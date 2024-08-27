@@ -12,6 +12,7 @@ class_name InteractComponent
 @export var usesSignal : bool = false
 @export var signalName : String
 @export var hitbox : HitboxComponent
+var pocketable : bool
 var parent
 
 # Called when the node enters the scene tree for the first time.
@@ -19,13 +20,12 @@ func _ready():
 	# I don't know if this actually fixes anything but changing this line to get_node_3d instead of
 	# get_node makes it not break when inside an inherited scene_change
 	parent = get_parent_node_3d()
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
+	
+	# This is inelegant
+	# Too bad!
+	if parent.has_method("on_pocket"):
+		pocketable = true
+		
 func Interact(is_holding : bool):
 	if methodName:
 		parent.call(methodName)
