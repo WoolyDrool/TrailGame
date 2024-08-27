@@ -22,13 +22,14 @@ func _process(delta):
 		if col_to_select.pocketable:
 			can_pocket = true
 		elif col_to_select.get_parent().is_in_group("deposit points"):
+			print("its a deposit point")
 			can_deposit = true
 		else:
 			can_pocket = false
 			can_deposit = false
 			
 		# General Interact
-		if can_interact && !can_pocket:
+		if can_interact && !can_pocket && !can_deposit:
 				if Input.is_action_just_pressed("interact"):
 					is_holding = Input.is_action_pressed("interact")
 					col_to_select.Interact(is_holding)
@@ -36,6 +37,7 @@ func _process(delta):
 					can_interact = false
 		# Deposit Interact		
 		elif can_interact && can_deposit:
+			print("depositing")
 			if Input.is_action_just_pressed("pocket_left"):
 				col_to_select.get_parent().deposit_from_pocket(false)
 				col_to_select = null
@@ -53,28 +55,31 @@ func _process(delta):
 	
 	frob()
 	update_immediate_ui()
+
 func frob():
 	# todo 8/27/24 i think this is rescanning the object every frame. fine for now
 	# but could very easily become a performance problem l8r
 	
 	# Check if the player is directly looking at an object and override the frobbing process
-	if raycaster.is_colliding():
-		if raycaster.get_collider().is_in_group("interactable"):
-			col_to_select = raycaster.get_collider()
-			#print_debug("Raycast found ", col_to_select.get_parent().name)
-			can_interact = true
-	elif !raycaster.is_colliding() && frobber.is_colliding():
+	if raycaster.is_colliding() && !col_to_select:
+		if raycaster.get_collider() != null: # Important line to fix null instances
+			if raycaster.get_collider().is_in_group("interactable"):
+				col_to_select = raycaster.get_collider()
+				#print_debug("Raycast found ", col_to_select.get_parent().name)
+				can_interact = true
+	elif !raycaster.is_colliding() && frobber.is_colliding() && !col_to_select:
 		# Check for the nearest collider in the ShapeCast3D
-		for i in frobber.get_collision_count():
-			var test : CollisionObject3D = frobber.get_collider(i)
-			# Check the distance of the points. Find the collision thats within frob_range
-			if frobber.position.distance_to(test.position) < frob_range:
-				if test.is_in_group("interactable"):
-					col_to_select = test
-					#print_debug("Frobber found ", col_to_select.get_parent().name)
-					can_interact = true
-					break
-	elif !raycaster.is_colliding() && !frobber.is_colliding():
+			for i in frobber.get_collision_count():
+				if frobber.get_collider(i) != null: # Important line to fix null instances
+					var test : CollisionObject3D = frobber.get_collider(i)
+					# Check the distance of the points. Find the collision thats within frob_range
+					if frobber.position.distance_to(test.position) < frob_range:
+						if test.is_in_group("interactable"):
+							col_to_select = test
+							#print_debug("Frobber found ", col_to_select.get_parent().name)
+							can_interact = true
+							break
+	elif !raycaster.is_colliding() && !frobber.is_colliding() && col_to_select:
 		col_to_select = null
 		can_interact = false
 		can_pocket = false
@@ -88,7 +93,7 @@ func update_immediate_ui():
 			interact_text.text = col_to_select.interactText
 			modifier_text.text = col_to_select.modifierText
 			append_text.text = col_to_select.appendText
-			print("calling")
+		
 			interact_text.add_theme_color_override("Color", col_to_select.interactText_Color)
 			modifier_text.add_theme_color_override("Color", col_to_select.modifierText_Color)
 			append_text.add_theme_color_override("Color", col_to_select.appendText_Color)
