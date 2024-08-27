@@ -11,8 +11,9 @@ var is_holding : bool
 
 #region UI
 @onready var crosshair = $Crosshair
-@onready var interact_text : Label = $Crosshair/InteractTextLabel
-@onready var modifier_text : Label = $Crosshair/InteractType
+@onready var interact_text : Label = $Crosshair/InteractText
+@onready var modifier_text : Label = $Crosshair/ModifierText
+@onready var append_text : Label = $Crosshair/AppendText
 @onready var text_bg : ColorRect = $Crosshair/ColorRect
 #endregion
 
