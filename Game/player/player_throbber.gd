@@ -60,7 +60,7 @@ func frob():
 	if raycaster.is_colliding():
 		if raycaster.get_collider().is_in_group("interactable"):
 			col_to_select = raycaster.get_collider()
-			print_debug("Raycast found ", col_to_select.get_parent().name)
+			#print_debug("Raycast found ", col_to_select.get_parent().name)
 			can_interact = true
 	elif !raycaster.is_colliding() && frobber.is_colliding():
 		# Check for the nearest collider in the ShapeCast3D
@@ -70,16 +70,16 @@ func frob():
 			if frobber.position.distance_to(test.position) < frob_range:
 				if test.is_in_group("interactable"):
 					col_to_select = test
-					print_debug("Frobber found ", col_to_select.get_parent().name)
+					#print_debug("Frobber found ", col_to_select.get_parent().name)
 					can_interact = true
 					break
 	elif !raycaster.is_colliding() && !frobber.is_colliding():
-		print("exited")
 		col_to_select = null
 		can_interact = false
 		can_pocket = false
 		can_deposit = false
-		print(col_to_select)
+		#print("exited")
+		#print(col_to_select)
 
 func update_immediate_ui():
 	if col_to_select:
