@@ -93,19 +93,10 @@ func update_immediate_ui():
 			modifier_text.add_theme_color_override("Color", col_to_select.modifierText_Color)
 			append_text.add_theme_color_override("Color", col_to_select.appendText_Color)
 		text_bg.visible = true
-		
-		if can_interact && can_pocket:
-			var objitem = col_to_select.get_parent() as ObjectiveItem
-			match objitem.type:
-				objitem.item_type.TRASH:
-					modifier_text.text = "Trash"
-					modifier_text.add_theme_color_override("font_color", Color.GREEN)
-				objitem.item_type.RECYCLE:
-					modifier_text.text = "Recycle"
-					modifier_text.add_theme_color_override("font_color", Color.SKY_BLUE)
 	else:
 		interact_text.text = ""
 		modifier_text.text = ""
+		append_text.text = ""
 		can_interact = false
 		can_pocket = false
 		if text_bg.visible:
