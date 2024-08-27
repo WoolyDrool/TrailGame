@@ -5,8 +5,11 @@ class_name InteractComponent
 # This node will be attached to other nodes and will handle all the interaction handling
 @export_group("HUD Information")
 @export var interactText : String = "Default Message"
+@export var interactText_Color : Color = Color.WHITE
 @export var modifierText : String = ""
+@export var modifierText_Color : Color
 @export var appendText : String = ""
+@export var appendText_Color : Color
 @export_group("Connections")
 @export var methodName : String
 @export var usesSignal : bool = false
