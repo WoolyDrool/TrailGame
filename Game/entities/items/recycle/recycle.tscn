@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://dios3b7x3ju8o"]
+
+[ext_resource type="PackedScene" uid="uid://c867r6uxvlf4w" path="res://Game/entities/items/objective.tscn" id="1_mkdlo"]
+
+[node name="Recycle" instance=ExtResource("1_mkdlo")]
+item_name = "Recycle"
+type = 2
+
+[node name="Interact" parent="." index="2"]
+modifierText_Color = Color(0, 0.584661, 0.841267, 1)
+
+[editable path="Interact"]

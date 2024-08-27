@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://vqpskdaktj74"]
+
+[ext_resource type="PackedScene" uid="uid://c867r6uxvlf4w" path="res://Game/entities/items/objective.tscn" id="1_b43fa"]
+
+[node name="Trash" instance=ExtResource("1_b43fa")]
+item_name = "Trash"
+type = 1
+
+[node name="Interact" parent="." index="2"]
+interactText_Color = Color(0.689326, 0.0529312, 0.261069, 1)
+modifierText_Color = Color(0.180641, 0.678673, 0, 1)
+
+[editable path="Interact"]
