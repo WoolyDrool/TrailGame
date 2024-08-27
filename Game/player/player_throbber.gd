@@ -22,7 +22,6 @@ func _process(delta):
 		if col_to_select.pocketable:
 			can_pocket = true
 		elif col_to_select.get_parent().is_in_group("deposit points"):
-			print("its a deposit point")
 			can_deposit = true
 		else:
 			can_pocket = false
@@ -37,7 +36,6 @@ func _process(delta):
 					can_interact = false
 		# Deposit Interact		
 		elif can_interact && can_deposit:
-			print("depositing")
 			if Input.is_action_just_pressed("pocket_left"):
 				col_to_select.get_parent().deposit_from_pocket(false)
 				col_to_select = null
