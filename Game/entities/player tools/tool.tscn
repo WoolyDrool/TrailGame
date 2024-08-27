@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://gcsr8xrou0dj"]
+
+[ext_resource type="Script" path="res://Game/entities/player tools/tool.gd" id="1_bhjc5"]
+
+[node name="Tool" type="Node3D"]
+script = ExtResource("1_bhjc5")
+
+[node name="PrimaryTimer" type="Timer" parent="."]
+
+[node name="SecondaryTimer" type="Timer" parent="."]
+
+[node name="TertiaryTimer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[connection signal="timeout" from="PrimaryTimer" to="." method="_on_primary_timeout"]
+[connection signal="timeout" from="SecondaryTimer" to="." method="_on_secondary_timeout"]
+[connection signal="timeout" from="TertiaryTimer" to="." method="_on_tertiary_timeout"]

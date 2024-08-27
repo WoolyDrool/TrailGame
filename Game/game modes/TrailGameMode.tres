@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="GameMode" load_steps=2 format=3 uid="uid://bbn4ct52s33mq"]
+
+[ext_resource type="Script" path="res://Game/game modes/GameMode.gd" id="1_k7pam"]
+
+[resource]
+script = ExtResource("1_k7pam")
+mode_name = "GameMode"
+player_enabled = true
+player_control_enabled = true

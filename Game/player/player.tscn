@@ -1,0 +1,205 @@
+[gd_scene load_steps=18 format=3 uid="uid://bw8sepo1dej0s"]
+
+[ext_resource type="Script" path="res://Game/player/player_controller.gd" id="1_chifv"]
+[ext_resource type="PackedScene" uid="uid://b10igw5xcvojj" path="res://Interface/ui_player_interface.tscn" id="2_uk1te"]
+[ext_resource type="Script" path="res://Game/player/player_throbber.gd" id="2_wjsc6"]
+[ext_resource type="Script" path="res://Game/entities/player tools/tool_manager.gd" id="3_frtv5"]
+[ext_resource type="Script" path="res://Game/MissionInventory.gd" id="4_8w30n"]
+[ext_resource type="PackedScene" uid="uid://dnxn4by1788gu" path="res://Game/entities/player tools/tool_hatchet.tscn" id="4_vlj4k"]
+[ext_resource type="PackedScene" uid="uid://cp0fol7mmhjpx" path="res://Game/entities/player tools/tool_shovel.tscn" id="5_krp0k"]
+[ext_resource type="PackedScene" uid="uid://c3koxqga8a6rm" path="res://Game/entities/player tools/tool_picker.tscn" id="6_4qgwt"]
+[ext_resource type="Texture2D" uid="uid://ti8omwpac58c" path="res://Content/sprites/spr_ui_crosshair.png" id="7_00gkg"]
+[ext_resource type="Script" path="res://Game/player/states/player_state.gd" id="10_2sqto"]
+[ext_resource type="Script" path="res://Game/components/StateMachine.gd" id="10_fwt7f"]
+[ext_resource type="Script" path="res://Game/player/states/state_player_idle.gd" id="11_dpwjy"]
+[ext_resource type="Script" path="res://Game/player/states/state_player_moving.gd" id="11_hyb7x"]
+[ext_resource type="Script" path="res://Game/components/pocket_component.gd" id="14_hygt8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hcygf"]
+radius = 0.2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mrjsy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2v6a4"]
+height = 1.0
+
+[node name="Player" type="CharacterBody3D"]
+collision_mask = 14
+script = ExtResource("1_chifv")
+walking_speed = 10.0
+sprinting_speed = 16.0
+gravity_accel_ramp = 0.6
+grav_multiplier = -15.0
+bunny_multiplier = 50.0
+bunny = false
+
+[node name="CamContainer" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CamContainer"]
+cull_mask = 524285
+current = true
+script = ExtResource("2_wjsc6")
+
+[node name="RayCast3D" type="RayCast3D" parent="CamContainer/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+target_position = Vector3(0, -2, 0)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="ToolRayCast3D" type="RayCast3D" parent="CamContainer/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+target_position = Vector3(0, -2, 0)
+collision_mask = 240
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="ToolCamera" type="Camera3D" parent="CamContainer/Camera3D"]
+cull_mask = 2
+
+[node name="Tools" type="Node3D" parent="CamContainer/Camera3D" node_paths=PackedStringArray("ray3d", "debuglabel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
+script = ExtResource("3_frtv5")
+ray3d = NodePath("../ToolRayCast3D")
+debuglabel = NodePath("../RichTextLabel")
+
+[node name="ToolHatchet" parent="CamContainer/Camera3D/Tools" instance=ExtResource("4_vlj4k")]
+
+[node name="ToolShovel" parent="CamContainer/Camera3D/Tools" instance=ExtResource("5_krp0k")]
+
+[node name="ToolPicker" parent="CamContainer/Camera3D/Tools" node_paths=PackedStringArray("toolCast") instance=ExtResource("6_4qgwt")]
+toolCast = NodePath("../../ToolRayCast3D")
+
+[node name="Crosshair" type="TextureRect" parent="CamContainer/Camera3D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+pivot_offset = Vector2(32, 32)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("7_00gkg")
+
+[node name="ColorRect" type="ColorRect" parent="CamContainer/Camera3D/Crosshair"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -245.5
+offset_top = 45.3333
+offset_right = 245.5
+offset_bottom = 357.333
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.404511, 0.404511, 0.404511, 1)
+
+[node name="InteractTextLabel" type="Label" parent="CamContainer/Camera3D/Crosshair"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -238.5
+offset_top = 53.3333
+offset_right = 238.5
+offset_bottom = 349.333
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(72.0002, 36.4452)
+theme_override_font_sizes/font_size = 41
+text = "Interactable Objects"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="InteractType" type="Label" parent="CamContainer/Camera3D/Crosshair"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -238.0
+offset_top = 128.0
+offset_right = 239.0
+offset_bottom = 349.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(72.0002, 36.4452)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 41
+text = "Interactable Objects"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="RichTextLabel" type="Label" parent="CamContainer/Camera3D"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -666.0
+offset_top = -97.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 71
+text = "Tool
+"
+horizontal_alignment = 1
+
+[node name="Frobber" type="ShapeCast3D" parent="CamContainer/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_hcygf")
+
+[node name="StandingCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_mrjsy")
+
+[node name="CrouchingCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("CapsuleShape3D_2v6a4")
+
+[node name="CeilingCheck" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+target_position = Vector3(0, 2, 0)
+
+[node name="PlayerInterface" parent="." instance=ExtResource("2_uk1te")]
+
+[node name="MissionInventory" type="Node" parent="."]
+script = ExtResource("4_8w30n")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+process_mode = 4
+script = ExtResource("10_fwt7f")
+initial_state = NodePath("Idle")
+
+[node name="PlayerState" type="Node" parent="StateMachine" node_paths=PackedStringArray("cam_container", "standing_collision", "crouching_collision", "ceiling_check", "controller")]
+script = ExtResource("10_2sqto")
+cam_container = NodePath("../../CamContainer")
+standing_collision = NodePath("../../StandingCollision")
+crouching_collision = NodePath("../../CrouchingCollision")
+ceiling_check = NodePath("../../CeilingCheck")
+controller = NodePath("../..")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("ps")]
+script = ExtResource("11_dpwjy")
+ps = NodePath("../PlayerState")
+
+[node name="Moving" type="Node" parent="StateMachine" node_paths=PackedStringArray("ps")]
+script = ExtResource("11_hyb7x")
+ps = NodePath("../PlayerState")
+
+[node name="Jumping" type="Node" parent="StateMachine"]
+
+[node name="PocketComponent" type="Node" parent="."]
+script = ExtResource("14_hygt8")

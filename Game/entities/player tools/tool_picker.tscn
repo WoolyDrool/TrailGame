@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3koxqga8a6rm"]
+
+[ext_resource type="PackedScene" uid="uid://gcsr8xrou0dj" path="res://Game/entities/player tools/tool.tscn" id="1_vxnd3"]
+[ext_resource type="Script" path="res://Game/entities/player tools/tool_picker.gd" id="2_m30x5"]
+[ext_resource type="PackedScene" uid="uid://ckb72h7mqiepx" path="res://Content/models/model_picker.glb" id="3_cpoj8"]
+
+[sub_resource type="Curve3D" id="Curve3D_fvhg7"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0.364752, 0.0043787, 0, 0, 0, 0, 0, 0, 0, 0.726378, -0.00310312, 0, 0, 0, 0, 0, 0, 0, 1.10047, -0.00310312, 0, 0, 0, 0, 0, 0, 0, 1.36234, 0.00188484, 0, 0, 0, 0, 0, 0, 0, 1.52944, -0.00060926, 0, 0, 0, 0, 0, 0, 0, 0.364752, 0.0043787),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
+[node name="ToolPicker" instance=ExtResource("1_vxnd3")]
+script = ExtResource("2_m30x5")
+max_items = 6
+toolName = "Picker"
+primaryActionCooldown = 3.0
+
+[node name="model_picker" parent="." index="4" instance=ExtResource("3_cpoj8")]
+transform = Transform3D(0.115, 0, 0, 0, 0.115, 0, 0, 0, 0.115, 0, 0, 0)
+
+[node name="Bottom" type="Node3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.166788, 0)
+
+[node name="Top" type="Node3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.60892, 0)
+
+[node name="Path3D" type="Path3D" parent="." index="7"]
+curve = SubResource("Curve3D_fvhg7")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D" index="0"]
+transform = Transform3D(1.58888e-08, 1, -7.24669e-10, -0.0121579, -5.3144e-10, -0.999926, -0.999926, 1.58965e-08, 0.0121579, 0, 1.52772, -0.000503744)
+progress = 1.15125

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://2vbx4k1qtsgu"]
+
+[ext_resource type="Script" path="res://Game/area_mission.gd" id="1_sa8ac"]
+
+[node name="AreaMission" type="Node3D"]
+script = ExtResource("1_sa8ac")
+
+[node name="MissionTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="MissionTimer" to="." method="_on_mission_timer_timeout"]

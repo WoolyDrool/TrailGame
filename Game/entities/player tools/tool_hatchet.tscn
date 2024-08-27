@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnxn4by1788gu"]
+
+[ext_resource type="PackedScene" uid="uid://gcsr8xrou0dj" path="res://Game/entities/player tools/tool.tscn" id="1_81yem"]
+[ext_resource type="Script" path="res://Game/entities/player tools/tool_hatchet.gd" id="2_yggq0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_77wso"]
+albedo_color = Color(0.498039, 0, 0.0980392, 1)
+
+[node name="ToolHatchet" instance=ExtResource("1_81yem")]
+script = ExtResource("2_yggq0")
+toolName = "Hatchet"
+primaryActionCooldown = 3.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." index="4"]
+layers = 2
+size = Vector3(0.15, 0.75, 0.15)
+material = SubResource("StandardMaterial3D_77wso")

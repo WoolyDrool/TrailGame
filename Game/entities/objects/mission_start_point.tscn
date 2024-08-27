@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://f5mwqiyud4is"]
+
+[ext_resource type="PackedScene" uid="uid://pletdq3bfgxj" path="res://Game/components/interact_component.tscn" id="1_afvj5"]
+[ext_resource type="Script" path="res://Game/entities/objects/mission_start_point.gd" id="1_grswy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bjw6a"]
+size = Vector3(1.35254, 2, 0.477539)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_erkig"]
+size = Vector3(1.34595, 1, 0.159637)
+
+[node name="MissionStartPoint" type="Area3D"]
+collision_layer = 2
+script = ExtResource("1_grswy")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+size = Vector3(1.37329, 1, 0.385742)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+radius = 0.103181
+height = 1.9576
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_bjw6a")
+
+[node name="InteractComponent" parent="." instance=ExtResource("1_afvj5")]
+methodName = "activate_mission_from_point"
+
+[node name="CollisionShape3D" parent="InteractComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.269608)
+shape = SubResource("BoxShape3D_erkig")
+
+[editable path="InteractComponent"]

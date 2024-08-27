@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://chs8oja85k8ks"]
+
+[ext_resource type="Script" path="res://Game/game.gd" id="1_lf7hn"]
+[ext_resource type="PackedScene" uid="uid://d04atuoskhbn1" path="res://Game/main_menu.tscn" id="2_2rgst"]
+[ext_resource type="Script" path="res://Game/scene_manager.gd" id="4_jj8ee"]
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_lf7hn")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Control" type="Control" parent="Node2D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Node2D/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MainMenu" parent="." instance=ExtResource("2_2rgst")]
+
+[node name="SceneManager" type="Node" parent="." node_paths=PackedStringArray("current_scene")]
+script = ExtResource("4_jj8ee")
+current_scene = NodePath("../MainMenu")

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3owmt0k6634o"]
+
+[ext_resource type="PackedScene" uid="uid://dt6rsl6ncy4t2" path="res://Game/entities/objects/deposit_point.tscn" id="1_db5rn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6t32k"]
+albedo_color = Color(0, 0.227871, 0.56238, 1)
+
+[node name="RecycleDepositPoint" instance=ExtResource("1_db5rn")]
+deposit_type = 1
+
+[node name="Interact" parent="." index="0"]
+interactText = "Empty Pockets (Recycle Bin)"
+
+[node name="CSGCylinder3D" parent="." index="1"]
+material = SubResource("StandardMaterial3D_6t32k")

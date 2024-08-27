@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://pletdq3bfgxj"]
+
+[ext_resource type="Script" path="res://Game/components/interact_component.gd" id="1_lv3tr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2ctav"]
+radius = 0.3
+
+[node name="InteractComponent" type="Area3D" groups=["interactable"]]
+collision_layer = 4
+script = ExtResource("1_lv3tr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_2ctav")

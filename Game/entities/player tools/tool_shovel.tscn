@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cp0fol7mmhjpx"]
+
+[ext_resource type="PackedScene" uid="uid://gcsr8xrou0dj" path="res://Game/entities/player tools/tool.tscn" id="1_8c6cj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s3vvj"]
+albedo_color = Color(0.545098, 0, 0.407843, 1)
+
+[node name="ToolShovel" instance=ExtResource("1_8c6cj")]
+toolName = "Shovel"
+primaryActionCooldown = 1.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." index="4"]
+size = Vector3(0.3, 1.5, 0.3)
+material = SubResource("StandardMaterial3D_s3vvj")
