@@ -84,8 +84,14 @@ func frob():
 
 func update_immediate_ui():
 	if col_to_select:
-		interact_text.text = col_to_select.interactText
-		modifier_text.text = col_to_select.modifierText
+		if interact_text.text == "":
+			interact_text.text = col_to_select.interactText
+			modifier_text.text = col_to_select.modifierText
+			append_text.text = col_to_select.appendText
+			print("calling")
+			interact_text.add_theme_color_override("Color", col_to_select.interactText_Color)
+			modifier_text.add_theme_color_override("Color", col_to_select.modifierText_Color)
+			append_text.add_theme_color_override("Color", col_to_select.appendText_Color)
 		text_bg.visible = true
 		
 		if can_interact && can_pocket:
