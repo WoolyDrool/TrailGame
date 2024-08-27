@@ -10,6 +10,7 @@ func _ready() -> void:
 		print(mission.mission_name)
 		$InteractComponent.interactText = "Begin Mission"
 		$InteractComponent.modifierText = mission.mission_name
+		$InteractComponent.appendText = str("Time Limit: ", mission.mission_time)
 	else:
 		print_debug("Mission Start Point is not the child of an AreaMission node")
 	pass # Replace with function body.

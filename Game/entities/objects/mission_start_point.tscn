@@ -25,6 +25,9 @@ height = 1.9576
 shape = SubResource("BoxShape3D_bjw6a")
 
 [node name="InteractComponent" parent="." instance=ExtResource("1_afvj5")]
+interactText_Color = Color(0.558183, 0.119295, 0.0546605, 1)
+modifierText_Color = Color(1, 1, 1, 1)
+appendText_Color = Color(0.880176, 0, 0.155309, 1)
 methodName = "activate_mission_from_point"
 
 [node name="CollisionShape3D" parent="InteractComponent" index="0"]
