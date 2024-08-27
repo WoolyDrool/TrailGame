@@ -15,7 +15,6 @@ var complete : bool
 
 # Internal
 @onready var mission_timer : Timer = $MissionTimer
-@onready var timer_label : RichTextLabel = $MissionTimerLabel
 var objectives_completed : int = 0
 var mission_active : bool
 
