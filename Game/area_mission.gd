@@ -63,6 +63,7 @@ func finish_mission():
 	boundaries.use_collision = false
 	area.complete_area_mission(self)
 	GameManager.mission_end.emit(self)
+	mission_timer.stop()
 	mission_active = false
 
 func fail_mission():
@@ -70,11 +71,11 @@ func fail_mission():
 	boundaries.use_collision = false
 	area.fail_area_mission(self)
 	GameManager.mission_fail.emit(self)
+	mission_timer.stop()
 	mission_active = false
 
 
 func _on_mission_timer_timeout() -> void:
-	print("called")
 	if objectives_completed < objectives_in_mission:
 		fail_mission()
 		print("Mission Failed")
