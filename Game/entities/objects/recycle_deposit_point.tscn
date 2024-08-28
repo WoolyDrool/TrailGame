@@ -9,6 +9,7 @@ albedo_color = Color(0, 0.227871, 0.56238, 1)
 deposit_type = 1
 
 [node name="Interact" parent="." index="0"]
+type = 2
 interactText = "Empty Pockets (Recycle Bin)"
 
 [node name="CSGCylinder3D" parent="." index="1"]

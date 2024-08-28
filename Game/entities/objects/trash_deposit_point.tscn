@@ -5,4 +5,5 @@
 [node name="TrashDepositPoint" instance=ExtResource("1_4lpnu")]
 
 [node name="Interact" parent="." index="0"]
+type = 2
 interactText = "Empty Pockets (Trash Bin)"
