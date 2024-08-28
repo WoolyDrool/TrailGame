@@ -23,7 +23,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	total = left_pocket_current + right_pocket_current
+	pass
 
 # false is left, true is right
 func add_to_pockets(item : ObjectiveItem, leftright : bool):
@@ -52,22 +52,24 @@ func add_to_pockets(item : ObjectiveItem, leftright : bool):
 	
 	left_pocket_current = left_pocket_trash + left_pocket_recycle
 	right_pocket_current = right_pocket_trash + right_pocket_recycle
-
-	print("L trash: ", left_pocket_trash, " L rec: ", left_pocket_recycle)
-	print("R trash: ", right_pocket_trash, " R rec: ", right_pocket_recycle)
-	print("Pocket total: ", total)
+	total = left_pocket_current + right_pocket_current
+	#print("L trash: ", left_pocket_trash, " L rec: ", left_pocket_recycle)
+	#print("R trash: ", right_pocket_trash, " R rec: ", right_pocket_recycle)
 
 func empty_pocket(leftright : bool):
 	if !leftright:
 		left_pocket_trash = 0
 		left_pocket_recycle = 0
+		left_pocket_current = 0
 	else:
 		right_pocket_trash = 0
 		right_pocket_recycle = 0
+		right_pocket_current = 0
 	
 	GameManager.ui_update_item_counts.emit()
-	print("L trash: ", left_pocket_trash, " L rec: ", left_pocket_recycle)
-	print("R trash: ", right_pocket_trash, " R rec: ", right_pocket_recycle)
+	total = left_pocket_current + right_pocket_current
+	print("L Trash:", left_pocket_trash, " Recycle:", left_pocket_recycle)
+	print("R Trash:", right_pocket_trash, " Recycle:", right_pocket_recycle)
 	print("Pocket total: ", total)
 
 #func empty_left_pocket():
