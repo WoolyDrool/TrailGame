@@ -19,13 +19,11 @@ var is_holding : bool
 
 func _process(delta):
 	if col_to_select && is_instance_valid(col_to_select):
-		if col_to_select.pocketable:
+		can_interact = true
+		if col_to_select.type == col_to_select.interact_type.ITEM:
 			can_pocket = true
-		elif col_to_select.get_parent().is_in_group("deposit points"):
+		elif col_to_select.type == col_to_select.interact_type.DEPOSIT:
 			can_deposit = true
-		else:
-			can_pocket = false
-			can_deposit = false
 			
 		# General Interact
 		if can_interact && !can_pocket && !can_deposit:
@@ -50,7 +48,10 @@ func _process(delta):
 			elif Input.is_action_just_pressed("pocket_right"):
 				col_to_select.get_parent().on_pocket(true)
 				col_to_select = null
-	
+	else:
+		can_interact = false
+		can_pocket = false
+		can_deposit = false
 	frob()
 	update_immediate_ui()
 
@@ -64,7 +65,7 @@ func frob():
 			if raycaster.get_collider().is_in_group("interactable"):
 				col_to_select = raycaster.get_collider()
 				#print_debug("Raycast found ", col_to_select.get_parent().name)
-				can_interact = true
+
 	elif !raycaster.is_colliding() && frobber.is_colliding() && !col_to_select:
 		# Check for the nearest collider in the ShapeCast3D
 			for i in frobber.get_collision_count():
@@ -75,7 +76,7 @@ func frob():
 						if test.is_in_group("interactable"):
 							col_to_select = test
 							#print_debug("Frobber found ", col_to_select.get_parent().name)
-							can_interact = true
+
 							break
 	elif !raycaster.is_colliding() && !frobber.is_colliding() && col_to_select:
 		col_to_select = null
