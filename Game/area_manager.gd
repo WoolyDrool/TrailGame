@@ -10,6 +10,9 @@ var missions_completed : int = 0
 var current_mission : AreaMission
 @export var area_wrong_deposits : int = 0
 var failed_missions : int = 0
+var area_completed : bool = false
+
+signal complete_area
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -34,8 +37,11 @@ func complete_area_mission(mission : AreaMission):
 		current_mission = null
 		missions_completed += 1
 		
-		if missions_completed == missions.size():
+		if missions_completed == missions.size() && !area_completed:
 			# Do area complete stuff
+			area_completed = true
+			GameManager.area_complete_area.emit()
+			complete_area.emit()
 			print(area_name, " Completed!")
 			pass
 
