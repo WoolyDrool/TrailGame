@@ -4,6 +4,8 @@ class_name InteractComponent
 
 # This node will be attached to other nodes and will handle all the interaction handling
 @export_group("HUD Information")
+enum interact_type {GENERAL, ITEM, DEPOSIT}
+@export var type : interact_type
 @export var interactText : String = "Default Message"
 @export var interactText_Color : Color = Color.WHITE
 @export var modifierText : String = ""
