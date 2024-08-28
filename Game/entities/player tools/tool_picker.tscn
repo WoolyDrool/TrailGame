@@ -30,5 +30,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.60892, 0)
 curve = SubResource("Curve3D_fvhg7")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D" index="0"]
-transform = Transform3D(1.58888e-08, 1, -7.24669e-10, -0.0121579, -5.3144e-10, -0.999926, -0.999926, 1.58965e-08, 0.0121579, 0, 1.52772, -0.000503744)
+transform = Transform3D(1.58888e-08, 1, -7.24669e-10, -0.0121579, -5.3144e-10, -0.999926, -0.999926, 1.58965e-08, 0.0121579, 0, 1.52772, -0.000503709)
 progress = 1.15125
