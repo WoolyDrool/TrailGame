@@ -1,4 +1,4 @@
-extends Node
+extends Node3D
 
 class_name PlayerTool
 
@@ -39,7 +39,7 @@ func _process(delta):
 	pass
 
 func tool_equip(on : bool) -> void:
-	print("tool toggled ", on)
+	print(toolName, " toggled ", on)
 	if on:
 		ray.target_position = Vector3(0, raycast_range, 0)
 	
