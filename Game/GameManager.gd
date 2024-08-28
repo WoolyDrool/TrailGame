@@ -30,3 +30,6 @@ signal area_complete_area
 
 # Scene Management
 signal load_scene(path : String)
+
+# Debug
+signal debug_add_message(message : String)
