@@ -10,11 +10,11 @@ var can_deposit : bool
 var is_holding : bool
 
 #region UI
-@onready var crosshair = $Crosshair
-@onready var interact_text : Label = $Crosshair/InteractText
-@onready var modifier_text : Label = $Crosshair/ModifierText
-@onready var append_text : Label = $Crosshair/AppendText
-@onready var text_bg : ColorRect = $Crosshair/ColorRect
+@onready var crosshair = $ImmediateUI/Crosshair
+@onready var interact_text : Label = $ImmediateUI/Crosshair/InteractText
+@onready var modifier_text : Label = $ImmediateUI/Crosshair/ModifierText
+@onready var append_text : Label = $ImmediateUI/Crosshair/AppendText
+@onready var text_bg : ColorRect = $ImmediateUI/Crosshair/ColorRect
 #endregion
 
 func _process(delta):
