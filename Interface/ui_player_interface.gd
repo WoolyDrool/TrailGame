@@ -5,19 +5,22 @@ extends Control
 @onready var completed_label = $MissionCompleteLabel
 @onready var fail_label = $MissionFailLabel
 @onready var score_label = $ScoreLabel
+@onready var area_label = $AreaCompleteLabel
 
 @onready var timer_label = $MissionTimerLabel
 @onready var mission_timer : Timer = $MissionTimer
 var counting : bool
+@onready var label_countdown_timer : Timer = $ClearTimer
+var timeout : float = 2
 #endregion
 
 #region Pockets
 @onready var pocket_left_fill = $HBoxContainer/LPocketBG/LPocketFill
 @onready var pocket_right_fill = $HBoxContainer/RPocketBG/RPocketFill
-@onready var pocket_left_garbnumb = $HBoxContainer/LPocketBG/LPocketTrash
-@onready var pocket_left_recnumb = $HBoxContainer/RPocketBG/LPocketRecycle
-@onready var pocket_right_garbnumb = $HBoxContainer/RPocketBG/RPocketTrash
-@onready var pocket_right_recnumb = $HBoxContainer/RPocketBG/RPocketRecycle
+#@onready var pocket_left_garbnumb = $HBoxContainer/LPocketBG/LPocketTrash
+#@onready var pocket_left_recnumb = $HBoxContainer/RPocketBG/LPocketRecycle
+#@onready var pocket_right_garbnumb = $HBoxContainer/RPocketBG/RPocketTrash
+#@onready var pocket_right_recnumb = $HBoxContainer/RPocketBG/RPocketRecycle
 #endregion
 
 # Called when the node enters the scene tree for the first time.
@@ -25,6 +28,7 @@ func _ready():
 	GameManager.mission_start.connect(begin_mission_ui)
 	GameManager.mission_end.connect(complete_mission_ui)
 	GameManager.mission_fail.connect(fail_mission_ui)
+	GameManager.area_complete_area.connect(complete_area_ui)
 	
 	GameManager.ui_update_item_counts.connect(update_counts)
 	GameManager.ui_update_score_count.connect(update_score)
@@ -37,8 +41,11 @@ func _ready():
 
 func begin_mission_ui(mission : AreaMission):
 	update_score(mission)
+	print("Starting mission UI for ", mission.mission_name)
 	timer_label.visible = true
 	score_label.visible = true
+	completed_label.visible = false
+	fail_label.visible = false
 
 func begin_ui_timer(time : float):
 	counting = true
@@ -49,7 +56,6 @@ func begin_ui_timer(time : float):
 func _process(delta):
 	if counting:
 		timer_label.text = "0%d:%0d" % [floor(mission_timer.time_left / 60), int(mission_timer.time_left) % 60]
-	pass
 
 func update_counts():
 	#trash_count_label.text = str("[center]Trash: ", MissionInventory.level_trash_count,"[/center]")
@@ -74,8 +80,25 @@ func complete_mission_ui(mission : AreaMission):
 	timer_label.visible = false
 	score_label.visible = false
 	completed_label.visible = true
+	label_countdown_timer.paused = false
+	label_countdown_timer.start(timeout)
 
 func fail_mission_ui(mission : AreaMission):
 	timer_label.visible = false
 	score_label.visible = false
 	fail_label.visible = true
+	label_countdown_timer.paused = false
+	label_countdown_timer.start(timeout)
+
+func complete_area_ui():
+	area_label.visible = true
+	label_countdown_timer.start(timeout + 3)
+
+# This is for debug purposes only, replace with animations and stuff later
+func clear_mission_ui():
+	print("Clearing UI")
+	timer_label.visible = false
+	score_label.visible = false
+	completed_label.visible = false
+	fail_label.visible = false
+	area_label.visible = false

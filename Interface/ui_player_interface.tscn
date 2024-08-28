@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b10igw5xcvojj"]
+[gd_scene load_steps=5 format=3 uid="uid://b10igw5xcvojj"]
 
 [ext_resource type="Script" path="res://Interface/ui_player_interface.gd" id="1_ovo8g"]
 [ext_resource type="Texture2D" uid="uid://ceh4b8v0mimh3" path="res://Content/sprites/spr_ui_pocket.png" id="2_0kwwq"]
 [ext_resource type="Texture2D" uid="uid://dbrtokwrlxx07" path="res://Content/sprites/spr_ui_pocketfill.png" id="3_o2vdu"]
 [ext_resource type="Script" path="res://Interface/ui_pocket_component.gd" id="4_qecr0"]
-[ext_resource type="Script" path="res://Interface/fpscounter.gd" id="5_utyd4"]
 
 [node name="PlayerInterface" type="Control"]
 layout_mode = 3
@@ -74,6 +73,23 @@ pivot_offset = Vector2(288, 64)
 theme_override_colors/font_color = Color(1, 0.710835, 0.000571408, 1)
 theme_override_font_sizes/font_size = 96
 text = "Trail Complete!"
+horizontal_alignment = 1
+
+[node name="AreaCompleteLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -350.0
+offset_top = 430.0
+offset_right = 363.0
+offset_bottom = 562.0
+grow_horizontal = 2
+pivot_offset = Vector2(288, 64)
+theme_override_colors/font_color = Color(0.341075, 1, 0.639761, 1)
+theme_override_font_sizes/font_size = 96
+text = "Area Complete!"
 horizontal_alignment = 1
 
 [node name="MissionFailLabel" type="Label" parent="."]
@@ -186,15 +202,12 @@ theme_override_colors/font_color = Color(0, 0.843137, 1, 1)
 text = "0"
 horizontal_alignment = 2
 
-[node name="FPS" type="Label" parent="."]
-layout_mode = 1
-offset_right = 40.0
-offset_bottom = 44.0
-theme_override_font_sizes/font_size = 31
-text = "60"
-script = ExtResource("5_utyd4")
-
 [node name="Timer" type="Timer" parent="."]
 
 [node name="MissionTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="ClearTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="ClearTimer" to="." method="clear_mission_ui"]
