@@ -6,7 +6,7 @@
 item_name = "Trash"
 type = 1
 
-[node name="Interact" parent="." index="2"]
+[node name="Interact" parent="." index="2" groups=["pickable", "pocketable"]]
 type = 1
 interactText_Color = Color(0.689326, 0.0529312, 0.261069, 1)
 modifierText = "Trash"
