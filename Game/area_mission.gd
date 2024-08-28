@@ -29,7 +29,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if objectives_completed == objectives_in_mission:
+	if objectives_completed == objectives_in_mission && !complete:
 		finish_mission()
 	
 func register_new_objective(amt : int):
