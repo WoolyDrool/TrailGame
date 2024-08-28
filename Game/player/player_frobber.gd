@@ -1,5 +1,7 @@
 extends Camera3D
 
+class_name Frobber
+
 @onready var raycaster : RayCast3D = $RayCast3D
 @onready var frobber : ShapeCast3D = $Frobber
 @export var frob_range : float = 2
@@ -16,13 +18,13 @@ var is_holding : bool
 @onready var append_text : Label = $ImmediateUI/Crosshair/AppendText
 @onready var text_bg : ColorRect = $ImmediateUI/Crosshair/ColorRect
 #endregion
-
+		
 func _process(delta):
 	if col_to_select && is_instance_valid(col_to_select):
 		can_interact = true
-		if col_to_select.type == col_to_select.interact_type.ITEM:
+		if col_to_select.is_in_group("pocketable"):
 			can_pocket = true
-		elif col_to_select.type == col_to_select.interact_type.DEPOSIT:
+		elif col_to_select.is_in_group("depositable"):
 			can_deposit = true
 			
 		# General Interact
