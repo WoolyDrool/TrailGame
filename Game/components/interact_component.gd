@@ -4,8 +4,6 @@ class_name InteractComponent
 
 # This node will be attached to other nodes and will handle all the interaction handling
 @export_group("HUD Information")
-enum interact_type {GENERAL, ITEM, DEPOSIT}
-@export var type : interact_type
 @export var interactText : String = "Default Message"
 @export var interactText_Color : Color = Color.WHITE
 @export var modifierText : String = ""
@@ -17,7 +15,6 @@ enum interact_type {GENERAL, ITEM, DEPOSIT}
 @export var usesSignal : bool = false
 @export var signalName : String
 @export var hitbox : HitboxComponent
-var pocketable : bool
 var parent
 
 # Called when the node enters the scene tree for the first time.
@@ -25,11 +22,6 @@ func _ready():
 	# I don't know if this actually fixes anything but changing this line to get_node_3d instead of
 	# get_node makes it not break when inside an inherited scene_change
 	parent = get_parent_node_3d()
-	
-	# This is inelegant
-	# Too bad!
-	if parent.has_method("on_pocket"):
-		pocketable = true
 		
 func Interact(is_holding : bool):
 	if methodName:
