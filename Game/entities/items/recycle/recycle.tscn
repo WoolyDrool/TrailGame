@@ -7,7 +7,6 @@ item_name = "Recycle"
 type = 2
 
 [node name="Interact" parent="." index="2" groups=["pickable", "pocketable"]]
-type = 1
 modifierText = "Recycle"
 modifierText_Color = Color(0, 0.584661, 0.841267, 1)
 
