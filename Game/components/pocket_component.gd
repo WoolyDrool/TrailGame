@@ -11,6 +11,9 @@ var right_pocket_recycle : int = 0
 var left_pocket_current : int = 0
 var right_pocket_current : int = 0
 
+var left_pocket_mixed : bool = false
+var right_pocket_mixed : bool = false
+
 var total
 
 # Called when the node enters the scene tree for the first time.
@@ -37,6 +40,15 @@ func add_to_pockets(item : ObjectiveItem, leftright : bool):
 			else:
 				right_pocket_recycle += 1
 			#print("Recycle")
+	
+	if !left_pocket_mixed:
+		if left_pocket_trash > 0 && left_pocket_recycle > 0:
+			left_pocket_mixed = true
+			print("Left pocket mixed")
+	if !right_pocket_mixed:
+		if right_pocket_trash > 0 && right_pocket_recycle > 0:
+			right_pocket_mixed = true
+			print("Right pocket mixed")
 	
 	left_pocket_current = left_pocket_trash + left_pocket_recycle
 	right_pocket_current = right_pocket_trash + right_pocket_recycle
