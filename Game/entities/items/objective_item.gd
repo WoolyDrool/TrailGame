@@ -21,10 +21,12 @@ func on_grab():
 
 func on_pocket(leftright : bool):
 	if !leftright:
-		if PocketManager.left_pocket_current < PocketManager.max_pocket_size:
+		if PocketManager.left_pocket_current <= PocketManager.max_pocket_size:
 				PocketManager.add_to_pockets(self, leftright)
+				queue_free()
 	else:
-		if PocketManager.right_pocket_current < PocketManager.max_pocket_size:
+		if PocketManager.right_pocket_current <= PocketManager.max_pocket_size:
 				PocketManager.add_to_pockets(self, leftright)
-	queue_free()
+				queue_free()
+	
 	GameManager.ui_update_item_counts.emit()
