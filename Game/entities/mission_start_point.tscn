@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://f5mwqiyud4is"]
 
 [ext_resource type="PackedScene" uid="uid://pletdq3bfgxj" path="res://Game/components/interact_component.tscn" id="1_afvj5"]
-[ext_resource type="Script" path="res://Game/entities/objects/mission_start_point.gd" id="1_grswy"]
+[ext_resource type="Script" path="res://Game/entities/mission_start_point.gd" id="1_grswy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bjw6a"]
 size = Vector3(1.35254, 2, 0.477539)

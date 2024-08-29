@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cqrgt8fr6vutg"]
 
-[ext_resource type="PackedScene" uid="uid://dt6rsl6ncy4t2" path="res://Game/entities/objects/deposit_point.tscn" id="1_4lpnu"]
+[ext_resource type="PackedScene" uid="uid://dt6rsl6ncy4t2" path="res://Game/entities/deposit_point.tscn" id="1_4lpnu"]
 
 [node name="TrashDepositPoint" instance=ExtResource("1_4lpnu")]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://vqpskdaktj74"]
 
-[ext_resource type="PackedScene" uid="uid://c867r6uxvlf4w" path="res://Game/entities/items/objective.tscn" id="1_b43fa"]
+[ext_resource type="PackedScene" uid="uid://c867r6uxvlf4w" path="res://Game/items/objective.tscn" id="1_b43fa"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_syrxw"]
 albedo_color = Color(2.59906e-06, 0.659069, 0.313399, 1)

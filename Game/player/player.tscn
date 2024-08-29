@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bw8sepo1dej0s"]
+[gd_scene load_steps=10 format=3 uid="uid://bw8sepo1dej0s"]
 
 [ext_resource type="Script" path="res://Game/player/player_controller.gd" id="1_chifv"]
 [ext_resource type="PackedScene" uid="uid://b10igw5xcvojj" path="res://Interface/ui_player_interface.tscn" id="2_uk1te"]
 [ext_resource type="Script" path="res://Game/player/player_frobber.gd" id="2_wjsc6"]
-[ext_resource type="Script" path="res://Game/MissionInventory.gd" id="4_8w30n"]
 [ext_resource type="PackedScene" uid="uid://bfwfcn483wgly" path="res://Game/player/tools/tool_manager.tscn" id="4_bexwg"]
 [ext_resource type="Texture2D" uid="uid://ti8omwpac58c" path="res://Content/sprites/spr_ui_crosshair.png" id="7_00gkg"]
 [ext_resource type="Script" path="res://Game/components/pocket_component.gd" id="14_hygt8"]
@@ -172,9 +171,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 target_position = Vector3(0, 2, 0)
 
 [node name="PlayerInterface" parent="." instance=ExtResource("2_uk1te")]
-
-[node name="MissionInventory" type="Node" parent="."]
-script = ExtResource("4_8w30n")
 
 [node name="PocketComponent" type="Node" parent="."]
 script = ExtResource("14_hygt8")

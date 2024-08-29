@@ -18,7 +18,6 @@ config/icon="res://Content/sprites/icon.svg"
 [autoload]
 
 GameManager="*res://Game/GameManager.gd"
-MissionInventory="*res://Game/MissionInventory.gd"
 PocketManager="*res://Game/components/pocket_component.gd"
 
 [display]

@@ -14,11 +14,6 @@ func _ready():
 	
 	$Interact.interactText = item_name
 
-func on_grab():
-	MissionInventory.add_item(self)
-	GameManager.ui_update_item_counts.emit()
-	queue_free()
-
 func on_pocket(leftright : bool):
 	if !leftright:
 		if PocketManager.left_pocket_current <= PocketManager.max_pocket_size:
