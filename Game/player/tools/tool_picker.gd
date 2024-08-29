@@ -25,7 +25,7 @@ func _tool_primary() -> void:
 			if frobber.col_to_select.is_in_group("pickable"):
 				var picked_item = frobber.col_to_select.get_parent()
 				picked_item.reparent(item_container)
-				
+				picked_item.freeze = true
 				frobber.col_to_select.queue_free()
 				adjusted_ratio = (max_items * path.progress)
 				print(adjusted_ratio)
