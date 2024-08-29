@@ -34,6 +34,12 @@ func Interact(action : InputEvent):
 			get_parent().deposit_from_pocket(false)
 		if action.is_action_pressed("pocket_right"):
 			get_parent().deposit_from_pocket(true)
+	elif is_in_group("choppable"):
+		if action.is_action_pressed("interact"):
+			parent.call(methodName)	
 	elif is_in_group("interactable"):
 		if action.is_action_pressed("interact"):
 			parent.call(methodName)	
+			
+func GenericInteract():
+	parent.call(methodName)
