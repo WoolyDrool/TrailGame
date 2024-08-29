@@ -1,19 +1,16 @@
-[gd_scene load_steps=15 format=3 uid="uid://bw8sepo1dej0s"]
+[gd_scene load_steps=11 format=3 uid="uid://bw8sepo1dej0s"]
 
 [ext_resource type="Script" path="res://Game/player/player_controller.gd" id="1_chifv"]
 [ext_resource type="PackedScene" uid="uid://b10igw5xcvojj" path="res://Interface/ui_player_interface.tscn" id="2_uk1te"]
 [ext_resource type="Script" path="res://Game/player/player_frobber.gd" id="2_wjsc6"]
-[ext_resource type="Script" path="res://Game/entities/player tools/tool_manager.gd" id="3_frtv5"]
 [ext_resource type="Script" path="res://Game/MissionInventory.gd" id="4_8w30n"]
-[ext_resource type="PackedScene" uid="uid://vgijbx81ryjk" path="res://Game/entities/player tools/tool_hands.tscn" id="4_g02mk"]
-[ext_resource type="PackedScene" uid="uid://dnxn4by1788gu" path="res://Game/entities/player tools/tool_hatchet.tscn" id="4_vlj4k"]
-[ext_resource type="PackedScene" uid="uid://cp0fol7mmhjpx" path="res://Game/entities/player tools/tool_shovel.tscn" id="5_krp0k"]
-[ext_resource type="PackedScene" uid="uid://c3koxqga8a6rm" path="res://Game/entities/player tools/tool_picker.tscn" id="6_4qgwt"]
+[ext_resource type="PackedScene" uid="uid://bfwfcn483wgly" path="res://Game/player/tools/tool_manager.tscn" id="4_bexwg"]
 [ext_resource type="Texture2D" uid="uid://ti8omwpac58c" path="res://Content/sprites/spr_ui_crosshair.png" id="7_00gkg"]
 [ext_resource type="Script" path="res://Game/components/pocket_component.gd" id="14_hygt8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hcygf"]
 radius = 0.2
+height = 3.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mrjsy"]
 
@@ -40,13 +37,13 @@ script = ExtResource("2_wjsc6")
 
 [node name="RayCast3D" type="RayCast3D" parent="CamContainer/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-target_position = Vector3(0, -2, 0)
+target_position = Vector3(0, -3, 0)
 collision_mask = 4
 hit_from_inside = true
 collide_with_areas = true
 
 [node name="Frobber" type="ShapeCast3D" parent="CamContainer/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.3)
 shape = SubResource("CapsuleShape3D_hcygf")
 collision_mask = 244
 collide_with_areas = true
@@ -153,42 +150,15 @@ text = "Append"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="ToolLabel" type="Label" parent="CamContainer/Camera3D/ImmediateUI"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -666.0
-offset_top = -97.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_font_sizes/font_size = 71
-text = "Tool
-"
-horizontal_alignment = 1
-
-[node name="Tools" type="Node3D" parent="CamContainer" node_paths=PackedStringArray("default_tool", "ray3d", "playerFrobber", "debuglabel")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0060029, -2.38419e-07, 0.00159717)
-script = ExtResource("3_frtv5")
-default_tool = NodePath("ToolHands")
+[node name="ToolManager" parent="CamContainer" node_paths=PackedStringArray("player", "cam_container", "ray3d", "playerFrobber") instance=ExtResource("4_bexwg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+player = NodePath("../..")
+cam_container = NodePath("..")
 ray3d = NodePath("../Camera3D/RayCast3D")
 playerFrobber = NodePath("../Camera3D")
-debuglabel = NodePath("../Camera3D/ImmediateUI/ToolLabel")
 
-[node name="ToolHands" parent="CamContainer/Tools" instance=ExtResource("4_g02mk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
-
-[node name="ToolHatchet" parent="CamContainer/Tools" instance=ExtResource("4_vlj4k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
-
-[node name="ToolShovel" parent="CamContainer/Tools" instance=ExtResource("5_krp0k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
-
-[node name="ToolPicker" parent="CamContainer/Tools" node_paths=PackedStringArray("toolCast") instance=ExtResource("6_4qgwt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
-toolCast = NodePath("")
+[node name="HoldPoint" parent="CamContainer/ToolManager" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="StandingCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_mrjsy")
@@ -208,3 +178,6 @@ script = ExtResource("4_8w30n")
 
 [node name="PocketComponent" type="Node" parent="."]
 script = ExtResource("14_hygt8")
+
+[editable path="CamContainer/ToolManager"]
+[editable path="CamContainer/ToolManager/ToolHands"]
