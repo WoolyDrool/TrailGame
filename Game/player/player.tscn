@@ -45,13 +45,6 @@ collision_mask = 4
 hit_from_inside = true
 collide_with_areas = true
 
-[node name="ToolRayCast3D" type="RayCast3D" parent="CamContainer/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-target_position = Vector3(0, -2.5, 0)
-collision_mask = 240
-hit_from_inside = true
-collide_with_areas = true
-
 [node name="Frobber" type="ShapeCast3D" parent="CamContainer/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_hcygf")
@@ -176,11 +169,12 @@ text = "Tool
 "
 horizontal_alignment = 1
 
-[node name="Tools" type="Node3D" parent="CamContainer" node_paths=PackedStringArray("default_tool", "ray3d", "debuglabel")]
+[node name="Tools" type="Node3D" parent="CamContainer" node_paths=PackedStringArray("default_tool", "ray3d", "playerFrobber", "debuglabel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0060029, -2.38419e-07, 0.00159717)
 script = ExtResource("3_frtv5")
 default_tool = NodePath("ToolHands")
-ray3d = NodePath("../Camera3D/ToolRayCast3D")
+ray3d = NodePath("../Camera3D/RayCast3D")
+playerFrobber = NodePath("../Camera3D")
 debuglabel = NodePath("../Camera3D/ImmediateUI/ToolLabel")
 
 [node name="ToolHands" parent="CamContainer/Tools" instance=ExtResource("4_g02mk")]
@@ -194,7 +188,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
 
 [node name="ToolPicker" parent="CamContainer/Tools" node_paths=PackedStringArray("toolCast") instance=ExtResource("6_4qgwt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
-toolCast = NodePath("../../Camera3D/ToolRayCast3D")
+toolCast = NodePath("")
 
 [node name="StandingCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_mrjsy")
