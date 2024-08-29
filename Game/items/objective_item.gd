@@ -1,4 +1,4 @@
-extends Node3D
+extends Objective
 
 class_name ObjectiveItem
 
@@ -15,13 +15,15 @@ func _ready():
 	$Interact.interactText = item_name
 
 func on_pocket(leftright : bool):
-	if !leftright:
-		if PocketManager.left_pocket_current <= PocketManager.max_pocket_size:
-				PocketManager.add_to_pockets(self, leftright)
-				queue_free()
+	if type != item_type.NONE:
+		if !leftright:
+			if PocketManager.left_pocket_current <= PocketManager.max_pocket_size:
+					PocketManager.add_to_pockets(self, leftright)
+					queue_free()
+		else:
+			if PocketManager.right_pocket_current <= PocketManager.max_pocket_size:
+					PocketManager.add_to_pockets(self, leftright)
+					queue_free()
 	else:
-		if PocketManager.right_pocket_current <= PocketManager.max_pocket_size:
-				PocketManager.add_to_pockets(self, leftright)
-				queue_free()
-	
+		print("Item does not have a type")
 	GameManager.ui_update_item_counts.emit()
