@@ -52,7 +52,7 @@ missions="area missions"
 player="da player"
 pickable="Can be skewered by the picker"
 pocketable="Can be placed in players pockets"
-depositable="Can be deposited in"
+depositable="Can be deposited in deposit points"
 grabbable="Can be grabbed with the players hands"
 choppable="Can be chopped with the hatchet"
 
