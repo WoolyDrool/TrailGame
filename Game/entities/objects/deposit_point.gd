@@ -59,3 +59,20 @@ func deposit_from_pocket(leftright : bool):
 	GameManager.ui_update_score_count.emit(mission)
 	GameManager.ui_update_item_counts.emit()
 		
+func deposit_from_picker(item : ObjectiveItem):
+	if item.type == item.item_type.TRASH:
+		match deposit_type:
+			accepts.TRASH:
+				mission.complete_objective(1)
+			accepts.RECYCLE:
+				mission.add_wrong_deposit(1)
+	elif item.type == item.item_type.RECYCLE:
+		match deposit_type:
+			accepts.TRASH:
+				mission.add_wrong_deposit(1)
+			accepts.RECYCLE:
+				mission.complete_objective(1)
+	
+	GameManager.ui_update_score_count.emit(mission)
+	GameManager.ui_update_item_counts.emit()
+	
