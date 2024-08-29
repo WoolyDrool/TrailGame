@@ -1,7 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://c867r6uxvlf4w"]
+[gd_scene load_steps=7 format=3 uid="uid://c867r6uxvlf4w"]
 
 [ext_resource type="Script" path="res://Game/entities/items/objective_item.gd" id="1_6ntpe"]
 [ext_resource type="PackedScene" uid="uid://pletdq3bfgxj" path="res://Game/components/interact_component.tscn" id="2_g88cq"]
+[ext_resource type="Script" path="res://Game/entities/items/grabbable_component.gd" id="3_0ahyy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ebqwy"]
+size = Vector3(0.51001, 0.515869, 0.167969)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_43vlg"]
 
@@ -11,10 +15,13 @@ outer_radius = 0.253
 rings = 32
 ring_segments = 16
 
-[node name="Objective" type="Area3D" groups=["items", "pickable", "pocketable"]]
-collision_layer = 240
-collision_mask = 4
+[node name="Objective" type="RigidBody3D" groups=["items", "pickable", "pocketable"]]
+collision_layer = 4
+collision_mask = 10
 script = ExtResource("1_6ntpe")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_ebqwy")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_43vlg")
@@ -24,7 +31,10 @@ disabled = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("TorusMesh_6p1ur")
 
-[node name="Interact" parent="." instance=ExtResource("2_g88cq")]
+[node name="Interact" parent="." groups=["grabbable"] instance=ExtResource("2_g88cq")]
 methodName = "on_grab"
+
+[node name="GrabbableComponent" type="Node3D" parent="."]
+script = ExtResource("3_0ahyy")
 
 [editable path="Interact"]
