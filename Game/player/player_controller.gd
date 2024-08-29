@@ -48,6 +48,10 @@ func _process(delta):
 		else:
 			current_speed = walking_speed
 	
+		# Handle Jump.
+	if Input.is_action_just_pressed("move_jump") and is_on_floor():
+		velocity.y = jump_velocity
+	
 	if Input.is_action_just_pressed("ui_cancel") && Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
@@ -57,9 +61,7 @@ func _physics_process(delta):
 		var deaccell_ramp = lerpf(0, grav_multiplier, gravity_accel_ramp)
 		velocity.y -= (gravity - deaccell_ramp) * delta 
 
-	# Handle Jump.
-	if Input.is_action_just_pressed("move_jump") and is_on_floor():
-		velocity.y = jump_velocity
+
 	
 	if bunny:
 		if Input.is_action_just_pressed("move_jump") and Input.is_action_pressed("move_forward"):
