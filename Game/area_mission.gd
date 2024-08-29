@@ -56,6 +56,7 @@ func complete_objective(amt : int):
 
 func add_wrong_deposit(amt : int):
 	mission_wrong_deposits += amt
+	objectives_completed += amt
 	print_debug("Wrong Deposits: ", mission_wrong_deposits)
 
 func finish_mission():
