@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://2vbx4k1qtsgu"]
 
-[ext_resource type="Script" path="res://Game/area_mission.gd" id="1_sa8ac"]
+[ext_resource type="Script" path="res://Game/areas/area_mission.gd" id="1_sa8ac"]
 
 [node name="AreaMission" type="Node3D"]
 script = ExtResource("1_sa8ac")
