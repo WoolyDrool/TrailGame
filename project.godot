@@ -17,7 +17,7 @@ config/icon="res://Content/sprites/icon.svg"
 
 [autoload]
 
-GameManager="*res://Game/GameManager.gd"
+GameManager="*res://App/GameManager.gd"
 PocketManager="*res://Game/components/pocket_component.gd"
 
 [display]
