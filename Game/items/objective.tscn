@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Game/items/objective_item.gd" id="1_6ntpe"]
 [ext_resource type="PackedScene" uid="uid://pletdq3bfgxj" path="res://Game/components/interact_component.tscn" id="2_g88cq"]
-[ext_resource type="Script" path="res://Game/items/grabbable_component.gd" id="3_0ahyy"]
+[ext_resource type="Script" path="res://Game/components/grabbable_component.gd" id="3_0ahyy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ebqwy"]
 size = Vector3(0.51001, 0.515869, 0.167969)
