@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://vgijbx81ryjk"]
+
+[ext_resource type="PackedScene" uid="uid://gcsr8xrou0dj" path="res://Game/player/tools/tool.tscn" id="1_cgdkp"]
+[ext_resource type="Script" path="res://Game/player/tools/tool_hands.gd" id="2_vbi5e"]
+
+[node name="ToolHands" node_paths=PackedStringArray("hold_point") instance=ExtResource("1_cgdkp")]
+script = ExtResource("2_vbi5e")
+hold_point = NodePath("")
+toolName = "Empty Hands"

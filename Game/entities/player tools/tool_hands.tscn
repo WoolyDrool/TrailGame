@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://vgijbx81ryjk"]
-
-[ext_resource type="PackedScene" uid="uid://gcsr8xrou0dj" path="res://Game/entities/player tools/tool.tscn" id="1_cgdkp"]
-
-[node name="ToolHands" instance=ExtResource("1_cgdkp")]
-toolName = "Empty Hands"
