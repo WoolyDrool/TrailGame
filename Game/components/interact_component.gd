@@ -30,11 +30,11 @@ func Interact(action : InputEvent):
 		if action.is_action_pressed("pocket_right"):
 			get_parent().on_pocket(true)
 	elif is_in_group("depositable"):
-		print("is depoistable")
 		if action.is_action_pressed("pocket_left"):
 			get_parent().deposit_from_pocket(false)
 		if action.is_action_pressed("pocket_right"):
 			get_parent().deposit_from_pocket(true)
+			
 	elif is_in_group("interactable"):
 		if action.is_action_pressed("interact"):
 			parent.call(methodName)	
