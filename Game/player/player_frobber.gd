@@ -29,6 +29,8 @@ func frob():
 	# todo 8/27/24 i think this is rescanning the object every frame. fine for now
 	# but could very easily become a performance problem l8r
 	
+	col_to_select = null
+	
 	# Check if the player is directly looking at an object and override the frobbing process
 	if raycaster.is_colliding() && !col_to_select:
 		if raycaster.get_collider() != null: # Important line to fix null instances
