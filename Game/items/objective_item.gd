@@ -1,4 +1,4 @@
-extends Objective
+extends Node3D
 
 class_name ObjectiveItem
 
