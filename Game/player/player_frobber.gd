@@ -78,3 +78,4 @@ func _unhandled_input(event: InputEvent) -> void:
 	if col_to_select && is_instance_valid(col_to_select):
 		if event.is_action_pressed("interact") || event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
 			col_to_select.Interact(event)
+			update_immediate_ui()
