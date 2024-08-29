@@ -9,12 +9,15 @@ var equip_index : int
 var tool_selected : int = 0
 var total_tools : int
 var tool_array = []
+@export var player : Player
+@export var cam_container : Node3D
 
 @export var ray3d : RayCast3D
 @export var playerFrobber : Frobber
 var has_hatchet : bool = true
 var has_shovel : bool = true
 @export var debuglabel : Label
+@export var debuglabel_ammo : Label
 @export var hand_container : Node3D
 
 # Called when the node enters the scene tree for the first time.
@@ -24,11 +27,13 @@ func _ready():
 	switch_tool()
 	_ready_tools()
 	debuglabel.text = str(default_tool.toolName)
+	debuglabel_ammo.text = ""
 	pass # Replace with function body.
 
 func _ready_tools():
 	for t in get_children():
 		if t is PlayerTool:
+			t.manager = self
 			t.ray = ray3d
 			t.frobber = playerFrobber
 			t.visible = false
@@ -36,6 +41,8 @@ func _ready_tools():
 			current_tool = t # DebugOnly
 			tool_array.append(t)
 			print(t)
+	current_tool = default_tool
+	current_tool.tool_equip()
 			
 			#total_tools += 1
 
@@ -82,13 +89,15 @@ func _process_input():
 func switch_tool():
 	equip_index = 0
 	
+	debuglabel_ammo.text = ""
+	
 	for t in tool_array:
 		if equip_index == tool_selected:
-			t.tool_equip(true)
+			t.tool_equip()
 			t.set_process(true)
 			current_tool = t
 		else:
-			t.tool_equip(false)
+			t.tool_unequip()
 			t.set_process(false)
 		
 		equip_index += 1

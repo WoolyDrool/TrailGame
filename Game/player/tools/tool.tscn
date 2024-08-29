@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://gcsr8xrou0dj"]
 
-[ext_resource type="Script" path="res://Game/entities/player tools/tool.gd" id="1_bhjc5"]
+[ext_resource type="Script" path="res://Game/player/tools/tool.gd" id="1_bhjc5"]
 
 [node name="Tool" type="Node3D"]
 script = ExtResource("1_bhjc5")

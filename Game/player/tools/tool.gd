@@ -2,6 +2,7 @@ extends Node3D
 
 class_name PlayerTool
 
+var manager : PlayerToolManager
 @export var toolName = "Default"
 var isEquip : bool = false
 var canPrimary : bool = true
@@ -43,14 +44,16 @@ func _get_nodes():
 func _process(delta):
 	pass
 
-func tool_equip(on : bool) -> void:
-	#print(toolName, " toggled ", on)
-	if on:
-		ray.target_position = Vector3(0, raycast_range, 0)
-	
-	self.visible = on
-	self.set_process(on)
+func tool_equip():
+	isEquip = true
+	visible = true
+	set_process(true)
 
+func tool_unequip():
+	isEquip = false
+	visible = false
+	set_process(false)
+	
 # Actions
 func _tool_primary() -> void:
 	canPrimary = false

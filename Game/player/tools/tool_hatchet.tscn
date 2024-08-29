@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://dnxn4by1788gu"]
+
+[ext_resource type="PackedScene" uid="uid://gcsr8xrou0dj" path="res://Game/player/tools/tool.tscn" id="1_81yem"]
+[ext_resource type="Script" path="res://Game/player/tools/tool_hatchet.gd" id="2_yggq0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jjfox"]
+albedo_color = Color(0.376471, 0.301961, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_3ye34"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_63hc3"]
+albedo_color = Color(0.552941, 0.552941, 0.552941, 1)
+
+[node name="ToolHatchet" instance=ExtResource("1_81yem")]
+script = ExtResource("2_yggq0")
+toolName = "Hatchet"
+primaryActionCooldown = 3.0
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." index="4"]
+size = Vector3(0.2, 1.5, 0.2)
+material = SubResource("StandardMaterial3D_jjfox")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="." index="5"]
+transform = Transform3D(0.26, 0, 0, 0, -4.27877e-08, 0.379003, 0, -0.978868, -1.65668e-08, 0, 0.6, -0.364422)
+mesh = SubResource("PrismMesh_3ye34")
+material = SubResource("StandardMaterial3D_63hc3")

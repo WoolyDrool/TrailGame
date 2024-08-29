@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://bfwfcn483wgly"]
+
+[ext_resource type="Script" path="res://Game/player/tools/tool_manager.gd" id="1_wsnef"]
+[ext_resource type="PackedScene" uid="uid://vgijbx81ryjk" path="res://Game/player/tools/tool_hands.tscn" id="2_20lvc"]
+[ext_resource type="PackedScene" uid="uid://c3koxqga8a6rm" path="res://Game/player/tools/tool_picker.tscn" id="3_4tbw1"]
+[ext_resource type="PackedScene" uid="uid://dnxn4by1788gu" path="res://Game/player/tools/tool_hatchet.tscn" id="4_k0i6l"]
+[ext_resource type="PackedScene" uid="uid://cp0fol7mmhjpx" path="res://Game/player/tools/tool_shovel.tscn" id="5_16u6d"]
+
+[node name="ToolManager" type="Node3D" node_paths=PackedStringArray("default_tool", "debuglabel", "debuglabel_ammo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0060029, -2.38419e-07, 0.00159717)
+script = ExtResource("1_wsnef")
+default_tool = NodePath("ToolHands")
+debuglabel = NodePath("ToolLabel")
+debuglabel_ammo = NodePath("ToolCountLabel")
+
+[node name="ToolHands" parent="." node_paths=PackedStringArray("hold_point") instance=ExtResource("2_20lvc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
+hold_point = NodePath("../HoldPoint")
+
+[node name="ToolPicker" parent="." instance=ExtResource("3_4tbw1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
+
+[node name="ToolHatchet" parent="." instance=ExtResource("4_k0i6l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
+
+[node name="ToolShovel" parent="." instance=ExtResource("5_16u6d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
+
+[node name="ToolLabel" type="Label" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -666.0
+offset_top = -97.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 71
+text = "Tool
+"
+horizontal_alignment = 2
+
+[node name="ToolCountLabel" type="Label" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -124.0
+offset_top = -181.0
+offset_bottom = -70.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 81
+text = "0/0"
+
+[node name="HoldPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.6)

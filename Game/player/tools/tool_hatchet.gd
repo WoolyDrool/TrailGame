@@ -12,5 +12,4 @@ func _process(delta):
 
 # Actions
 func _tool_primary() -> void:
-	super()
 	print("hatchet")
