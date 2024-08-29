@@ -6,8 +6,6 @@ class_name Frobber
 @onready var frobber : ShapeCast3D = $Frobber
 @export var frob_range : float = 2
 var can_interact : bool
-var can_pocket : bool
-var can_deposit : bool
 @export var col_to_select : InteractComponent
 var is_holding : bool
 
@@ -22,38 +20,8 @@ var is_holding : bool
 func _process(delta):
 	if col_to_select && is_instance_valid(col_to_select):
 		can_interact = true
-		if col_to_select.is_in_group("pocketable"):
-			can_pocket = true
-		elif col_to_select.is_in_group("depositable"):
-			can_deposit = true
-			
-		# General Interact
-		if can_interact && !can_pocket && !can_deposit:
-				if Input.is_action_just_pressed("interact"):
-					is_holding = Input.is_action_pressed("interact")
-					col_to_select.Interact(is_holding)
-					col_to_select = null
-					can_interact = false
-		# Deposit Interact		
-		elif can_interact && can_deposit:
-			if Input.is_action_just_pressed("pocket_left"):
-				col_to_select.get_parent().deposit_from_pocket(false)
-				col_to_select = null
-			elif Input.is_action_just_pressed("pocket_right"):
-				col_to_select.get_parent().deposit_from_pocket(true)
-				col_to_select = null
-		# Item Interact
-		elif can_interact && can_pocket:
-			if Input.is_action_just_pressed("pocket_left"):
-				col_to_select.get_parent().on_pocket(false)
-				col_to_select = null
-			elif Input.is_action_just_pressed("pocket_right"):
-				col_to_select.get_parent().on_pocket(true)
-				col_to_select = null
 	else:
 		can_interact = false
-		can_pocket = false
-		can_deposit = false
 	frob()
 	update_immediate_ui()
 
@@ -83,10 +51,6 @@ func frob():
 	elif !raycaster.is_colliding() && !frobber.is_colliding() && col_to_select:
 		col_to_select = null
 		can_interact = false
-		can_pocket = false
-		can_deposit = false
-		#print("exited")
-		#print(col_to_select)
 
 func update_immediate_ui():
 	if col_to_select:
@@ -104,6 +68,10 @@ func update_immediate_ui():
 		modifier_text.text = ""
 		append_text.text = ""
 		can_interact = false
-		can_pocket = false
 		if text_bg.visible:
 			text_bg.visible = false
+
+func _unhandled_input(event: InputEvent) -> void:
+	if col_to_select && is_instance_valid(col_to_select):
+		if event.is_action_pressed("interact") || event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
+			col_to_select.Interact(event)
