@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+class_name Player
+
 # Nodes
 @onready var cam_container = $CamContainer
 @onready var standing_collision = $StandingCollision
