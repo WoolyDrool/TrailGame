@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccqbeoyx4fay1"]
+
+[ext_resource type="Script" path="res://Game/entities/chopped_deposit_zone.gd" id="1_ilig0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3bxgj"]
+size = Vector3(3.41016, 3.6825, 8.11914)
+
+[node name="ChoppedDepositZone" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.00947, 0.00771856, -0.0229578)
+collision_mask = 33
+script = ExtResource("1_ilig0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34125, 0)
+shape = SubResource("BoxShape3D_3bxgj")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
