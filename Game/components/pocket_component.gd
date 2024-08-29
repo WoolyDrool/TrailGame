@@ -53,8 +53,8 @@ func add_to_pockets(item : ObjectiveItem, leftright : bool):
 	left_pocket_current = left_pocket_trash + left_pocket_recycle
 	right_pocket_current = right_pocket_trash + right_pocket_recycle
 	total = left_pocket_current + right_pocket_current
-	#print("L trash: ", left_pocket_trash, " L rec: ", left_pocket_recycle)
-	#print("R trash: ", right_pocket_trash, " R rec: ", right_pocket_recycle)
+	#print("L Trash:", left_pocket_trash, " Recycle:", left_pocket_recycle)
+	#print("R Trash:", right_pocket_trash, " Recycle:", right_pocket_recycle)
 
 func empty_pocket(leftright : bool):
 	if !leftright:
@@ -68,9 +68,9 @@ func empty_pocket(leftright : bool):
 	
 	GameManager.ui_update_item_counts.emit()
 	total = left_pocket_current + right_pocket_current
-	print("L Trash:", left_pocket_trash, " Recycle:", left_pocket_recycle)
-	print("R Trash:", right_pocket_trash, " Recycle:", right_pocket_recycle)
-	print("Pocket total: ", total)
+	#print("L Trash:", left_pocket_trash, " Recycle:", left_pocket_recycle)
+	#print("R Trash:", right_pocket_trash, " Recycle:", right_pocket_recycle)
+	#print("Pocket total: ", total)
 
 #func empty_left_pocket():
 	#print("Emptied left pocket")
