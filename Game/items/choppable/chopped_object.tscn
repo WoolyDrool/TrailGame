@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqy3mjobgqdfl"]
+
+[ext_resource type="Script" path="res://Game/items/choppable/chopped_object.gd" id="1_3rcy5"]
+[ext_resource type="PackedScene" uid="uid://pletdq3bfgxj" path="res://Game/components/interact_component.tscn" id="2_nr75p"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6p8mm"]
+height = 1.0
+
+[node name="ChoppedObject" type="RigidBody3D" node_paths=PackedStringArray("interact_component") groups=["choppable"]]
+collision_layer = 32
+collision_mask = 43
+mass = 15.0
+freeze = true
+script = ExtResource("1_3rcy5")
+interact_component = NodePath("InteractComponent")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+height = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_6p8mm")
+
+[node name="InteractComponent" parent="." groups=["grabbable", "items"] instance=ExtResource("2_nr75p")]
+interactText = "Chopped Object"
+
+[editable path="InteractComponent"]

@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://s5a3pce256at"]
+
+[ext_resource type="Script" path="res://Game/items/choppable/choppable_object.gd" id="1_g0mm5"]
+[ext_resource type="PackedScene" uid="uid://dqy3mjobgqdfl" path="res://Game/items/choppable/chopped_object.tscn" id="1_i0yto"]
+[ext_resource type="PackedScene" uid="uid://pletdq3bfgxj" path="res://Game/components/interact_component.tscn" id="1_t64vp"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_oli24"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gvbtw"]
+size = Vector3(0.195557, 1, 1)
+
+[node name="ChoppableObject" type="Area3D" node_paths=PackedStringArray("center_segment", "left_segment", "right_segment", "left_interact", "right_interact") groups=["items"]]
+script = ExtResource("1_g0mm5")
+center_segment = NodePath("CenterSegment")
+left_segment = NodePath("LeftSegment")
+right_segment = NodePath("RightSegment")
+left_interact = NodePath("LeftInteract")
+right_interact = NodePath("RightInteract")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_oli24")
+
+[node name="CenterSegment" parent="." instance=ExtResource("1_i0yto")]
+
+[node name="RightSegment" parent="." instance=ExtResource("1_i0yto")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="LeftSegment" parent="." instance=ExtResource("1_i0yto")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="LeftInteract" parent="." groups=["choppable"] instance=ExtResource("1_t64vp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.1, 0)
+interactText = "Chop Left"
+methodName = "on_chop_left"
+
+[node name="CollisionShape3D" parent="LeftInteract" index="0"]
+shape = SubResource("BoxShape3D_gvbtw")
+
+[node name="RightInteract" parent="." groups=["choppable"] instance=ExtResource("1_t64vp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.1, 0)
+interactText = "Chop Right"
+methodName = "on_chop_right"
+
+[node name="CollisionShape3D" parent="RightInteract" index="0"]
+shape = SubResource("BoxShape3D_gvbtw")
+
+[editable path="LeftInteract"]
+[editable path="RightInteract"]
