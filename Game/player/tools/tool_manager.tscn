@@ -18,7 +18,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
 hold_point = NodePath("../HoldPoint")
 
 [node name="ToolPicker" parent="." instance=ExtResource("3_4tbw1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.6, -1.30477)
 
 [node name="ToolHatchet" parent="." instance=ExtResource("4_k0i6l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
