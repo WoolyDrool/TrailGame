@@ -6,6 +6,7 @@ extends Control
 @onready var fail_label = $MissionFailLabel
 @onready var score_label = $ScoreLabel
 @onready var area_label = $AreaCompleteLabel
+@onready var wrong_label = $WrongLabel
 
 @onready var timer_label = $MissionTimerLabel
 @onready var mission_timer : Timer = $MissionTimer
@@ -36,6 +37,7 @@ func _ready():
 	
 	completed_label.visible = false
 	fail_label.visible = false
+	wrong_label.visible = false
 	timer_label.visible = false
 	score_label.visible = false
 
@@ -44,6 +46,7 @@ func begin_mission_ui(mission : AreaMission):
 	print("Starting mission UI for ", mission.mission_name)
 	timer_label.visible = true
 	score_label.visible = true
+	wrong_label.visible = true
 	completed_label.visible = false
 	fail_label.visible = false
 
@@ -74,11 +77,13 @@ func update_counts():
 
 func update_score(mission : AreaMission):
 	var scr_as_percentage = int(round((float(mission.objectives_completed) / mission.objectives_in_mission) * 100))
-	score_label.text = str("[center]", str(scr_as_percentage), "%[/center]")
+	score_label.text = str("Items Deposited: ", str(mission.objectives_completed), "/", str(mission.objectives_in_mission))
+	wrong_label.text = str("Wrong Deposits: ", str(mission.mission_wrong_deposits))
 
 func complete_mission_ui(mission : AreaMission):
 	timer_label.visible = false
 	score_label.visible = false
+	wrong_label.visible = false
 	completed_label.visible = true
 	label_countdown_timer.paused = false
 	label_countdown_timer.start(timeout)
@@ -86,6 +91,7 @@ func complete_mission_ui(mission : AreaMission):
 func fail_mission_ui(mission : AreaMission):
 	timer_label.visible = false
 	score_label.visible = false
+	wrong_label.visible = false
 	fail_label.visible = true
 	label_countdown_timer.paused = false
 	label_countdown_timer.start(timeout)

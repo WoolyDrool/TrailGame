@@ -15,7 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ovo8g")
 
-[node name="ScoreLabel" type="RichTextLabel" parent="."]
+[node name="ScoreLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0112847
@@ -24,11 +24,23 @@ anchor_right = 0.136729
 anchor_bottom = 0.111383
 offset_right = -0.512024
 offset_bottom = -0.176003
-theme_override_colors/default_color = Color(0.94902, 0.788235, 0, 1)
-theme_override_font_sizes/normal_font_size = 43
-bbcode_enabled = true
-text = "[center]00/00[/center]"
-scroll_active = false
+theme_override_colors/font_color = Color(1, 0.709804, 0, 1)
+theme_override_font_sizes/font_size = 46
+text = "Score:00"
+metadata/_edit_use_anchors_ = true
+
+[node name="WrongLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0114583
+anchor_top = 0.0666667
+anchor_right = 0.136903
+anchor_bottom = 0.165704
+offset_right = -0.512024
+offset_bottom = -0.17601
+theme_override_colors/font_color = Color(0.968627, 0.113725, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "Wrong Deposits: 0"
 metadata/_edit_use_anchors_ = true
 
 [node name="TrashCountLabel" type="RichTextLabel" parent="."]
