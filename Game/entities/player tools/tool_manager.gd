@@ -11,6 +11,7 @@ var total_tools : int
 var tool_array = []
 
 @export var ray3d : RayCast3D
+@export var playerFrobber : Frobber
 var has_hatchet : bool = true
 var has_shovel : bool = true
 @export var debuglabel : Label
@@ -29,6 +30,7 @@ func _ready_tools():
 	for t in get_children():
 		if t is PlayerTool:
 			t.ray = ray3d
+			t.frobber = playerFrobber
 			t.visible = false
 			t.set_process(false)
 			current_tool = t # DebugOnly

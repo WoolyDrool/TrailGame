@@ -10,7 +10,8 @@ var canTertiary : bool = true
 @export var raycast_range = -2
 
 var ray : RayCast3D
-var ray_result : CollisionObject3D 
+var ray_result : InteractComponent 
+var frobber : Frobber
 @export var toolCast : RayCast3D
 @onready var primaryActionTimer = $PrimaryTimer
 @onready var secondaryActionTimer = $SecondaryTimer
@@ -32,14 +33,18 @@ func _get_nodes():
 	if tertiaryActionCooldown > 0:
 		tertiaryActionTimer.wait_time = tertiaryActionCooldown
 	
+	# Scene tree needs to keep the hierarchy RayCast3D -> ToolCast -> Frobber -> ToolFrobber
 	if !toolCast:
-		get_parent().find_child("ToolRayCast3D")
+		get_parent().get_child(2)
+	
+	if !frobber:
+		get_parent().get_child(4)
 	
 func _process(delta):
 	pass
 
 func tool_equip(on : bool) -> void:
-	print(toolName, " toggled ", on)
+	#print(toolName, " toggled ", on)
 	if on:
 		ray.target_position = Vector3(0, raycast_range, 0)
 	
