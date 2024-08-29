@@ -22,12 +22,19 @@ func _ready():
 	# I don't know if this actually fixes anything but changing this line to get_node_3d instead of
 	# get_node makes it not break when inside an inherited scene_change
 	parent = get_parent_node_3d()
-		
-func Interact(is_holding : bool):
-	if methodName:
-		parent.call(methodName)
-	elif !parent.has_method(methodName):
-		print_debug("Parent doesn't have method ",  methodName)
-	else:
-		print_debug("No method to call!")
-	
+
+func Interact(action : InputEvent):
+	if is_in_group("pocketable"):
+		if action.is_action_pressed("pocket_left"):
+			get_parent().on_pocket(false)
+		if action.is_action_pressed("pocket_right"):
+			get_parent().on_pocket(true)
+	elif is_in_group("depositable"):
+		print("is depoistable")
+		if action.is_action_pressed("pocket_left"):
+			get_parent().deposit_from_pocket(false)
+		if action.is_action_pressed("pocket_right"):
+			get_parent().deposit_from_pocket(true)
+	elif is_in_group("interactable"):
+		if action.is_action_pressed("interact"):
+			parent.call(methodName)	
