@@ -7,7 +7,6 @@ var mission : AreaMission
 func _ready() -> void:
 	if get_parent().is_in_group("missions"):
 		mission = get_parent()
-		print(mission.mission_name)
 		$InteractComponent.interactText = "Begin Mission"
 		$InteractComponent.modifierText = mission.mission_name
 		$InteractComponent.appendText = str("Time Limit: ", mission.mission_time)
