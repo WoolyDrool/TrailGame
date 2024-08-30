@@ -22,15 +22,8 @@ var mission_active : bool
 func _ready() -> void:
 	if !mission_timer:
 		mission_timer = $MissionTimer 
-	#GameManager.mission_start.connect(begin_mission)
-	#GameManager.mission_add_score.connect(complete_objective)
 	boundaries.visible = false
-	print(objectives_in_mission)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	if objectives_completed == objectives_in_mission && !complete:
-		finish_mission()
+	print(mission_name, ", ", objectives_in_mission, ", ","Time Limit: ", str(mission_time))
 	
 func register_new_objective(amt : int):
 	objectives_in_mission += amt
@@ -51,7 +44,7 @@ func complete_objective(amt : int):
 	objectives_completed += amt
 	print_debug("Completed ", objectives_completed, " of ", objectives_in_mission, " objectives")
 	complete = true
-	if objectives_completed == objectives_in_mission:
+	if objectives_completed == objectives_in_mission && !complete:
 		finish_mission()
 
 func add_wrong_deposit(amt : int):
