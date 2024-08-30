@@ -17,6 +17,7 @@ func load_scene(path : String):
 	if(ResourceLoader.exists(path)):
 		var new_scene = load(path).instantiate()
 		current_scene.queue_free()
+		current_scene = new_scene
 		get_parent().add_child(new_scene)
 		get_parent().scene_file_path
 	else:
