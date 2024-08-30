@@ -21,6 +21,7 @@ collision_mask = 10
 script = ExtResource("1_chifv")
 walking_speed = 10.0
 sprinting_speed = 16.0
+jump_velocity = 6.7
 gravity_accel_ramp = 0.6
 grav_multiplier = -15.0
 bunny_multiplier = 50.0
