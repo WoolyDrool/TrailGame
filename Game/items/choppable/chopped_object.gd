@@ -14,7 +14,6 @@ func _process(delta: float) -> void:
 	
 func disable_process():
 	freeze = true
-	print("disabled process")
 	interact_component.set_process(false)
 	interact_component.visible = false
 	interact_component.collision.disabled = true
