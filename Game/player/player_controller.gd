@@ -61,10 +61,7 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		var deaccell_ramp = lerpf(0, grav_multiplier, gravity_accel_ramp)
-		velocity.y -= (gravity - deaccell_ramp) * delta 
-
-
-	
+		velocity.y -= (gravity - deaccell_ramp) * delta 	
 	if bunny:
 		if Input.is_action_just_pressed("move_jump") and Input.is_action_pressed("move_forward"):
 			print("Bunny!")
@@ -75,7 +72,6 @@ func _physics_process(delta):
 			#velocity.z = direction.z + bunny_multiplier
 
 	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	direction = lerp(direction, (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized(), delta * move_lerp_speed)
 	
