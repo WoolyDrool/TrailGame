@@ -11,7 +11,7 @@ var current_mission : AreaMission
 @export var area_wrong_deposits : int = 0
 var failed_missions : int = 0
 var area_completed : bool = false
-
+var final_area_score : float
 signal complete_area
 
 # Called when the node enters the scene tree for the first time.
@@ -36,21 +36,18 @@ func complete_area_mission(mission : AreaMission):
 	if current_mission == mission:
 		current_mission = null
 		missions_completed += 1
-		
+		final_area_score += mission.mission_score
 		if missions_completed + failed_missions == missions.size() && !area_completed:
-			complete_area_final()
+			complete_area_final(self)
 
 func fail_area_mission(mission : AreaMission):
 	if current_mission == mission:
 		current_mission = null
 		failed_missions += 1
 	
-func complete_area_final():
-	var final_area_score
-	for mission in missions:
-		if mission is AreaMission:
-			final_area_score += mission.mission_score
+func complete_area_final(area : AreaManager):
+	print(final_area_score)
 	area_completed = true
-	GameManager.area_complete_area.emit(final_area_score)
+	GameManager.area_complete_area.emit(self)
 	complete_area.emit()
 	print(area_name, " Completed!")
