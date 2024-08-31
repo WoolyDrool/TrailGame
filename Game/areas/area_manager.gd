@@ -18,8 +18,8 @@ signal complete_area
 func _ready() -> void:
 	for mission in get_children():
 		if mission is AreaMission:
-			missions[mission.name.to_lower()] = mission
-	pass # Replace with function body.
+			missions[mission.mission_name.to_lower()] = mission
+	print(missions)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
