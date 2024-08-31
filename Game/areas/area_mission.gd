@@ -10,12 +10,15 @@ class_name AreaMission
 @export var mission_wrong_deposits : int = 0
 @export var boundaries : CSGCombiner3D
 @export var player_start_pos : Node3D
-
-var complete : bool
+ 
+var complete : bool = false
+var bonus_points : int
+var completed_time_left : float
 
 # Internal
 @onready var mission_timer : Timer = $MissionTimer
 var objectives_completed : int = 0
+var mission_score : float
 var mission_active : bool
 
 # Called when the node enters the scene tree for the first time.
@@ -75,3 +78,16 @@ func _on_mission_timer_timeout() -> void:
 		print("Mission Failed")
 		print("Remaining Objectives: ", (objectives_in_mission - objectives_completed))
 		# Do failure stuff
+#endregion
+
+#region Scoring
+func calculate_mission_score():
+	print(completed_time_left)
+	var deposit_bonus = (objectives_completed * 3)
+	var wrong_deposit_penalty = (mission_wrong_deposits * 0.25)
+	var timer_remaining_bonus = (completed_time_left * 2)
+	var style_bonus = (bonus_points * 0.5) * 3
+	var calculated_score = (deposit_bonus + timer_remaining_bonus + style_bonus) - wrong_deposit_penalty
+	mission_score = snappedf(calculated_score, 0.01)
+	print(mission_score)
+#endregion
