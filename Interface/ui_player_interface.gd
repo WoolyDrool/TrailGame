@@ -27,6 +27,7 @@ var counting : bool
 #@onready var pocket_right_recnumb = $HBoxContainer/RPocketBG/RPocketRecycle
 #endregion
 
+var timeout : float = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	GameManager.mission_start.connect(begin_mission_ui)
