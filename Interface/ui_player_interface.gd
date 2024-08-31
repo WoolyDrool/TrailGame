@@ -1,18 +1,21 @@
 extends Control
 
 
-#region Main
+#region Misison
 @onready var completed_label = $MissionCompleteLabel
 @onready var fail_label = $MissionFailLabel
-@onready var score_label = $ScoreLabel
-@onready var area_label = $AreaCompleteLabel
-@onready var wrong_label = $WrongLabel
-
+@onready var mission_score_label = $MissionScoreLabel
 @onready var timer_label = $MissionTimerLabel
+@onready var items_remaining_label = $ItemsRemainingLabel
+@onready var wrong_label = $WrongLabel
 @onready var mission_timer : Timer = $MissionTimer
 var counting : bool
 @onready var label_countdown_timer : Timer = $ClearTimer
-var timeout : float = 2
+#endregion
+
+#region Area
+@onready var area_label = $AreaCompleteLabel
+@onready var final_score_label = $AreaScoreLabel
 #endregion
 
 #region Pockets
