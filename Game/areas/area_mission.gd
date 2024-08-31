@@ -27,11 +27,25 @@ func _ready() -> void:
 		mission_timer = $MissionTimer 
 	boundaries.visible = false
 	print(mission_name, ", ", objectives_in_mission, ", ","Time Limit: ", str(mission_time))
-	
+
+#region Objectives
 func register_new_objective(amt : int):
 	objectives_in_mission += amt
 	#print_debug("Registered objective, total: ", objectives_in_mission)
 
+func complete_objective(amt : int):
+	objectives_completed += amt
+	print_debug("Completed ", objectives_completed, " of ", objectives_in_mission, " objectives")
+	
+	if objectives_completed == objectives_in_mission && !complete:
+		finish_mission()
+
+func add_wrong_deposit(amt : int):
+	mission_wrong_deposits += amt
+	print_debug("Wrong Deposits: ", mission_wrong_deposits)
+#endregion
+
+#region Missions
 func begin_mission():
 	boundaries.visible = true
 	boundaries.use_collision = true
@@ -42,35 +56,27 @@ func begin_mission():
 	GameManager.mission_start.emit(self)
 	mission_active = true
 	pass
-	
-func complete_objective(amt : int):
-	objectives_completed += amt
-	print_debug("Completed ", objectives_completed, " of ", objectives_in_mission, " objectives")
-	complete = true
-	if objectives_completed == objectives_in_mission && !complete:
-		finish_mission()
-
-func add_wrong_deposit(amt : int):
-	mission_wrong_deposits += amt
-	objectives_completed += amt
-	print_debug("Wrong Deposits: ", mission_wrong_deposits)
 
 func finish_mission():
+	completed_time_left = mission_timer.time_left
+	mission_timer.stop()
+	mission_active = false
 	boundaries.visible = false
 	boundaries.use_collision = false
+	calculate_mission_score()
 	area.complete_area_mission(self)
 	GameManager.mission_end.emit(self)
-	mission_timer.stop()
-	mission_active = false
+	complete = true
 
 func fail_mission():
-	boundaries.visible = false
-	boundaries.use_collision = false
-	area.fail_area_mission(self)
-	GameManager.mission_fail.emit(self)
 	mission_timer.stop()
 	mission_active = false
-
+	boundaries.visible = false
+	boundaries.use_collision = false
+	calculate_mission_score()
+	area.fail_area_mission(self)
+	GameManager.mission_fail.emit(self)
+	complete = true
 
 func _on_mission_timer_timeout() -> void:
 	if objectives_completed < objectives_in_mission:
