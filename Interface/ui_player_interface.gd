@@ -39,17 +39,14 @@ func _ready():
 	GameManager.ui_update_score_count.connect(update_score)
 	GameManager.ui_timer_start.connect(begin_ui_timer)
 	
-	completed_label.visible = false
-	fail_label.visible = false
-	wrong_label.visible = false
-	timer_label.visible = false
-	score_label.visible = false
+	clear_ui()
+
 
 func begin_mission_ui(mission : AreaMission):
 	update_score(mission)
 	print("Starting mission UI for ", mission.mission_name)
 	timer_label.visible = true
-	score_label.visible = true
+	items_remaining_label.visible = true
 	wrong_label.visible = true
 	completed_label.visible = false
 	fail_label.visible = false
@@ -81,34 +78,41 @@ func update_counts():
 
 func update_score(mission : AreaMission):
 	var scr_as_percentage = int(round((float(mission.objectives_completed) / mission.objectives_in_mission) * 100))
-	score_label.text = str("Items Deposited: ", str(mission.objectives_completed), "/", str(mission.objectives_in_mission))
+	items_remaining_label.text = str("Items Deposited: ", str(mission.objectives_completed), "/", str(mission.objectives_in_mission))
 	wrong_label.text = str("Wrong Deposits: ", str(mission.mission_wrong_deposits))
 
 func complete_mission_ui(mission : AreaMission):
 	timer_label.visible = false
-	score_label.visible = false
+	items_remaining_label.visible = false
 	wrong_label.visible = false
 	completed_label.visible = true
+	mission_score_label.visible = true
+	mission_score_label.text = ("Score: " + str(mission.mission_score))
 	label_countdown_timer.paused = false
-	label_countdown_timer.start(timeout)
+	label_countdown_timer.start(timeout+2)
 
 func fail_mission_ui(mission : AreaMission):
 	timer_label.visible = false
-	score_label.visible = false
+	items_remaining_label.visible = false
 	wrong_label.visible = false
 	fail_label.visible = true
 	label_countdown_timer.paused = false
 	label_countdown_timer.start(timeout)
 
-func complete_area_ui():
+func complete_area_ui(area : AreaManager):
 	area_label.visible = true
+	final_score_label.visible = true
+	final_score_label.text = ("Area Score: " + str(area.final_area_score)) 
 	label_countdown_timer.start(timeout + 3)
 
 # This is for debug purposes only, replace with animations and stuff later
-func clear_mission_ui():
+func clear_ui():
 	print("Clearing UI")
-	timer_label.visible = false
-	score_label.visible = false
 	completed_label.visible = false
 	fail_label.visible = false
+	wrong_label.visible = false
+	timer_label.visible = false
+	items_remaining_label.visible = false
+	mission_score_label.visible = false
 	area_label.visible = false
+	final_score_label.visible = false
