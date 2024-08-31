@@ -24,38 +24,28 @@ func deposit_from_pocket(leftright : bool):
 			if !leftright:
 				# Left Pocket
 				if PocketManager.left_pocket_current >= 1:
-					if PocketManager.left_pocket_mixed || PocketManager.left_pocket_recycle > 0:
+					if PocketManager.left_pocket_mixed:
 						mission.add_wrong_deposit(PocketManager.left_pocket_recycle)
-					else:
-						mission.complete_objective(PocketManager.left_pocket_trash)
-					PocketManager.empty_pocket(leftright)
+					mission.complete_objective(PocketManager.left_pocket_current)
 			else:
 				# Right Pocket
-				if PocketManager.right_pocket_current >= 1:
-					if PocketManager.right_pocket_mixed || PocketManager.right_pocket_recycle > 0:
-						mission.add_wrong_deposit(PocketManager.right_pocket_recycle)
-						pass
-					else:
-						mission.complete_objective(PocketManager.right_pocket_trash)
-					PocketManager.empty_pocket(leftright)
+				if PocketManager.right_pocket_mixed:
+					mission.add_wrong_deposit(PocketManager.right_pocket_recycle)
+				mission.complete_objective(PocketManager.right_pocket_current)
 		accepts.RECYCLE:
 			if !leftright:
 				# Left Pocket
 				if PocketManager.left_pocket_current >= 1:
-					if PocketManager.left_pocket_mixed || PocketManager.left_pocket_trash > 0:
+					if PocketManager.left_pocket_mixed:
 						mission.add_wrong_deposit(PocketManager.left_pocket_trash)
-					else:
-						mission.complete_objective(PocketManager.left_pocket_recycle)
-					PocketManager.empty_pocket(leftright)
+					mission.complete_objective(PocketManager.left_pocket_current)
 			else:
 				# Right Pocket
 				if PocketManager.right_pocket_current >= 1:
-					if PocketManager.right_pocket_mixed || PocketManager.right_pocket_trash > 0:
+					if PocketManager.right_pocket_mixed:
 						mission.add_wrong_deposit(PocketManager.right_pocket_trash)
-					else:
-						mission.complete_objective(PocketManager.right_pocket_recycle)
-					PocketManager.empty_pocket(leftright)
-
+					mission.complete_objective(PocketManager.right_pocket_current)
+	PocketManager.empty_pocket(leftright)
 	GameManager.ui_update_score_count.emit(mission)
 	GameManager.ui_update_item_counts.emit()
 		
