@@ -26,7 +26,7 @@ signal mission_add_score(score : int)
 signal mission_add_wrongdeposit(amt : int)
 
 # Missions - Areas
-signal area_complete_area
+signal area_complete_area(area : AreaManager)
 
 # Scene Management
 signal load_scene(path : String)
