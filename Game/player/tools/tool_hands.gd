@@ -12,31 +12,71 @@ func _ready() -> void:
 
 
 func _tool_primary() -> void:
-	if !holding:
-		if frobber.col_to_select && is_instance_valid(frobber.col_to_select):
-			if frobber.col_to_select.is_in_group("grabbable"):
-				print("grabbed")
-				held_object_interact = frobber.col_to_select
-				var grabbed_obj = frobber.col_to_select.get_parent()
-				held_object = grabbed_obj
-				grabbed_obj = null
-				held_object.freeze = true
-				held_object.reparent(hold_point)
-				held_object.position = hold_point.position
-				held_object.rotation = hold_point.rotation
-				held_object_interact.collision.disabled
-				holding = true
+	pass
+	#if !holding:
+		#if frobber.col_to_select && is_instance_valid(frobber.col_to_select):
+			#if frobber.col_to_select.is_in_group("grabbable"):
+				#print("grabbed")
+				#held_object_interact = frobber.col_to_select
+				#var grabbed_obj = frobber.col_to_select.get_parent()
+				#held_object = grabbed_obj
+				#grabbed_obj = null
+				#held_object.freeze = true
+				#held_object.reparent(hold_point)
+				#held_object.position = hold_point.position
+				#held_object.rotation = hold_point.rotation
+				#held_object_interact.collision.disabled
+				#holding = true
 				
 func _tool_secondary() -> void:
-	if holding:
-		if held_object != null:
-			print("threw")
-			# First child in a grabbable object is RigidBody3D
-			held_object.freeze = false
-			var angle = manager.player.global_rotation.y
-			held_object.apply_central_impulse(-manager.player.global_transform.basis.z.normalized() * 15 + Vector3(0,5,0))
-			held_object.reparent(manager.player.get_parent())
-			held_object_interact.collision.disabled = false
-			held_object = null
-			held_object_interact = null
-			holding = false
+	pass
+	#if holding:
+		#if held_object != null:
+			#print("threw")
+			## First child in a grabbable object is RigidBody3D
+			#held_object.freeze = false
+			#var angle = manager.player.global_rotation.y
+			#held_object.apply_central_impulse(-manager.player.global_transform.basis.z.normalized() * 15 + Vector3(0,5,0))
+			#held_object.reparent(manager.player.get_parent())
+			#held_object_interact.collision.disabled = false
+			#held_object = null
+			#held_object_interact = null
+			#holding = false
+
+func _unhandled_input(event: InputEvent) -> void:
+	if isEquip:
+		if event.is_action_pressed("grab"):
+			if holding:
+				if held_object != null:
+					print("threw")
+					# First child in a grabbable object is RigidBody3D
+					held_object.freeze = false
+					var angle = manager.player.global_rotation.y
+					held_object.apply_central_impulse(-manager.player.global_transform.basis.z.normalized() * 15 + Vector3(0,5,0))
+					held_object.reparent(manager.player.get_parent())
+					held_object_interact.collision.disabled = false
+					held_object = null
+					held_object_interact = null
+					holding = false
+			else:
+				if frobber.col_to_select && is_instance_valid(frobber.col_to_select):
+					if frobber.col_to_select.is_in_group("grabbable"):
+						print("grabbed")
+						held_object_interact = frobber.col_to_select
+						var grabbed_obj = frobber.col_to_select.get_parent()
+						held_object = grabbed_obj
+						grabbed_obj = null
+						held_object.freeze = true
+						held_object.reparent(hold_point)
+						held_object.position = hold_point.position
+						held_object.rotation = hold_point.rotation
+						held_object_interact.collision.disabled
+						holding = true
+		
+		if event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
+			print("got pocket input")
+			if frobber.col_to_select && is_instance_valid(frobber.col_to_select):
+				if frobber.col_to_select.is_in_group("interactable"):
+					print("called interact")
+					frobber.col_to_select.Interact(event)
+				
