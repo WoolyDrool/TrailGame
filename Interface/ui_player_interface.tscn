@@ -272,14 +272,35 @@ layout_mode = 0
 offset_left = 65.0
 offset_top = 3.0
 offset_right = 421.0
-offset_bottom = 420.0
+offset_bottom = 494.0
 color = Color(0.325441, 0.325441, 0.325441, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DebugPanel/BG"]
 layout_mode = 0
+offset_left = 7.37
 offset_top = 39.0
-offset_right = 343.0
-offset_bottom = 103.0
+offset_right = 350.37
+offset_bottom = 478.0
+
+[node name="Label" type="Label" parent="DebugPanel/BG/VBoxContainer"]
+layout_mode = 2
+text = "WASD - Move
+LSHIFT - Spring
+SPACE - Jump
+
+E - General Interact
+LMB - Tool primaray use
+RMB - Tool secondary use
+Q or LMB - Pocket left (with Empty Hands)
+R or RMB - Pocket right (with Empty Hands)
+G - Grab item (with Empty Hands)
+
+Deposit items from your pockets and picker
+into their proper deposit points. 
+Logs can be pushed with your body or
+grabbed and moved towards the deposit.
+
+Complete both trails to exit the level"
 
 [node name="FPS" type="Label" parent="DebugPanel"]
 layout_mode = 0
