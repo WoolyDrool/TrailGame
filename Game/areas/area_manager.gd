@@ -37,16 +37,20 @@ func complete_area_mission(mission : AreaMission):
 		current_mission = null
 		missions_completed += 1
 		
-		if missions_completed == missions.size() && !area_completed:
-			# Do area complete stuff
-			area_completed = true
-			GameManager.area_complete_area.emit()
-			complete_area.emit()
-			print(area_name, " Completed!")
-			pass
+		if missions_completed + failed_missions == missions.size() && !area_completed:
+			complete_area_final()
 
 func fail_area_mission(mission : AreaMission):
 	if current_mission == mission:
 		current_mission = null
 		failed_missions += 1
 	
+func complete_area_final():
+	var final_area_score
+	for mission in missions:
+		if mission is AreaMission:
+			final_area_score += mission.mission_score
+	area_completed = true
+	GameManager.area_complete_area.emit(final_area_score)
+	complete_area.emit()
+	print(area_name, " Completed!")
