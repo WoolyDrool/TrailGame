@@ -29,13 +29,18 @@ func frob():
 	# todo 8/27/24 i think this is rescanning the object every frame. fine for now
 	# but could very easily become a performance problem l8r
 	
-	col_to_select = null
+	#col_to_select = null
+	var old_col
+	
+	if col_to_select != old_col:
+		col_to_select = null
 	
 	# Check if the player is directly looking at an object and override the frobbing process
 	if raycaster.is_colliding() && !col_to_select:
 		if raycaster.get_collider() != null: # Important line to fix null instances
 			if raycaster.get_collider().is_in_group("interactable"):
 				col_to_select = raycaster.get_collider()
+				old_col = col_to_select
 				#print_debug("Raycast found ", col_to_select.get_parent().name)
 
 	elif !raycaster.is_colliding() && frobber.is_colliding() && !col_to_select:
@@ -47,6 +52,7 @@ func frob():
 					if frobber.position.distance_to(test.position) < frob_range:
 						if test.is_in_group("interactable"):
 							col_to_select = test
+							old_col = col_to_select
 							#print_debug("Frobber found ", col_to_select.get_parent().name)
 
 							break
@@ -78,4 +84,5 @@ func _unhandled_input(event: InputEvent) -> void:
 	if col_to_select && is_instance_valid(col_to_select):
 		if event.is_action_pressed("interact"): #|| event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
 			col_to_select.Interact(event)
+			col_to_select = null
 			update_immediate_ui()
