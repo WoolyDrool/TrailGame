@@ -74,9 +74,8 @@ func _unhandled_input(event: InputEvent) -> void:
 						holding = true
 		
 		if event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
-			print("got pocket input")
+			#print("got pocket input")
 			if frobber.col_to_select && is_instance_valid(frobber.col_to_select):
 				if frobber.col_to_select.is_in_group("interactable"):
-					print("called interact")
+					#print("called interact")
 					frobber.col_to_select.Interact(event)
-				
