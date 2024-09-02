@@ -55,6 +55,7 @@ pocketable="Can be placed in players pockets"
 depositable="Can be deposited in deposit points"
 grabbable="Can be grabbed with the players hands"
 choppable="Can be chopped with the hatchet"
+diggable="Can be dug with the shovel"
 
 [input]
 
