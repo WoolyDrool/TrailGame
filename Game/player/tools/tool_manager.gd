@@ -19,11 +19,12 @@ var has_shovel : bool = true
 @export var debuglabel : Label
 @export var debuglabel_ammo : Label
 
+signal on_tool_change(tool : PlayerTool)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
-	switch_tool()
 	_ready_tools()
+	switch_tool()
 	debuglabel.text = str(default_tool.toolName)
 	debuglabel_ammo.text = ""
 	pass # Replace with function body.
@@ -40,8 +41,7 @@ func _ready_tools():
 			tool_array.append(t)
 			print(t)
 	current_tool = default_tool
-	current_tool.tool_equip()
-			
+	current_tool.tool_equip()			
 			#total_tools += 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -99,6 +99,8 @@ func switch_tool():
 			t.set_process(false)
 		
 		equip_index += 1
+		
+	on_tool_change.emit(current_tool)
 
 func tool_primary():
 	current_tool._tool_primary()
