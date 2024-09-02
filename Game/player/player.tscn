@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://bw8sepo1dej0s"]
+[gd_scene load_steps=11 format=3 uid="uid://bw8sepo1dej0s"]
 
 [ext_resource type="Script" path="res://Game/player/player_controller.gd" id="1_chifv"]
 [ext_resource type="PackedScene" uid="uid://b10igw5xcvojj" path="res://Interface/ui_player_interface.tscn" id="2_uk1te"]
 [ext_resource type="Script" path="res://Game/player/player_frobber.gd" id="2_wjsc6"]
 [ext_resource type="PackedScene" uid="uid://bfwfcn483wgly" path="res://Game/player/tools/tool_manager.tscn" id="4_bexwg"]
+[ext_resource type="Script" path="res://Game/player/tools/tool_shovel.gd" id="5_0122v"]
 [ext_resource type="Texture2D" uid="uid://ti8omwpac58c" path="res://Content/sprites/spr_ui_crosshair.png" id="7_00gkg"]
 [ext_resource type="Script" path="res://Game/components/pocket_component.gd" id="14_hygt8"]
 
@@ -30,10 +31,11 @@ bunny = false
 [node name="CamContainer" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="Camera3D" type="Camera3D" parent="CamContainer"]
+[node name="Camera3D" type="Camera3D" parent="CamContainer" node_paths=PackedStringArray("tools")]
 cull_mask = 524285
 current = true
 script = ExtResource("2_wjsc6")
+tools = NodePath("../ToolManager")
 
 [node name="RayCast3D" type="RayCast3D" parent="CamContainer/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
@@ -156,6 +158,9 @@ player = NodePath("../..")
 cam_container = NodePath("..")
 ray3d = NodePath("../Camera3D/RayCast3D")
 playerFrobber = NodePath("../Camera3D")
+
+[node name="ToolShovel" parent="CamContainer/ToolManager" index="3"]
+script = ExtResource("5_0122v")
 
 [node name="HoldPoint" parent="CamContainer/ToolManager" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
