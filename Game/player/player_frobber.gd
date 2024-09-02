@@ -7,7 +7,11 @@ class_name Frobber
 @export var frob_range : float = 2
 var can_interact : bool
 @export var col_to_select : InteractComponent
+@export var tools : PlayerToolManager
 var is_holding : bool
+
+enum tool_state {EMPTY, PICKER, HATCHET, SHOVEL}
+var cur_tool_state : tool_state
 
 #region UI
 @onready var crosshair = $ImmediateUI/Crosshair
@@ -16,7 +20,26 @@ var is_holding : bool
 @onready var append_text : Label = $ImmediateUI/Crosshair/AppendText
 @onready var text_bg : ColorRect = $ImmediateUI/Crosshair/ColorRect
 #endregion
-		
+
+func _ready() -> void:
+	tools.on_tool_change.connect(update_held_tool_conditions)
+
+func update_held_tool_conditions(current_tool : PlayerTool):
+	if current_tool.toolName == "Empty Hands":
+		cur_tool_state = tool_state.EMPTY
+		print("Empty Hands")
+	elif current_tool.toolName == "Picker":
+		cur_tool_state = tool_state.PICKER
+		print("Picker")
+	elif current_tool.toolName == "Hatchet":
+		cur_tool_state = tool_state.HATCHET
+		print("Hatchet")
+	elif current_tool.toolName == "Shovel":
+		cur_tool_state = tool_state.SHOVEL
+		print("Shovel")
+	
+
+
 func _process(delta):
 	if col_to_select && is_instance_valid(col_to_select):
 		can_interact = true
@@ -82,7 +105,18 @@ func update_immediate_ui():
 func _unhandled_input(event: InputEvent) -> void:
 	# Todo add a sorting filter for if the player is holding a specific tool or not
 	if col_to_select && is_instance_valid(col_to_select):
-		if event.is_action_pressed("interact"): #|| event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
-			col_to_select.Interact(event)
-			col_to_select = null
-			update_immediate_ui()
+		if cur_tool_state == tool_state.EMPTY:
+			if event.is_action_pressed("interact"): #|| event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
+				col_to_select.Interact(event)
+				col_to_select = null
+				update_immediate_ui()
+		#elif cur_tool_state == tool_state.HATCHET:
+			#if event.is_action_pressed("primary"): #|| event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
+				#col_to_select.Interact(event)
+				#col_to_select = null
+				#update_immediate_ui()
+		#elif cur_tool_state == tool_state.SHOVEL:
+			#if event.is_action_pressed("primary"): #|| event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
+				#col_to_select.Interact(event)
+				#col_to_select = null
+				#update_immediate_ui()
