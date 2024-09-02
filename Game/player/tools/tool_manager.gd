@@ -18,12 +18,10 @@ var has_hatchet : bool = true
 var has_shovel : bool = true
 @export var debuglabel : Label
 @export var debuglabel_ammo : Label
-@export var hand_container : Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if !hand_container:
-		hand_container = $HandContainer
+
 	switch_tool()
 	_ready_tools()
 	debuglabel.text = str(default_tool.toolName)

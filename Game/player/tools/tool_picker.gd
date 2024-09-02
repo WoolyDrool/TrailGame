@@ -7,7 +7,6 @@ var item_container : Node3D
 var can_pick : bool = true
 var items = []
 var adjusted_ratio
-@onready var debug_label = $Man
 
 func _get_nodes():
 	item_container = $ItemContainer
