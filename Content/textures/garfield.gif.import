@@ -1,0 +1,14 @@
+[remap]
+
+importer="import_gif_to_animated_texture"
+type="AnimatedTexture"
+uid="uid://cvqe8srg5214r"
+path="res://.godot/imported/garfield.gif-9c4f5fe8933d09fcfe78ed0fb8a22e8b.tres"
+
+[deps]
+
+source_file="res://Content/textures/garfield.gif"
+dest_files=["res://.godot/imported/garfield.gif-9c4f5fe8933d09fcfe78ed0fb8a22e8b.tres"]
+
+[params]
+

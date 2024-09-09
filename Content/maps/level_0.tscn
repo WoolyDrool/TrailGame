@@ -1,0 +1,495 @@
+[gd_scene load_steps=29 format=3 uid="uid://dcn048utcp7wd"]
+
+[ext_resource type="Texture2D" uid="uid://c31tbmy4phf2h" path="res://addons/qodot/textures/base/checkerboard.png" id="1_krpfu"]
+[ext_resource type="PackedScene" uid="uid://bw8sepo1dej0s" path="res://Game/player/player.tscn" id="3_q3n1x"]
+[ext_resource type="PackedScene" uid="uid://d3owmt0k6634o" path="res://Game/entities/recycle_deposit_point.tscn" id="5_hyroh"]
+[ext_resource type="PackedScene" uid="uid://cqrgt8fr6vutg" path="res://Game/entities/trash_deposit_point.tscn" id="6_2qvif"]
+[ext_resource type="Script" path="res://Game/areas/objective_container.gd" id="7_4is7v"]
+[ext_resource type="PackedScene" uid="uid://vqpskdaktj74" path="res://Game/items/trash/trash.tscn" id="7_mva85"]
+[ext_resource type="PackedScene" uid="uid://2vbx4k1qtsgu" path="res://Game/areas/area_mission.tscn" id="7_txd24"]
+[ext_resource type="PackedScene" uid="uid://ccqbeoyx4fay1" path="res://Game/entities/chopped_deposit_zone.tscn" id="7_ukblv"]
+[ext_resource type="PackedScene" uid="uid://h7tv47f0jdew" path="res://Game/areas/area_manager.tscn" id="8_3bn26"]
+[ext_resource type="PackedScene" uid="uid://f5mwqiyud4is" path="res://Game/entities/mission_start_point.tscn" id="8_35knc"]
+[ext_resource type="PackedScene" uid="uid://dios3b7x3ju8o" path="res://Game/items/recycle/recycle.tscn" id="8_xb5a6"]
+[ext_resource type="Texture2D" uid="uid://djirmts1xr268" path="res://Content/textures/tex_missionboundary.png" id="9_5nxd1"]
+[ext_resource type="Script" path="res://Game/areas/area_exit.gd" id="11_o5uew"]
+[ext_resource type="PackedScene" uid="uid://s5a3pce256at" path="res://Game/items/choppable/choppable_object.tscn" id="12_yxxln"]
+[ext_resource type="PackedScene" uid="uid://bgeexjk3lm0ei" path="res://Game/items/diggable/diggable_object.tscn" id="14_fw54p"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0g2pv"]
+sky_top_color = Color(0.466667, 0.698039, 0.945098, 1)
+
+[sub_resource type="Sky" id="Sky_p5ujb"]
+sky_material = SubResource("ProceduralSkyMaterial_0g2pv")
+
+[sub_resource type="Environment" id="Environment_kcp7n"]
+background_mode = 2
+sky = SubResource("Sky_p5ujb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nd6v1"]
+albedo_texture = ExtResource("1_krpfu")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="PrismMesh" id="PrismMesh_op56h"]
+left_to_right = 0.0
+size = Vector3(5, 1, 8)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tqmbh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_62bfp"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_nqx04"]
+size = Vector2(8, 8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_swvwm"]
+transparency = 1
+albedo_texture = ExtResource("9_5nxd1")
+emission = Color(1, 0, 0, 1)
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="Animation" id="Animation_k18kj"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -2.15, 2.4, 0)
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Gate:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-2.15, 2.4, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_4kvra"]
+resource_name = "area_complete_raisebarrier"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -2.15, 2.4, 0)
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Gate:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-2.15, 2.4, 0), Vector3(-2.15, 7.4, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nkm6j"]
+_data = {
+"RESET": SubResource("Animation_k18kj"),
+"area_complete_raisebarrier": SubResource("Animation_4kvra")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0p1c1"]
+radius = 1.0
+
+[node name="level0" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kcp7n")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.258819, -0.836516, 0.482963, 0, 0.5, 0.866025, -0.965926, -0.224144, 0.12941, 0, 0, 0)
+
+[node name="Floor" type="CSGCombiner3D" parent="."]
+use_collision = true
+collision_layer = 2
+collision_mask = 5
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Floor"]
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -16)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 16)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 0)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -16)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 16)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -16, 0, 24.248)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 24.248)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 16, 0, 24.248)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D13" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -16, 0, -24.2491)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D14" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -24.2491)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 16, 0, -24.2491)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D16" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(-4.60639e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1.05382, 4.37114e-08, 1.91069e-15, 24, 0, -16.9103)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(-4.60639e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1.05382, 4.37114e-08, 1.91069e-15, 24, 0, -0.0491359)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(-4.60639e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1.05382, 4.37114e-08, 1.91069e-15, 24, 0, 16.812)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D19" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(-4.58154e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1.04813, 4.37114e-08, 1.91069e-15, -24.3, 0, -16.7193)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D20" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(-4.58154e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1.04813, 4.37114e-08, 1.91069e-15, -24.3, 0, 0.0508641)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGBox3D21" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(-4.58154e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1.04813, 4.37114e-08, 1.91069e-15, -24.3, 0, 16.821)
+use_collision = true
+size = Vector3(16, 0.5, 16)
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.5, 0.8, 0)
+use_collision = true
+mesh = SubResource("PrismMesh_op56h")
+material = SubResource("StandardMaterial3D_nd6v1")
+
+[node name="Player" parent="." groups=["Player"] instance=ExtResource("3_q3n1x")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -21, 2.3, 0)
+
+[node name="AreaManager" parent="." instance=ExtResource("8_3bn26")]
+area_name = "Debug Area"
+
+[node name="AreaMission" parent="AreaManager" node_paths=PackedStringArray("area", "boundaries", "player_start_pos") groups=["missions"] instance=ExtResource("7_txd24")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.1)
+area = NodePath("..")
+mission_name = "Debug Mission 1"
+mission_time = 20.0
+boundaries = NodePath("CSGCombiner3D2")
+player_start_pos = NodePath("PlayerStartPoint")
+
+[node name="MissionStartPoint" parent="AreaManager/AreaMission" instance=ExtResource("8_35knc")]
+transform = Transform3D(8.9407e-08, 0, -1, 0, 1, 0, 1, 0, 8.9407e-08, -10, 1, 0.0999999)
+
+[node name="PlayerStartPoint" type="Node3D" parent="AreaManager/AreaMission"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 2, 0)
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="AreaManager/AreaMission/PlayerStartPoint"]
+layers = 524288
+mesh = SubResource("CapsuleMesh_tqmbh")
+material = SubResource("StandardMaterial3D_62bfp")
+
+[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="AreaManager/AreaMission"]
+transform = Transform3D(1, 0, 0, 0, 2.98023e-08, -1, 0, 1, 2.98023e-08, 4, 4, -4)
+collision_layer = 8
+collision_mask = 37
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="AreaManager/AreaMission/CSGCombiner3D2"]
+mesh = SubResource("PlaneMesh_nqx04")
+material = SubResource("StandardMaterial3D_swvwm")
+
+[node name="CSGMesh3D5" type="CSGMesh3D" parent="AreaManager/AreaMission/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+mesh = SubResource("PlaneMesh_nqx04")
+material = SubResource("StandardMaterial3D_swvwm")
+
+[node name="CSGMesh3D6" type="CSGMesh3D" parent="AreaManager/AreaMission/CSGCombiner3D2"]
+transform = Transform3D(0, 1, 2.98023e-08, -1, 8.88178e-16, -2.98023e-08, -2.98023e-08, -2.98023e-08, 1, -12, 4, 0)
+mesh = SubResource("PlaneMesh_nqx04")
+material = SubResource("StandardMaterial3D_swvwm")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="AreaManager/AreaMission/CSGCombiner3D2"]
+transform = Transform3D(-4.37114e-08, -1, -2.98023e-08, 1, -4.37114e-08, -2.98023e-08, 2.98023e-08, -2.98023e-08, 1, 4, 4, 0)
+mesh = SubResource("PlaneMesh_nqx04")
+material = SubResource("StandardMaterial3D_swvwm")
+
+[node name="CSGMesh3D3" type="CSGMesh3D" parent="AreaManager/AreaMission/CSGCombiner3D2"]
+transform = Transform3D(-1, 8.74228e-08, 2.6054e-15, -8.74228e-08, -1, -5.96046e-08, -2.6054e-15, -5.96046e-08, 1, 0, 8, 2.38419e-07)
+mesh = SubResource("PlaneMesh_nqx04")
+material = SubResource("StandardMaterial3D_swvwm")
+
+[node name="CSGMesh3D4" type="CSGMesh3D" parent="AreaManager/AreaMission/CSGCombiner3D2"]
+transform = Transform3D(-1, 8.74228e-08, 2.6054e-15, -8.74228e-08, -1, -5.96046e-08, -2.6054e-15, -5.96046e-08, 1, -8, 8, 2.38419e-07)
+mesh = SubResource("PlaneMesh_nqx04")
+material = SubResource("StandardMaterial3D_swvwm")
+
+[node name="ChoppedDepositZone" parent="AreaManager/AreaMission" node_paths=PackedStringArray("mission") instance=ExtResource("7_ukblv")]
+mission = NodePath("..")
+
+[node name="Objectives" type="Node3D" parent="AreaManager/AreaMission" node_paths=PackedStringArray("parent_mission")]
+script = ExtResource("7_4is7v")
+parent_mission = NodePath("..")
+
+[node name="Trash" parent="AreaManager/AreaMission/Objectives" instance=ExtResource("7_mva85")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -2)
+
+[node name="Trash2" parent="AreaManager/AreaMission/Objectives" instance=ExtResource("7_mva85")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, -2)
+
+[node name="Trash3" parent="AreaManager/AreaMission/Objectives" instance=ExtResource("7_mva85")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, -2)
+
+[node name="Recycle" parent="AreaManager/AreaMission/Objectives" instance=ExtResource("8_xb5a6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 2)
+
+[node name="Recycle2" parent="AreaManager/AreaMission/Objectives" instance=ExtResource("8_xb5a6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, 2)
+
+[node name="Recycle3" parent="AreaManager/AreaMission/Objectives" instance=ExtResource("8_xb5a6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, 2)
+
+[node name="ChoppableObject" parent="AreaManager/AreaMission/Objectives" instance=ExtResource("12_yxxln")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1, 0)
+
+[node name="RecycleDepositPoint" parent="AreaManager/AreaMission" node_paths=PackedStringArray("mission") groups=["deposit points"] instance=ExtResource("5_hyroh")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 7, 0.6, 1.5)
+collision_layer = 1
+mission = NodePath("..")
+
+[node name="TrashDepositPoint" parent="AreaManager/AreaMission" node_paths=PackedStringArray("mission") groups=["deposit points"] instance=ExtResource("6_2qvif")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 7, 0.6, -1.5)
+collision_layer = 1
+mission = NodePath("..")
+
+[node name="DiggableObject" parent="AreaManager/AreaMission" instance=ExtResource("14_fw54p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.349, 0.0999999)
+
+[node name="AreaMission2" parent="AreaManager" node_paths=PackedStringArray("area", "boundaries", "player_start_pos") groups=["missions"] instance=ExtResource("7_txd24")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.9)
+area = NodePath("..")
+mission_name = "Debug Mission 2"
+mission_time = 20.0
+boundaries = NodePath("CSGCombiner3D2")
+player_start_pos = NodePath("PlayerStartPoint")
+
+[node name="MissionStartPoint" parent="AreaManager/AreaMission2" instance=ExtResource("8_35knc")]
+transform = Transform3D(8.9407e-08, 0, -1, 0, 1, 0, 1, 0, 8.9407e-08, -10, 1, 0.0999999)
+
+[node name="PlayerStartPoint" type="Node3D" parent="AreaManager/AreaMission2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 2, 0)
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="AreaManager/AreaMission2/PlayerStartPoint"]
+layers = 524288
+mesh = SubResource("CapsuleMesh_tqmbh")
+material = SubResource("StandardMaterial3D_62bfp")
+
+[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="AreaManager/AreaMission2"]
+transform = Transform3D(1, 0, 0, 0, 2.98023e-08, -1, 0, 1, 2.98023e-08, 4, 4, -4)
+collision_layer = 8
+collision_mask = 37
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="AreaManager/AreaMission2/CSGCombiner3D2"]
+mesh = SubResource("PlaneMesh_nqx04")
+material = SubResource("StandardMaterial3D_swvwm")
+
+[node name="CSGMesh3D5" type="CSGMesh3D" parent="AreaManager/AreaMission2/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+mesh = SubResource("PlaneMesh_nqx04")
+material = SubResource("StandardMaterial3D_swvwm")
+
+[node name="CSGMesh3D6" type="CSGMesh3D" parent="AreaManager/AreaMission2/CSGCombiner3D2"]
+transform = Transform3D(0, 1, 2.98023e-08, -1, 8.88178e-16, -2.98023e-08, -2.98023e-08, -2.98023e-08, 1, -12, 4, 0)
+mesh = SubResource("PlaneMesh_nqx04")
+material = SubResource("StandardMaterial3D_swvwm")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="AreaManager/AreaMission2/CSGCombiner3D2"]
+transform = Transform3D(-4.37114e-08, -1, -2.98023e-08, 1, -4.37114e-08, -2.98023e-08, 2.98023e-08, -2.98023e-08, 1, 4, 4, 0)
+mesh = SubResource("PlaneMesh_nqx04")
+material = SubResource("StandardMaterial3D_swvwm")
+
+[node name="CSGMesh3D3" type="CSGMesh3D" parent="AreaManager/AreaMission2/CSGCombiner3D2"]
+transform = Transform3D(-1, 8.74228e-08, 2.6054e-15, -8.74228e-08, -1, -5.96046e-08, -2.6054e-15, -5.96046e-08, 1, 0, 8, 2.38419e-07)
+mesh = SubResource("PlaneMesh_nqx04")
+material = SubResource("StandardMaterial3D_swvwm")
+
+[node name="CSGMesh3D4" type="CSGMesh3D" parent="AreaManager/AreaMission2/CSGCombiner3D2"]
+transform = Transform3D(-1, 8.74228e-08, 2.6054e-15, -8.74228e-08, -1, -5.96046e-08, -2.6054e-15, -5.96046e-08, 1, -8, 8, 2.38419e-07)
+mesh = SubResource("PlaneMesh_nqx04")
+material = SubResource("StandardMaterial3D_swvwm")
+
+[node name="ChoppedDepositZone" parent="AreaManager/AreaMission2" node_paths=PackedStringArray("mission") instance=ExtResource("7_ukblv")]
+mission = NodePath("..")
+
+[node name="Objectives" type="Node3D" parent="AreaManager/AreaMission2" node_paths=PackedStringArray("parent_mission")]
+script = ExtResource("7_4is7v")
+parent_mission = NodePath("..")
+
+[node name="Trash" parent="AreaManager/AreaMission2/Objectives" instance=ExtResource("7_mva85")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -2)
+
+[node name="Trash2" parent="AreaManager/AreaMission2/Objectives" instance=ExtResource("7_mva85")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, -2)
+
+[node name="Trash3" parent="AreaManager/AreaMission2/Objectives" instance=ExtResource("7_mva85")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, -2)
+
+[node name="Recycle" parent="AreaManager/AreaMission2/Objectives" instance=ExtResource("8_xb5a6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 2)
+
+[node name="Recycle2" parent="AreaManager/AreaMission2/Objectives" instance=ExtResource("8_xb5a6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, 2)
+
+[node name="Recycle3" parent="AreaManager/AreaMission2/Objectives" instance=ExtResource("8_xb5a6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, 2)
+
+[node name="ChoppableObject" parent="AreaManager/AreaMission2/Objectives" instance=ExtResource("12_yxxln")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1, 0)
+
+[node name="RecycleDepositPoint" parent="AreaManager/AreaMission2" node_paths=PackedStringArray("mission") groups=["deposit points"] instance=ExtResource("5_hyroh")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 7, 0.6, 1.5)
+collision_layer = 1
+mission = NodePath("..")
+
+[node name="TrashDepositPoint" parent="AreaManager/AreaMission2" node_paths=PackedStringArray("mission") groups=["deposit points"] instance=ExtResource("6_2qvif")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 7, 0.6, -1.5)
+collision_layer = 1
+mission = NodePath("..")
+
+[node name="AreaExit" type="Node3D" parent="AreaManager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+script = ExtResource("11_o5uew")
+
+[node name="BackWall" type="CSGBox3D" parent="AreaManager/AreaExit"]
+transform = Transform3D(1, 0, 0, 0, 4.8, 0, 0, 0, 1, 2.25, 2.4, 0)
+use_collision = true
+collision_layer = 2
+size = Vector3(0.5, 1, 5)
+
+[node name="Gate" type="CSGBox3D" parent="AreaManager/AreaExit"]
+transform = Transform3D(1, 0, 0, 0, 4.8, 0, 0, 0, 1, -2.15, 2.4, 0)
+use_collision = true
+collision_layer = 2
+size = Vector3(0.5, 1, 5)
+
+[node name="Label3D" type="Label3D" parent="AreaManager/AreaExit/Gate"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 0.208333, 0, 1, 0, -4.37114e-08, -0.35, 0.125, 0)
+text = "Complete The Mission
+To Exit"
+font_size = 72
+
+[node name="Wall" type="CSGBox3D" parent="AreaManager/AreaExit"]
+transform = Transform3D(-5.96046e-08, 0, -1, 0, 4.8, 0, 1, 0, -5.96046e-08, 0.0500002, 2.4, 2.7)
+use_collision = true
+collision_layer = 2
+size = Vector3(0.5, 1, 5)
+
+[node name="Wall2" type="CSGBox3D" parent="AreaManager/AreaExit"]
+transform = Transform3D(-5.96046e-08, 0, -1, 0, 4.8, 0, 1, 0, -5.96046e-08, 0.0500002, 2.4, -2.7)
+use_collision = true
+collision_layer = 2
+size = Vector3(0.5, 1, 5)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AreaManager/AreaExit"]
+libraries = {
+"": SubResource("AnimationLibrary_nkm6j")
+}
+
+[node name="Area3D" type="Area3D" parent="AreaManager/AreaExit"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaManager/AreaExit/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0, 0)
+shape = SubResource("SphereShape3D_0p1c1")
+
+[node name="Label3D" type="Label3D" parent="AreaManager/AreaExit/Area3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.8, 0, 0)
+text = "Level Exit
+"
+font_size = 177
+
+[connection signal="complete_area" from="AreaManager" to="AreaManager/AreaExit" method="raise_gate"]
+[connection signal="body_shape_entered" from="AreaManager/AreaExit/Area3D" to="AreaManager/AreaExit" method="_on_area_3d_body_shape_entered"]

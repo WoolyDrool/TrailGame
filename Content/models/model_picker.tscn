@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkta2by5xdsdo"]
+
+[ext_resource type="PackedScene" uid="uid://ckb72h7mqiepx" path="res://Content/models/model_picker.glb" id="1_tl3kj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ki5is"]
+albedo_color = Color(0.781295, 0.347413, 1.92523e-07, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmrwi"]
+metallic = 1.0
+metallic_specular = 1.0
+
+[node name="model_picker" instance=ExtResource("1_tl3kj")]
+
+[node name="Handle" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ki5is")
+
+[node name="Shaft" parent="." index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_fmrwi")
