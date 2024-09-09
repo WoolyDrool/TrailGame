@@ -1,6 +1,6 @@
 [gd_scene load_steps=29 format=3 uid="uid://dcn048utcp7wd"]
 
-[ext_resource type="Texture2D" uid="uid://c31tbmy4phf2h" path="res://addons/qodot/textures/base/checkerboard.png" id="1_krpfu"]
+[ext_resource type="Texture2D" uid="uid://c31tbmy4phf2h" path="res://Content/sprites/checkerboard.png" id="1_krpfu"]
 [ext_resource type="PackedScene" uid="uid://bw8sepo1dej0s" path="res://Game/player/player.tscn" id="3_q3n1x"]
 [ext_resource type="PackedScene" uid="uid://d3owmt0k6634o" path="res://Game/entities/recycle_deposit_point.tscn" id="5_hyroh"]
 [ext_resource type="PackedScene" uid="uid://cqrgt8fr6vutg" path="res://Game/entities/trash_deposit_point.tscn" id="6_2qvif"]

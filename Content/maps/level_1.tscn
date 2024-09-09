@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://28mfp7oec0ef"]
 
-[ext_resource type="Texture2D" uid="uid://c31tbmy4phf2h" path="res://addons/qodot/textures/base/checkerboard.png" id="1_dp4rc"]
+[ext_resource type="Texture2D" uid="uid://c31tbmy4phf2h" path="res://Content/sprites/checkerboard.png" id="1_dp4rc"]
 [ext_resource type="PackedScene" uid="uid://bw8sepo1dej0s" path="res://Game/player/player.tscn" id="2_u46s3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lg8te"]
