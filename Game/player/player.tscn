@@ -1,12 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://bw8sepo1dej0s"]
+[gd_scene load_steps=13 format=3 uid="uid://bw8sepo1dej0s"]
 
-[ext_resource type="Script" path="res://Game/player/player_controller.gd" id="1_chifv"]
+[ext_resource type="Script" uid="uid://chcpbdpal42dg" path="res://Game/player/player_controller.gd" id="1_chifv"]
 [ext_resource type="PackedScene" uid="uid://b10igw5xcvojj" path="res://Interface/ui_player_interface.tscn" id="2_uk1te"]
-[ext_resource type="Script" path="res://Game/player/player_frobber.gd" id="2_wjsc6"]
+[ext_resource type="Script" uid="uid://lqkqqlni4kvg" path="res://Game/player/player_frobber.gd" id="2_wjsc6"]
 [ext_resource type="PackedScene" uid="uid://bfwfcn483wgly" path="res://Game/player/tools/tool_manager.tscn" id="4_bexwg"]
-[ext_resource type="Script" path="res://Game/player/tools/tool_shovel.gd" id="5_0122v"]
+[ext_resource type="Script" uid="uid://b2e0l3amacr6i" path="res://Game/player/tools/tool_shovel.gd" id="5_0122v"]
 [ext_resource type="Texture2D" uid="uid://ti8omwpac58c" path="res://Content/sprites/spr_ui_crosshair.png" id="7_00gkg"]
-[ext_resource type="Script" path="res://Game/components/pocket_component.gd" id="14_hygt8"]
+[ext_resource type="Script" uid="uid://ngk5os68j0ar" path="res://Game/components/runtime_item_manager.gd" id="9_4ys5o"]
+[ext_resource type="Script" uid="uid://btdv1yqfoavxf" path="res://Game/player/player_gamemode_manager.gd" id="9_uv2qt"]
+[ext_resource type="Script" uid="uid://dipsx1lg3006e" path="res://Game/components/pocket_component.gd" id="14_hygt8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hcygf"]
 radius = 0.2
@@ -17,9 +19,10 @@ height = 3.0
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2v6a4"]
 height = 1.0
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("cam_container")]
 collision_mask = 10
 script = ExtResource("1_chifv")
+cam_container = NodePath("CamContainer")
 walking_speed = 10.0
 sprinting_speed = 16.0
 jump_velocity = 6.7
@@ -35,7 +38,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 cull_mask = 524285
 current = true
 script = ExtResource("2_wjsc6")
-tools = NodePath("../ToolManager")
+tools = NodePath("ToolManager")
 
 [node name="RayCast3D" type="RayCast3D" parent="CamContainer/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
@@ -152,17 +155,26 @@ text = "Append"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="ToolManager" parent="CamContainer" node_paths=PackedStringArray("player", "cam_container", "ray3d", "playerFrobber") instance=ExtResource("4_bexwg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-player = NodePath("../..")
-cam_container = NodePath("..")
-ray3d = NodePath("../Camera3D/RayCast3D")
-playerFrobber = NodePath("../Camera3D")
+[node name="PlayerInterface" parent="CamContainer/Camera3D" instance=ExtResource("2_uk1te")]
 
-[node name="ToolShovel" parent="CamContainer/ToolManager" index="3"]
+[node name="ToolManager" parent="CamContainer/Camera3D" node_paths=PackedStringArray("player", "cam_container", "ray3d", "playerFrobber") instance=ExtResource("4_bexwg")]
+player = NodePath("../../..")
+cam_container = NodePath("../..")
+ray3d = NodePath("../RayCast3D")
+playerFrobber = NodePath("..")
+
+[node name="ToolShovel" parent="CamContainer/Camera3D/ToolManager" index="3"]
 script = ExtResource("5_0122v")
 
-[node name="HoldPoint" parent="CamContainer/ToolManager" index="6"]
+[node name="ToolLabel" parent="CamContainer/Camera3D/ToolManager" index="4"]
+offset_top = -329.0
+offset_bottom = -132.0
+
+[node name="ToolCountLabel" parent="CamContainer/Camera3D/ToolManager" index="5"]
+offset_top = -313.0
+offset_bottom = -202.0
+
+[node name="HoldPoint" parent="CamContainer/Camera3D/ToolManager" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="StandingCollision" type="CollisionShape3D" parent="."]
@@ -176,10 +188,18 @@ shape = SubResource("CapsuleShape3D_2v6a4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 target_position = Vector3(0, 2, 0)
 
-[node name="PlayerInterface" parent="." instance=ExtResource("2_uk1te")]
-
 [node name="PocketComponent" type="Node" parent="."]
 script = ExtResource("14_hygt8")
 
-[editable path="CamContainer/ToolManager"]
-[editable path="CamContainer/ToolManager/ToolHands"]
+[node name="RuntimeItemManager" type="Node" parent="."]
+script = ExtResource("9_4ys5o")
+metadata/_custom_type_script = "uid://ngk5os68j0ar"
+
+[node name="PlayerGamemodeManager" type="Node" parent="." node_paths=PackedStringArray("tool_manager", "player_interface", "player_frobber")]
+script = ExtResource("9_uv2qt")
+tool_manager = NodePath("../CamContainer/Camera3D/ToolManager")
+player_interface = NodePath("../CamContainer/Camera3D/PlayerInterface")
+player_frobber = NodePath("../CamContainer/Camera3D")
+
+[editable path="CamContainer/Camera3D/ToolManager"]
+[editable path="CamContainer/Camera3D/ToolManager/ToolHands"]

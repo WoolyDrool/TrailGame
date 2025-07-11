@@ -1,0 +1,104 @@
+[gd_scene load_steps=9 format=3 uid="uid://bqqeynusqbdd7"]
+
+[ext_resource type="Script" uid="uid://qle4mcjn3wjk" path="res://Game/player/player_state_machine_controller.gd" id="1_u7c1e"]
+[ext_resource type="Script" uid="uid://bac3slntni31r" path="res://Game/player/states/state_player_jump.gd" id="5_lapce"]
+[ext_resource type="Script" uid="uid://bko5vod725e25" path="res://Game/player/states/core/state_machine.gd" id="6_etsn1"]
+[ext_resource type="Script" uid="uid://b1axftxmij3kb" path="res://Game/player/states/state_player_fall.gd" id="6_smwyd"]
+[ext_resource type="Script" uid="uid://c5wal72f5y0rs" path="res://Game/player/states/state_player_idle.gd" id="7_ylm7t"]
+[ext_resource type="Script" uid="uid://bltgf1d1mpl1u" path="res://Game/player/states/state_player_walk.gd" id="8_n8lrq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bktcu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2fh6l"]
+height = 1.0
+
+[node name="PlayerSMC" type="CharacterBody3D" node_paths=PackedStringArray("state_debug_label", "vector_debug_label", "direction_debug_label", "cam_container", "standing_collision", "crouching_collision", "ceiling_check", "state_machine")]
+collision_mask = 2
+script = ExtResource("1_u7c1e")
+state_debug_label = NodePath("Control/statelabel")
+vector_debug_label = NodePath("Control/vectorlabel")
+direction_debug_label = NodePath("Control/dirlabel")
+default_movement_speed = 560
+jump_height = 6.0
+cam_container = NodePath("CameraContainer")
+standing_collision = NodePath("StandingCollision")
+crouching_collision = NodePath("CrouchingCollision")
+ceiling_check = NodePath("CeilingCheck")
+state_machine = NodePath("StateMachine")
+
+[node name="CameraContainer" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraContainer"]
+
+[node name="CeilingCheck" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+target_position = Vector3(0, 2, 0)
+
+[node name="StandingCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_bktcu")
+
+[node name="CrouchingCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("CapsuleShape3D_2fh6l")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("6_etsn1")
+starting_state = NodePath("PlayerIdle")
+metadata/_custom_type_script = "uid://bko5vod725e25"
+
+[node name="PlayerIdle" type="Node" parent="StateMachine" node_paths=PackedStringArray("move_state", "jump_state", "fall_state")]
+script = ExtResource("7_ylm7t")
+move_state = NodePath("../PlayerWalk")
+jump_state = NodePath("../PlayerJump")
+fall_state = NodePath("../PlayerFall")
+metadata/_custom_type_script = "uid://bwdj2ia0hoc4i"
+
+[node name="PlayerWalk" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state")]
+script = ExtResource("8_n8lrq")
+idle_state = NodePath("../PlayerIdle")
+jump_state = NodePath("../PlayerJump")
+fall_state = NodePath("../PlayerFall")
+move_speed = 1.0
+metadata/_custom_type_script = "uid://bwdj2ia0hoc4i"
+
+[node name="PlayerJump" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "move_state", "fall_state")]
+script = ExtResource("5_lapce")
+idle_state = NodePath("../PlayerIdle")
+move_state = NodePath("../PlayerWalk")
+fall_state = NodePath("../PlayerFall")
+metadata/_custom_type_script = "uid://bwdj2ia0hoc4i"
+
+[node name="PlayerFall" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "move_state")]
+script = ExtResource("6_smwyd")
+idle_state = NodePath("../PlayerIdle")
+move_state = NodePath("../PlayerWalk")
+metadata/_custom_type_script = "uid://bwdj2ia0hoc4i"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="statelabel" type="RichTextLabel" parent="Control"]
+layout_mode = 0
+offset_right = 761.0
+offset_bottom = 40.0
+text = "state: idle"
+
+[node name="vectorlabel" type="RichTextLabel" parent="Control"]
+layout_mode = 0
+offset_top = 40.0
+offset_right = 761.0
+offset_bottom = 80.0
+text = "vector: 0,0,0"
+
+[node name="dirlabel" type="RichTextLabel" parent="Control"]
+layout_mode = 0
+offset_top = 80.0
+offset_right = 761.0
+offset_bottom = 120.0
+text = "direction: 0,0,0"

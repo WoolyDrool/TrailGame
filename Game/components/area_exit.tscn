@@ -1,0 +1,109 @@
+[gd_scene load_steps=6 format=3 uid="uid://opay0h2o0oc"]
+
+[ext_resource type="Script" uid="uid://p1qoh3n8i32n" path="res://Game/areas/area_exit.gd" id="1_7kri2"]
+
+[sub_resource type="Animation" id="Animation_k18kj"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -2.15, 2.4, 0)
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Gate:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-2.15, 2.4, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_4kvra"]
+resource_name = "area_complete_raisebarrier"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -2.15, 2.4, 0)
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Gate:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-2.15, 2.4, 0), Vector3(-2.15, 7.4, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nkm6j"]
+_data = {
+&"RESET": SubResource("Animation_k18kj"),
+&"area_complete_raisebarrier": SubResource("Animation_4kvra")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0p1c1"]
+radius = 1.0
+
+[node name="AreaExit" type="Node3D"]
+script = ExtResource("1_7kri2")
+
+[node name="BackWall" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 4.8, 0, 0, 0, 1, 2.25, 2.4, 0)
+use_collision = true
+collision_layer = 2
+size = Vector3(0.5, 1, 5)
+
+[node name="Gate" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 4.8, 0, 0, 0, 1, -2.15, 2.4, 0)
+use_collision = true
+collision_layer = 2
+size = Vector3(0.5, 1, 5)
+
+[node name="Label3D" type="Label3D" parent="Gate"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 0.208333, 0, 1, 0, -4.37114e-08, -0.35, 0.125, 0)
+text = "Complete The Mission
+To Exit"
+font_size = 72
+
+[node name="Wall" type="CSGBox3D" parent="."]
+transform = Transform3D(-5.96046e-08, 0, -1, 0, 4.8, 0, 1, 0, -5.96046e-08, 0.0500002, 2.4, 2.7)
+use_collision = true
+collision_layer = 2
+size = Vector3(0.5, 1, 5)
+
+[node name="Wall2" type="CSGBox3D" parent="."]
+transform = Transform3D(-5.96046e-08, 0, -1, 0, 4.8, 0, 1, 0, -5.96046e-08, 0.0500002, 2.4, -2.7)
+use_collision = true
+collision_layer = 2
+size = Vector3(0.5, 1, 5)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_nkm6j")
+}
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0, 0)
+shape = SubResource("SphereShape3D_0p1c1")
+
+[node name="Label3D" type="Label3D" parent="Area3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.8, 0, 0)
+text = "Level Exit
+"
+font_size = 177
+
+[connection signal="body_shape_entered" from="Area3D" to="." method="_on_area_3d_body_shape_entered"]

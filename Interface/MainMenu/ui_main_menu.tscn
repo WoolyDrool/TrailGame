@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://uk31cfernn64"]
+[gd_scene load_steps=3 format=3 uid="uid://uk31cfernn64"]
 
-[ext_resource type="Script" path="res://Interface/MainMenu/ui_main_menu.gd" id="1_8mhv6"]
+[ext_resource type="Script" uid="uid://pvg423p1ysar" path="res://Interface/MainMenu/ui_main_menu.gd" id="1_8mhv6"]
+[ext_resource type="Script" uid="uid://cjofe4ckgi0hr" path="res://Interface/MainMenu/ui_map_select.gd" id="2_ofpxp"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -19,7 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.737255, 0.666667, 0.533333, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -38,6 +39,34 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("2_ofpxp")
+
+[node name="TabContainer" type="TabContainer" parent="HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="Debug" type="Button" parent="HBoxContainer/VBoxContainer/VBoxContainer/TabContainer"]
+modulate = Color(0.393868, 0.694817, 3.85046e-07, 1)
+layout_mode = 2
+text = "Load Map"
+metadata/_tab_index = 0
+
+[node name="Office" type="Button" parent="HBoxContainer/VBoxContainer/VBoxContainer/TabContainer"]
+visible = false
+modulate = Color(0.393868, 0.694817, 3.85046e-07, 1)
+layout_mode = 2
+text = "Load Map"
+metadata/_tab_index = 1
+
+[node name="Hub" type="Button" parent="HBoxContainer/VBoxContainer/VBoxContainer/TabContainer"]
+visible = false
+modulate = Color(0.393868, 0.694817, 3.85046e-07, 1)
+layout_mode = 2
+text = "Load Map"
+metadata/_tab_index = 2
+
 [node name="Play" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 71
@@ -48,5 +77,8 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 71
 text = "Quit Game"
 
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/VBoxContainer/TabContainer/Debug" to="HBoxContainer/VBoxContainer/VBoxContainer" method="_on_debug_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/VBoxContainer/TabContainer/Office" to="HBoxContainer/VBoxContainer/VBoxContainer" method="_on_office_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/VBoxContainer/TabContainer/Hub" to="HBoxContainer/VBoxContainer/VBoxContainer" method="_on_hub_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

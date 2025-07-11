@@ -1,5 +1,6 @@
 extends Node3D
 
+@export var scene_to_load : String
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,4 +17,4 @@ func raise_gate():
 
 func _on_area_3d_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
 	if body is Player:
-		GameManager.load_scene.emit("res://Content/maps/level_1.tscn")
+		GameManager.load_scene.emit(scene_to_load)

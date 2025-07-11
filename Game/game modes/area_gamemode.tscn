@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6auasmiyrxw4"]
+
+[ext_resource type="Script" uid="uid://ll0o1erlgudx" path="res://Game/game modes/area_gamemode.gd" id="1_klmfs"]
+
+[node name="AreaGamemode" type="Node"]
+script = ExtResource("1_klmfs")

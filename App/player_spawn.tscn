@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnsjyuv5n8csa"]
+
+[ext_resource type="Script" uid="uid://djhvpmkmgh43d" path="res://App/player_spawn.gd" id="1_ji46e"]
+[ext_resource type="Texture2D" uid="uid://bdv0d0gyaf4c0" path="res://App/editor icons/spr_ed_playerSpawn.png" id="2_6vkgs"]
+[ext_resource type="Texture2D" uid="uid://bv811cxuoi7xo" path="res://App/editor icons/spr_ed_playerSpawn_forwardArrow.png" id="3_6vkgs"]
+
+[node name="PlayerSpawn" type="Node3D" node_paths=PackedStringArray("cam_point")]
+script = ExtResource("1_ji46e")
+cam_point = NodePath("CamDirection")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture = ExtResource("2_6vkgs")
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+texture = ExtResource("2_6vkgs")
+
+[node name="Sprite3D3" type="Sprite3D" parent="."]
+transform = Transform3D(-2.18557e-08, 0, -0.5, 0, 0.5, 0, 0.5, 0, -2.18557e-08, 0, 0, -1)
+texture = ExtResource("3_6vkgs")
+
+[node name="Sprite3D4" type="Sprite3D" parent="."]
+transform = Transform3D(2.18557e-08, -0.5, 2.18557e-08, -4.37114e-08, -2.18557e-08, -0.5, 0.5, 2.18557e-08, -4.37114e-08, 0, 0, -1)
+texture = ExtResource("3_6vkgs")
+
+[node name="CamDirection" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 1, 0)
+
+[node name="Sprite3D3" type="Sprite3D" parent="CamDirection"]
+transform = Transform3D(-3.49691e-08, 0, -0.29, 0, 0.29, 0, 0.8, 0, -1.26763e-08, 0, 0, -1)
+modulate = Color(0.927474, 0, 0.414464, 1)
+texture = ExtResource("3_6vkgs")
+
+[node name="Sprite3D4" type="Sprite3D" parent="CamDirection"]
+transform = Transform3D(6.03983e-08, -0.29, 1.26763e-08, 0, -1.26763e-08, -0.29, 0.8, 2.18944e-08, -9.57034e-16, 0, 0, -1)
+modulate = Color(0.927474, 0, 0.414464, 1)
+texture = ExtResource("3_6vkgs")

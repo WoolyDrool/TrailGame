@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://s5a3pce256at"]
 
-[ext_resource type="Script" path="res://Game/items/choppable/choppable_object.gd" id="1_g0mm5"]
+[ext_resource type="Script" uid="uid://c3kevi8wv8kvs" path="res://Game/items/choppable/choppable_object.gd" id="1_g0mm5"]
 [ext_resource type="PackedScene" uid="uid://dqy3mjobgqdfl" path="res://Game/items/choppable/chopped_object.tscn" id="1_i0yto"]
 [ext_resource type="PackedScene" uid="uid://pletdq3bfgxj" path="res://Game/components/interact_component.tscn" id="1_t64vp"]
 

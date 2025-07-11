@@ -1,13 +1,89 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfwfcn483wgly"]
+[gd_scene load_steps=10 format=3 uid="uid://bfwfcn483wgly"]
 
-[ext_resource type="Script" path="res://Game/player/tools/tool_manager.gd" id="1_wsnef"]
+[ext_resource type="Script" uid="uid://bjkfhvmmvcrwg" path="res://Game/player/tools/tool_manager.gd" id="1_wsnef"]
 [ext_resource type="PackedScene" uid="uid://vgijbx81ryjk" path="res://Game/player/tools/tool_hands.tscn" id="2_20lvc"]
 [ext_resource type="PackedScene" uid="uid://c3koxqga8a6rm" path="res://Game/player/tools/tool_picker.tscn" id="3_4tbw1"]
 [ext_resource type="PackedScene" uid="uid://dnxn4by1788gu" path="res://Game/player/tools/tool_hatchet.tscn" id="4_k0i6l"]
 [ext_resource type="PackedScene" uid="uid://cp0fol7mmhjpx" path="res://Game/player/tools/tool_shovel.tscn" id="5_16u6d"]
 
+[sub_resource type="AnimationRootNode" id="AnimationRootNode_gi7xv"]
+
+[sub_resource type="Animation" id="Animation_0klq1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../ToolHatchet:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.897342, -0.4, -1.30477)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../ToolHatchet:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wiwxw"]
+resource_name = "new_animation"
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("../ToolHatchet")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array()
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("../ToolHatchet")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array()
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../ToolHatchet:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0600619, 0.0720829, 0.0850727, 0.1, 0.123162, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.897342, -0.4, -1.30477), Vector3(0.297342, -0.4, -3.30477), Vector3(0.280295, -0.455108, -3.3073), Vector3(0.297342, -0.4, -3.30477), Vector3(0.280295, -0.455108, -3.3073), Vector3(0.297342, -0.4, -3.30477), Vector3(0.897342, -0.4, -1.30477)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../ToolHatchet:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.0600619, 0.0720829, 0.0850727, 0.1, 0.123162, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.966733, 1.53788, -0.991039), Vector3(-0.966733, 1.53788, -0.991039), Vector3(-0.966733, 1.53788, -0.991039), Vector3(-0.966733, 1.53788, -0.991039), Vector3(-0.966733, 1.53788, -0.991039), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bif5i"]
+_data = {
+&"RESET": SubResource("Animation_0klq1"),
+&"new_animation": SubResource("Animation_wiwxw")
+}
+
 [node name="ToolManager" type="Node3D" node_paths=PackedStringArray("default_tool", "debuglabel", "debuglabel_ammo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0060029, -2.38419e-07, 0.00159717)
 script = ExtResource("1_wsnef")
 default_tool = NodePath("ToolHands")
 debuglabel = NodePath("ToolLabel")
@@ -21,7 +97,6 @@ hold_point = NodePath("../HoldPoint")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.6, -1.30477)
 
 [node name="ToolHatchet" parent="." instance=ExtResource("4_k0i6l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
 
 [node name="ToolShovel" parent="." instance=ExtResource("5_16u6d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
@@ -57,3 +132,13 @@ text = "0/0"
 
 [node name="HoldPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.6)
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath(".")
+tree_root = SubResource("AnimationRootNode_gi7xv")
+anim_player = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
+libraries = {
+&"": SubResource("AnimationLibrary_bif5i")
+}

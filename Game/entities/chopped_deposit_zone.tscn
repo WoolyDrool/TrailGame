@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ccqbeoyx4fay1"]
 
-[ext_resource type="Script" path="res://Game/entities/chopped_deposit_zone.gd" id="1_ilig0"]
+[ext_resource type="Script" uid="uid://cfh4qx76g3vk5" path="res://Game/entities/chopped_deposit_zone.gd" id="1_ilig0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3bxgj"]
 size = Vector3(3.41016, 3.6825, 8.11914)

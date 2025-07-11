@@ -1,5 +1,8 @@
 extends Node
 
+# Controls
+var mouse_sensitivity : float = 0.4
+
 # Player
 var player_path : String = "res://Game/player/player.tscn"
 var toggle_crouch : bool = false
@@ -9,6 +12,8 @@ signal move_player_to_position(newpos : Vector3)
 # Control
 signal player_enabled(bool)
 signal player_control_enabled(bool)
+signal player_seize_controls
+signal player_return_controls
 
 # UI
 signal ui_update_item_counts # Updates things things like pockets
@@ -17,6 +22,10 @@ signal ui_timer_start(time : float)
 
 # Game Modes
 signal change_gamemode(gm : GameMode)
+signal gamemode_enter_roam
+signal gamemode_exit_roam
+signal gamemode_enter_gather
+signal gamemode_exit_gather
 
 # Game Mode - Missions
 signal mission_start(mission : AreaMission)

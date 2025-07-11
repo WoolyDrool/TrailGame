@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bgeexjk3lm0ei"]
 
 [ext_resource type="PackedScene" uid="uid://pletdq3bfgxj" path="res://Game/components/interact_component.tscn" id="1_cyn4g"]
-[ext_resource type="Script" path="res://Game/items/diggable/diggable_object.gd" id="1_f6x0j"]
+[ext_resource type="Script" uid="uid://cyvjwghmhrdiy" path="res://Game/items/diggable/diggable_object.gd" id="1_f6x0j"]
 [ext_resource type="PackedScene" uid="uid://vqpskdaktj74" path="res://Game/items/trash/trash.tscn" id="3_c38kc"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_yqq8t"]

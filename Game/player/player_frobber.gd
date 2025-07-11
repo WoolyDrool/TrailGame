@@ -1,6 +1,5 @@
-extends Camera3D
-
 class_name Frobber
+extends Camera3D
 
 @onready var raycaster : RayCast3D = $RayCast3D
 @onready var frobber : ShapeCast3D = $Frobber
@@ -38,7 +37,6 @@ func update_held_tool_conditions(current_tool : PlayerTool):
 		cur_tool_state = tool_state.SHOVEL
 		print("Shovel")
 	
-
 
 func _process(delta):
 	if col_to_select && is_instance_valid(col_to_select):

@@ -9,10 +9,10 @@ albedo_color = Color(0, 1, 1, 1)
 item_name = "Recycle"
 type = 2
 
-[node name="MeshInstance3D" parent="." index="1"]
+[node name="MeshInstance3D" parent="." index="2"]
 surface_material_override/0 = SubResource("StandardMaterial3D_tkd8g")
 
-[node name="Interact" parent="." index="2" groups=["pickable", "pocketable"]]
+[node name="Interact" parent="." index="3" groups=["pickable", "pocketable"]]
 modifierText = "Recycle"
 modifierText_Color = Color(0, 0.584661, 0.841267, 1)
 

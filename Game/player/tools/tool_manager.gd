@@ -2,6 +2,9 @@ extends Node3D
 
 class_name PlayerToolManager
 
+# TOOL MANAGER
+# Handles things like equipping/unequipping, input handling, and 
+
 @export var default_tool : PlayerTool
 var current_tool : PlayerTool
 
@@ -9,14 +12,14 @@ var equip_index : int
 var tool_selected : int = 0
 var total_tools : int
 var tool_array = []
-@export var player : Player
+@export var player : PlayerSMC
 @export var cam_container : Node3D
 
 @export var ray3d : RayCast3D
 @export var playerFrobber : Frobber
 var has_hatchet : bool = true
 var has_shovel : bool = true
-@export var debuglabel : Label
+@export var debuglabel : Label 
 @export var debuglabel_ammo : Label
 
 signal on_tool_change(tool : PlayerTool)
@@ -35,7 +38,7 @@ func _ready_tools():
 			t.manager = self
 			t.ray = ray3d
 			t.frobber = playerFrobber
-			t.visible = false
+			t.visible = false 
 			t.set_process(false)
 			current_tool = t # DebugOnly
 			tool_array.append(t)
