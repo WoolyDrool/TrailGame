@@ -8,7 +8,7 @@ func _ready() -> void:
 	if get_parent().is_in_group("missions"):
 		mission = get_parent()
 		$InteractComponent.interactText = "Begin Mission"
-		$InteractComponent.modifierText = mission.mission_name
+		$InteractComponent.descriptorText = mission.mission_name
 		#$InteractComponent.appendText = str("Time Limit: ", mission.mission_time)
 	else:
 		print_debug("Mission Start Point is not the child of an AreaMission node")

@@ -13,11 +13,12 @@ enum tool_state {EMPTY, PICKER, HATCHET, SHOVEL}
 var cur_tool_state : tool_state
 
 #region UI
+@export var immediate_ui : ImmediateUI
 @onready var crosshair = $ImmediateUI/Crosshair
-@onready var interact_text : Label = $ImmediateUI/Crosshair/InteractText
-@onready var modifier_text : Label = $ImmediateUI/Crosshair/ModifierText
-@onready var append_text : Label = $ImmediateUI/Crosshair/AppendText
-@onready var text_bg : ColorRect = $ImmediateUI/Crosshair/ColorRect
+@onready var interact_text : Label = $ImmediateUI/Container/InteractText
+@onready var modifier_text : Label = $ImmediateUI/Container/ModifierText
+@onready var append_text : Label = $ImmediateUI/Container/AppendText
+@onready var text_bg : ColorRect = $ImmediateUI/Container/ColorRect
 #endregion
 
 func _ready() -> void:
@@ -83,27 +84,16 @@ func frob():
 
 func update_immediate_ui():
 	if col_to_select:
-		if interact_text.text == "":
-			interact_text.text = col_to_select.interactText
-			modifier_text.text = col_to_select.modifierText
-			append_text.text = col_to_select.appendText
-		
-			interact_text.add_theme_color_override("Color", col_to_select.interactText_Color)
-			modifier_text.add_theme_color_override("Color", col_to_select.modifierText_Color)
-			append_text.add_theme_color_override("Color", col_to_select.appendText_Color)
-		text_bg.visible = true
+		if !immediate_ui.immediate_ui_active:
+			immediate_ui.update_immediate_ui(col_to_select)
 	else:
-		interact_text.text = ""
-		modifier_text.text = ""
-		append_text.text = ""
-		can_interact = false
-		if text_bg.visible:
-			text_bg.visible = false
+		if immediate_ui.immediate_ui_active:
+			immediate_ui.clear_immediate_ui()
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Todo add a sorting filter for if the player is holding a specific tool or not
 	if col_to_select && is_instance_valid(col_to_select):
-		if cur_tool_state == tool_state.EMPTY:
+		#if cur_tool_state == tool_state.EMPTY:
 			if event.is_action_pressed("interact"): #|| event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
 				col_to_select.Interact(event)
 				col_to_select = null

@@ -1,0 +1,112 @@
+[gd_scene load_steps=4 format=3 uid="uid://mcoxybw4lgw7"]
+
+[ext_resource type="Script" uid="uid://bkpefbk825xa7" path="res://Game/interface/ui_immediate.gd" id="1_iovqi"]
+[ext_resource type="FontFile" uid="uid://ugdwuve6ft8x" path="res://Content/fonts/typewcond_bold.otf" id="2_2y3uj"]
+[ext_resource type="Texture2D" uid="uid://ti8omwpac58c" path="res://Content/sprites/spr_ui_crosshair.png" id="3_8kwyg"]
+
+[node name="ImmediateUI" type="Control" node_paths=PackedStringArray("context_panel", "interact_text", "key_input_text", "descriptor_text", "context_text")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iovqi")
+context_panel = NodePath("ContextPanel")
+interact_text = NodePath("ContextPanel/InteractText")
+key_input_text = NodePath("ContextPanel/KeyInputText")
+descriptor_text = NodePath("ContextPanel/DescriptorText")
+context_text = NodePath("ContextPanel/ContextText")
+
+[node name="ContextPanel" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 954.4
+offset_top = 534.4
+offset_right = 994.4
+offset_bottom = 574.4
+
+[node name="BGPanel" type="Panel" parent="ContextPanel"]
+modulate = Color(1, 1, 1, 0.466667)
+layout_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 19.6
+offset_top = -95.4
+offset_right = 151.6
+offset_bottom = 67.6
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.3, 1)
+
+[node name="InteractText" type="Label" parent="ContextPanel"]
+layout_mode = 1
+offset_left = 40.0
+offset_top = -75.0
+offset_right = 172.0
+offset_bottom = 6.0
+scale = Vector2(1.3, 1)
+theme_override_fonts/font = ExtResource("2_2y3uj")
+theme_override_font_sizes/font_size = 22
+text = "Interact Text"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="KeyInputText" type="Label" parent="ContextPanel"]
+layout_mode = 1
+offset_left = 40.0
+offset_top = -24.4
+offset_right = 172.0
+offset_bottom = 61.6
+scale = Vector2(1.3, 1)
+theme_override_fonts/font = ExtResource("2_2y3uj")
+theme_override_font_sizes/font_size = 64
+text = "\"E\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescriptorText" type="Label" parent="ContextPanel"]
+layout_mode = 1
+offset_left = 39.6
+offset_top = -36.4
+offset_right = 171.6
+offset_bottom = 2.59998
+scale = Vector2(1.3, 1)
+theme_override_fonts/font = ExtResource("2_2y3uj")
+theme_override_font_sizes/font_size = 15
+text = "Descriptor Text"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ContextText" type="Label" parent="ContextPanel"]
+layout_mode = 1
+offset_left = 40.0
+offset_top = 65.6
+offset_right = 172.0
+offset_bottom = 86.6
+scale = Vector2(1.3, 1)
+theme_override_fonts/font = ExtResource("2_2y3uj")
+theme_override_font_sizes/font_size = 15
+text = "Interact Context"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Crosshair" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.175, 0.175)
+pivot_offset = Vector2(32, 32)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_8kwyg")
