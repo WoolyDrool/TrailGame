@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://dipsx1lg3006e" path="res://Game/components/pocket_component.gd" id="14_hygt8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hcygf"]
-radius = 0.6
+radius = 0.3
 height = 6.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mrjsy"]
