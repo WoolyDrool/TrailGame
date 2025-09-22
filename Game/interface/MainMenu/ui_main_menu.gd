@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 
 
 func _on_play_pressed() -> void:
-	GameManager.load_scene.emit("res://Content/maps/level_1/map_hub.tscn")
+	GameManager.load_scene_without_player.emit("res://Content/maps/map_hubWorld.tscn")
 
 
 func _on_quit_pressed() -> void:
