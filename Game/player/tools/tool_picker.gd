@@ -8,7 +8,6 @@ var can_pick : bool = true
 var items = []
 var adjusted_ratio
 var is_looking_down : bool = true
-@export var tool_manager : PlayerToolManager
 
 func _get_nodes():
 	item_container = $ItemContainer
@@ -50,5 +49,5 @@ func _tool_secondary() -> void:
 
 func _tool_tertiary() -> void:
 	super()
-	if tool_manager.player.is_looking_down and not tool_manager.player.has_picker_jumped:
-		tool_manager.player.change_state(Player.PLAYER_STATES.PICKERJUMP)
+	if manager.player.is_looking_down and not manager.player.has_picker_jumped:
+		manager.player.change_state(Player.PLAYER_STATES.PICKERJUMP)
