@@ -17,8 +17,11 @@ type = 2
 surface_material_override/0 = SubResource("StandardMaterial3D_tkd8g")
 
 [node name="Interact" parent="." index="3" groups=["pickable", "pocketable"]]
-modifierText = "Recycle"
-modifierText_Color = Color(0, 0.584661, 0.841267, 1)
+interactText = "Blue Donut"
+descriptorText = "Recycle Item"
+descriptorText_Color = Color(0, 0.768329, 0.827557, 1)
+contextText = "Pick Up"
+contextText_Color = Color(1, 1, 1, 1)
 
 [node name="CollisionShape3D" parent="Interact" index="0"]
 shape = SubResource("BoxShape3D_th37g")
