@@ -13,7 +13,6 @@ func _ready():
 	if !type == item_type.KEY:
 		get_parent().get_parent().register_new_objective(objective_worth)
 	
-	$Interact.interactText = item_name
 
 func disable_process():
 	interact_component.set_process(false)
