@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://d04atuoskhbn1"]
+
+[ext_resource type="PackedScene" uid="uid://uk31cfernn64" path="res://Game/interface/MainMenu/ui_main_menu.tscn" id="1_wdwy3"]
+[ext_resource type="Shader" uid="uid://bvavb8k2sc47u" path="res://Content/shaders/earthbound.gdshader" id="2_fq11s"]
+[ext_resource type="Texture2D" uid="uid://nxarwo4gbydm" path="res://Content/textures/tex_menu_veil.png" id="2_pwfdo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i3grq"]
+shader = ExtResource("2_fq11s")
+shader_parameter/screen_height = 640.0
+shader_parameter/amplitude = 0.075
+shader_parameter/frequency = 10.0
+shader_parameter/speed = 0.3
+shader_parameter/amplitude_vertical = 0.0
+shader_parameter/frequency_vertical = 0.0
+shader_parameter/speed_vertical = 0.0
+shader_parameter/scroll_direction = Vector2(0.13, 0)
+shader_parameter/scrolling_speed = 0.085
+shader_parameter/enable_palette_cycling = false
+shader_parameter/palette_speed = 0.1
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_i3grq")
+offset_left = -1920.0
+offset_top = -1080.0
+scale = Vector2(2, 2)
+texture = ExtResource("2_pwfdo")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+z_index = -1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_i3grq")
+offset_left = 1928.0
+offset_top = -1920.0
+offset_right = 3848.0
+offset_bottom = -840.0
+rotation = 1.5708
+scale = Vector2(2, 3.57)
+texture = ExtResource("2_pwfdo")
+
+[node name="MainMenu" parent="." instance=ExtResource("1_wdwy3")]
+z_index = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+autoplay = true
+bus = &"Music"

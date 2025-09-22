@@ -1,0 +1,35 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://ctxgbp1p1h61v"]
+
+[ext_resource type="FontFile" uid="uid://bmjudyvy4ugkf" path="res://Content/fonts/PixelSplitter-Bold.ttf" id="1_qawcg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rpajt"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qawcg"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmoyr"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i8yp3"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+
+[resource]
+default_font = ExtResource("1_qawcg")
+Button/styles/focus = SubResource("StyleBoxFlat_rpajt")
+Button/styles/hover = SubResource("StyleBoxFlat_qawcg")
+Button/styles/normal = SubResource("StyleBoxFlat_qmoyr")
+Panel/styles/panel = SubResource("StyleBoxFlat_i8yp3")

@@ -1,0 +1,155 @@
+[gd_scene load_steps=7 format=3 uid="uid://b10igw5xcvojj"]
+
+[ext_resource type="Script" uid="uid://bvoraqgnvunyr" path="res://Game/interface/ui_player_interface.gd" id="1_ovo8g"]
+[ext_resource type="PackedScene" uid="uid://uxnygvr20moq" path="res://Game/interface/ui_main_gameplay.tscn" id="2_2rt4l"]
+[ext_resource type="PackedScene" uid="uid://rv5ewhi4t7vu" path="res://Game/interface/ui_free_roam.tscn" id="2_du40e"]
+[ext_resource type="Script" uid="uid://b00ny5kkytw53" path="res://Game/interface/debug_panel.gd" id="5_mrhco"]
+[ext_resource type="Script" uid="uid://bby4d3kx6xsd1" path="res://Game/interface/ui_death_screen.gd" id="7_bldy4"]
+[ext_resource type="FontFile" uid="uid://123cyg2ru2nn" path="res://Content/fonts/mingliu.ttf" id="8_eoybr"]
+
+[node name="PlayerInterface" type="Control" node_paths=PackedStringArray("death_screen", "default_ui_panel", "free_roam_panel", "gameplay_panel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ovo8g")
+death_screen = NodePath("DeathScreen")
+default_ui_panel = NodePath("UIFreeRoam")
+free_roam_panel = NodePath("UIFreeRoam")
+gameplay_panel = NodePath("UIMainGameplay")
+
+[node name="UIFreeRoam" parent="." instance=ExtResource("2_du40e")]
+layout_mode = 1
+
+[node name="UIMainGameplay" parent="." instance=ExtResource("2_2rt4l")]
+layout_mode = 1
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="MissionTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ClearTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="DebugPanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -416.0
+offset_top = -2.0
+offset_right = 11.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("5_mrhco")
+
+[node name="BG" type="ColorRect" parent="DebugPanel"]
+visible = false
+layout_mode = 0
+offset_left = 65.0
+offset_top = 3.0
+offset_right = 421.0
+offset_bottom = 494.0
+color = Color(0.325441, 0.325441, 0.325441, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugPanel/BG"]
+visible = false
+layout_mode = 0
+offset_left = 7.37
+offset_top = 39.0
+offset_right = 350.37
+offset_bottom = 478.0
+
+[node name="Label" type="Label" parent="DebugPanel/BG/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "WASD - Move
+LSHIFT - Spring
+SPACE - Jump
+
+E - General Interact
+LMB - Tool primaray use
+RMB - Tool secondary use
+Q or LMB - Pocket left (with Empty Hands)
+R or RMB - Pocket right (with Empty Hands)
+G - Grab item (with Empty Hands)
+
+Deposit items from your pockets and picker
+into their proper deposit points. 
+Logs can be pushed with your body or
+grabbed and moved towards the deposit.
+
+Complete both trails to exit the level"
+
+[node name="FPS" type="Label" parent="DebugPanel"]
+layout_mode = 0
+offset_left = 355.0
+offset_top = 2.0
+offset_right = 395.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 31
+text = "999"
+
+[node name="DeathScreen" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_bldy4")
+
+[node name="ColorRect" type="ColorRect" parent="DeathScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="DeathScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.5
+offset_top = -151.5
+offset_right = 450.5
+offset_bottom = 151.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(450.5, 154.5)
+theme_override_fonts/normal_font = ExtResource("8_eoybr")
+theme_override_font_sizes/normal_font_size = 241
+text = "FAILURE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="DeathScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = 211.0
+offset_right = 25.0
+offset_bottom = 242.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(25, 16)
+theme_override_font_sizes/font_size = 81
+text = "Retry"
+
+[connection signal="timeout" from="ClearTimer" to="." method="clear_ui"]
+[connection signal="pressed" from="DeathScreen/Button" to="DeathScreen" method="_on_button_pressed"]

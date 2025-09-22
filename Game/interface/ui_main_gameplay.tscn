@@ -1,0 +1,203 @@
+[gd_scene load_steps=6 format=3 uid="uid://uxnygvr20moq"]
+
+[ext_resource type="Script" uid="uid://chkawu750o8tk" path="res://Game/interface/ui_main_gameplay.gd" id="1_hsk2k"]
+[ext_resource type="FontFile" uid="uid://123cyg2ru2nn" path="res://Content/fonts/mingliu.ttf" id="2_j43k7"]
+[ext_resource type="Texture2D" uid="uid://oaxqlxwm76dj" path="res://Content/sprites/spr_ui_pocket_new.png" id="2_q1axo"]
+[ext_resource type="Texture2D" uid="uid://iitk82gbwem3" path="res://Content/sprites/spr_ui_pocketfill_new.png" id="3_j43k7"]
+[ext_resource type="Script" uid="uid://bkv0oscfbof1x" path="res://Game/interface/ui_pocket_component.gd" id="4_6wy5l"]
+
+[node name="UIMainGameplay" type="Control" node_paths=PackedStringArray("mission_completed_label", "mission_score_label", "mission_time_label", "mission_objectives_remaining_label", "pocket_container", "pocket_left_fill", "pocket_right_fill", "area_label", "final_score_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hsk2k")
+mission_completed_label = NodePath("MissionCompleteLabel")
+mission_score_label = NodePath("MissionScoreLabel")
+mission_time_label = NodePath("MissionTimerLabel")
+mission_objectives_remaining_label = NodePath("MissionObjectivesRemainingLabel")
+pocket_container = NodePath("Pockets")
+pocket_left_fill = NodePath("Pockets/LPocketBG/LPocketFill")
+pocket_right_fill = NodePath("Pockets/RPocketBG/RPocketFill")
+area_label = NodePath("AreaCompleteLabel")
+final_score_label = NodePath("AreaScoreLabel")
+
+[node name="MissionCompleteLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -351.5
+offset_right = 351.5
+offset_bottom = 132.0
+grow_horizontal = 2
+pivot_offset = Vector2(288, 64)
+theme_override_colors/font_color = Color(1, 0.710835, 0.000571408, 1)
+theme_override_font_sizes/font_size = 96
+text = "Trail Complete!"
+horizontal_alignment = 1
+
+[node name="MissionScoreLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -338.0
+offset_top = 116.0
+offset_right = 338.0
+offset_bottom = 236.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.709804, 0, 1)
+theme_override_font_sizes/font_size = 61
+text = "Score: 0000"
+horizontal_alignment = 1
+
+[node name="MissionTimerLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -238.0
+offset_right = 238.0
+offset_bottom = 62.0
+grow_horizontal = 2
+pivot_offset = Vector2(238, 31)
+theme_override_constants/outline_size = 14
+theme_override_fonts/font = ExtResource("2_j43k7")
+theme_override_font_sizes/font_size = 61
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MissionObjectivesRemainingLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -238.0
+offset_top = 62.0
+offset_right = 252.0
+offset_bottom = 113.0
+grow_horizontal = 2
+pivot_offset = Vector2(245, 26)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 14
+theme_override_fonts/font = ExtResource("2_j43k7")
+theme_override_font_sizes/font_size = 46
+text = "Items Left: 0/00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MissionFailLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -338.0
+offset_right = 338.0
+offset_bottom = 132.0
+grow_horizontal = 2
+pivot_offset = Vector2(288, 64)
+theme_override_colors/font_color = Color(0.98125, 0, 0.3306, 1)
+theme_override_font_sizes/font_size = 96
+text = "Trail Failed"
+horizontal_alignment = 1
+
+[node name="WrongLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0114583
+anchor_top = 0.0666667
+anchor_right = 0.136903
+anchor_bottom = 0.165704
+offset_right = -0.512024
+offset_bottom = -0.17601
+theme_override_colors/font_color = Color(0.968627, 0.113725, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "Wrong Deposits: 0"
+
+[node name="AreaCompleteLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -350.5
+offset_top = 430.0
+offset_right = 363.5
+offset_bottom = 562.0
+grow_horizontal = 2
+pivot_offset = Vector2(288, 64)
+theme_override_colors/font_color = Color(0.341075, 1, 0.639761, 1)
+theme_override_font_sizes/font_size = 96
+text = "Area Complete!"
+horizontal_alignment = 1
+
+[node name="AreaScoreLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -434.5
+offset_top = 543.0
+offset_right = 447.5
+offset_bottom = 675.0
+grow_horizontal = 2
+pivot_offset = Vector2(288, 64)
+theme_override_colors/font_color = Color(0.341075, 1, 0.639761, 1)
+theme_override_font_sizes/font_size = 96
+text = "Final Score: 000000"
+horizontal_alignment = 1
+
+[node name="Pockets" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1408.0
+offset_top = -286.0
+offset_right = 2369.0
+offset_bottom = -158.0
+grow_vertical = 0
+scale = Vector2(2, 2)
+
+[node name="LPocketBG" type="TextureRect" parent="Pockets"]
+layout_mode = 2
+texture = ExtResource("2_q1axo")
+expand_mode = 3
+
+[node name="LPocketFill" type="TextureProgressBar" parent="Pockets/LPocketBG"]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 512.0
+offset_bottom = 513.0
+scale = Vector2(0.25, 0.25)
+max_value = 5.0
+fill_mode = 3
+texture_progress = ExtResource("3_j43k7")
+texture_progress_offset = Vector2(0, -0.84)
+script = ExtResource("4_6wy5l")
+
+[node name="RPocketBG" type="TextureRect" parent="Pockets"]
+layout_mode = 2
+texture = ExtResource("2_q1axo")
+expand_mode = 3
+flip_h = true
+
+[node name="RPocketFill" type="TextureProgressBar" parent="Pockets/RPocketBG"]
+layout_mode = 0
+offset_left = 128.197
+offset_right = 640.197
+offset_bottom = 512.0
+scale = Vector2(-0.25, 0.25)
+max_value = 5.0
+fill_mode = 3
+texture_progress = ExtResource("3_j43k7")
+script = ExtResource("4_6wy5l")

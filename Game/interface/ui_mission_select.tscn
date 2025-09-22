@@ -1,0 +1,86 @@
+[gd_scene load_steps=7 format=3 uid="uid://cywvs0jk6clft"]
+
+[ext_resource type="Script" uid="uid://bsgqlrbak4pa8" path="res://Game/interface/ui_mission_select.gd" id="1_64icc"]
+[ext_resource type="Texture2D" uid="uid://33ayvttvwl7x" path="res://Game/areas/hud layout concept.png" id="1_oo1bn"]
+[ext_resource type="PackedScene" uid="uid://dhncv3fvys8e3" path="res://Game/interface/ui_mission_select_button.tscn" id="3_yc2jt"]
+[ext_resource type="Texture2D" uid="uid://ddkrtjyowk2q6" path="res://Content/sprites/mission thumbnails/spr_thumb_default.png" id="4_8wcjm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_73j3k"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ou7lp"]
+bg_color = Color(0.099986, 0.099986, 0.099986, 1)
+
+[node name="MissionSelectUI" type="Control" node_paths=PackedStringArray("zone_name_label", "zone_data_label", "mission_thumbnail")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_64icc")
+zone_name_label = NodePath("BGPanel/ZoneNameLabel")
+zone_data_label = NodePath("BGPanel/ZoneDataLabel")
+mission_thumbnail = NodePath("BGPanel/MissionThumbnail")
+
+[node name="HudLayoutConcept" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(960, 544)
+scale = Vector2(1, 1.00741)
+texture = ExtResource("1_oo1bn")
+
+[node name="BGPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 1088.0
+offset_top = 24.0
+offset_right = 1896.0
+offset_bottom = 1064.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_73j3k")
+
+[node name="ZoneNameLabel" type="RichTextLabel" parent="BGPanel"]
+layout_mode = 2
+offset_left = 192.0
+offset_right = 640.0
+offset_bottom = 88.0
+theme_override_font_sizes/normal_font_size = 62
+text = "Zone Name"
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="ZoneDataLabel" type="RichTextLabel" parent="BGPanel"]
+layout_mode = 2
+offset_left = 192.0
+offset_top = 488.0
+offset_right = 640.0
+offset_bottom = 576.0
+theme_override_font_sizes/normal_font_size = 40
+text = "Easy - 3 Stage - $"
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="MissionThumbnail" type="TextureRect" parent="BGPanel"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 104.0
+offset_right = 800.0
+offset_bottom = 445.0
+scale = Vector2(0.956522, 0.945748)
+texture = ExtResource("4_8wcjm")
+
+[node name="Panel" type="Panel" parent="BGPanel"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 680.0
+offset_right = 768.0
+offset_bottom = 1000.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ou7lp")
+
+[node name="MissionBox" type="VBoxContainer" parent="BGPanel"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 680.0
+offset_right = 768.0
+offset_bottom = 1000.0
+
+[node name="MissionSelectButton" parent="BGPanel/MissionBox" instance=ExtResource("3_yc2jt")]
+layout_mode = 2

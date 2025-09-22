@@ -1,0 +1,170 @@
+class_name PlayerInterface
+extends Control
+
+@export var death_screen : Control
+
+@export var default_ui_panel : PlayerUIPanel
+@export var current_ui_panel : PlayerUIPanel
+
+@export_category("Panels")
+@export var free_roam_panel : PlayerUIPanel
+@export var gameplay_panel : PlayerUIPanel
+@export var paused_panel : PlayerUIPanel
+
+func _ready() -> void:
+	change_ui_panel(default_ui_panel)
+	GameManager.mission_start.connect(start_mission_ui)
+	GameManager.mission_end.connect(finish_mission_ui)
+
+func change_ui_panel(new_panel : PlayerUIPanel) -> void:
+	if new_panel == current_ui_panel:
+		return
+	if current_ui_panel:
+		current_ui_panel.exit_panel()
+	
+	current_ui_panel = new_panel
+	current_ui_panel.enter_panel()
+
+func instantiante_oneoff_ui_panel(path : String):
+	var panel_to_instance = load(path)
+	if panel_to_instance.is_class("PlayerUIPanel"):	
+		var panel : PlayerUIPanel = panel_to_instance.instantiate() as PlayerUIPanel
+		add_child(panel)
+		change_ui_panel(panel)
+	else:
+		push_error("Received panel is not of type PlayerUIPanel")
+
+func _process(delta: float) -> void:
+	if current_ui_panel:
+		current_ui_panel.process_panel(delta)
+
+func start_mission_ui(mission : AreaMission):
+	change_ui_panel(gameplay_panel)
+
+func finish_mission_ui(mission : AreaMission):
+	change_ui_panel(free_roam_panel)
+
+##region Misison
+#@onready var completed_label = $MissionCompleteLabel
+#@onready var fail_label = $MissionFailLabel
+#@onready var mission_score_label = $MissionScoreLabel
+#@onready var timer_label = $MissionTimerLabel
+#@onready var items_remaining_label = $ItemsRemainingLabel
+#@onready var wrong_label = $WrongLabel
+#@onready var mission_timer : Timer = $MissionTimer
+#var counting : bool
+#@onready var label_countdown_timer : Timer = $ClearTimer
+##endregion
+#
+##region Area
+#@onready var area_label = $AreaCompleteLabel
+#@onready var final_score_label = $AreaScoreLabel
+##endregion
+#
+##region Pockets
+#@onready var pocket_left_fill = $Pockets/LPocketBG/LPocketFill
+#@onready var pocket_right_fill = $Pockets/RPocketBG/RPocketFill
+##@onready var pocket_left_garbnumb = $HBoxContainer/LPocketBG/LPocketTrash
+##@onready var pocket_left_recnumb = $HBoxContainer/RPocketBG/LPocketRecycle
+##@onready var pocket_right_garbnumb = $HBoxContainer/RPocketBG/RPocketTrash
+##@onready var pocket_right_recnumb = $HBoxContainer/RPocketBG/RPocketRecycle
+##endregion
+#
+#var timeout : float = 0
+## Called when the node enters the scene tree for the first time.
+#func _ready():
+	#GameManager.mission_start.connect(begin_mission_ui)
+	#GameManager.mission_end.connect(complete_mission_ui)
+	#GameManager.mission_fail.connect(fail_mission_ui)
+	#GameManager.area_complete_area.connect(complete_area_ui)
+	#
+	#GameManager.ui_update_item_counts.connect(update_counts)
+	#GameManager.ui_update_score_count.connect(update_score)
+	#GameManager.ui_timer_start.connect(begin_ui_timer)
+	#GameManager.ui_update_time_taken.connect(update_time_taken_ui)
+	#GameManager.player_death.connect(player_death_ui)
+	#clear_ui()
+#
+#func player_death_ui():
+	#death_screen.visible = true
+#
+#func begin_mission_ui(mission : AreaMission):
+	#update_score(mission)
+	#print("Starting mission UI for ", mission.mission_name)
+	#timer_label.visible = true
+	#items_remaining_label.visible = true
+	#wrong_label.visible = true
+	#completed_label.visible = false
+	#fail_label.visible = false
+#
+#func begin_ui_timer(time : float):
+	#counting = true
+	##mission_timer.wait_time = time
+	#mission_timer.start(time)
+#
+#func update_time_taken_ui(time_taken : float):
+	#print("bagwa")
+	#timer_label.text = str(snappedf(time_taken, 0.1))
+	##timer_label.text = "0%d:%0d" % [floor(time_taken / 60), int(time_taken) % 60]
+#
+## Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+	#if counting:
+		#timer_label.text = "0%d:%0d" % [floor(mission_timer.time_left / 60), int(mission_timer.time_left) % 60]
+#
+#func update_counts():
+	##trash_count_label.text = str("[center]Trash: ", MissionInventory.level_trash_count,"[/center]")
+	##recycle_count_label.text = str("[center]Recycle: ", MissionInventory.level_recycle_count,"[/center]")
+	#
+	#pocket_left_fill.value = PocketManager.left_pocket_current
+	#pocket_right_fill.value = PocketManager.right_pocket_current
+	#
+	## This is probably horribly innefficient
+	## Too bad! 
+	##pocket_left_garbnumb = str(PocketManager.left_pocket_trash)
+	##pocket_left_recnumb.text = str(PocketManager.left_pocket_recycle)
+	##pocket_right_garbnumb.text = str(PocketManager.right_pocket_trash)
+	##pocket_right_recnumb.text = str(PocketManager.right_pocket_recycle)
+	##trash_count_label.text = str(MissionInventory.level_trash_count)
+#
+#func update_score(mission : AreaMission):
+	#var scr_as_percentage = int(round((float(mission.objectives_completed) / mission.objectives_in_mission) * 100))
+	#items_remaining_label.text = str("Items Deposited: ", str(mission.objectives_completed), "/", str(mission.objectives_in_mission))
+	#wrong_label.text = str("Wrong Deposits: ", str(mission.mission_wrong_deposits))
+#
+#func complete_mission_ui(mission : AreaMission):
+	#timer_label.visible = false
+	#items_remaining_label.visible = false
+	#wrong_label.visible = false
+	#completed_label.visible = true
+	#mission_score_label.visible = true
+	#mission_score_label.text = ("Score: " + str(mission.mission_score))
+	#label_countdown_timer.paused = false
+	#label_countdown_timer.start(timeout+2)
+#
+#func fail_mission_ui(mission : AreaMission):
+	#timer_label.visible = false
+	#items_remaining_label.visible = false
+	#wrong_label.visible = false
+	#fail_label.visible = true
+	#label_countdown_timer.paused = false
+	#label_countdown_timer.start(timeout)
+#
+#func complete_area_ui(area : AreaManager):
+	#area_label.visible = true
+	#final_score_label.visible = true
+	#final_score_label.text = ("Area Score: " + str(area.final_area_score)) 
+	#label_countdown_timer.start(timeout + 3)
+#
+## This is for debug purposes only, replace with animations and stuff later
+#func clear_ui():
+	#print("Clearing UI")
+	#completed_label.visible = false
+	#fail_label.visible = false
+	#wrong_label.visible = false
+	#timer_label.visible = false
+	#items_remaining_label.visible = false
+	#mission_score_label.visible = false
+	#area_label.visible = false
+	#final_score_label.visible = false
+	#death_screen.visible = false
