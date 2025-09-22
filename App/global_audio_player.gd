@@ -1,4 +1,5 @@
-extends Control
+class_name GlobalAudioPlayer
+extends AudioStreamPlayer
 
 
 # Called when the node enters the scene tree for the first time.
@@ -10,10 +11,5 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-
-func _on_play_pressed() -> void:
-	GameManager.load_scene.emit("res://Content/maps/map_intro_office.tscn")
-
-
-func _on_quit_pressed() -> void:
-	pass # Replace with function body.
+func _on_finished() -> void:
+	queue_free()

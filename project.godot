@@ -10,9 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Untitled Trail Game"
+config/name="Hallows Well"
+config/description="Explore the Farway. Collect treasures."
 config/tags=PackedStringArray("game")
-run/main_scene="res://App/game.tscn"
+run/main_scene="uid://chs8oja85k8ks"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://Content/sprites/icon.svg"
 
@@ -22,17 +23,24 @@ GameManager="*res://App/GameManager.gd"
 PocketManager="*res://Game/components/pocket_component.gd"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
+GlobalAudioManager="*res://App/global_audio_manager.gd"
 
 [dialogic]
 
 directories/dch_directory={
+"lab_tech": "res://Content/dialogue/characters/lab_tech.dch",
 "navigator": "res://Content/dialogue/characters/navigator.dch",
-"receptionist_bunny": "res://Content/dialogue/characters/receptionist_bunny.dch"
+"random_guy": "res://Content/dialogue/characters/random_guy.dch",
+"receptionist_bunny": "res://Content/dialogue/characters/receptionist_bunny.dch",
+"smug_guy": "res://Content/dialogue/characters/smug_guy.dch"
 }
 directories/dtl_directory={
 "map_hub_labTech_intro": "res://Content/dialogue/conversations/map_hub_labTech_intro.dtl",
 "map_hub_navigator_intro": "res://Content/dialogue/conversations/map_hub_navigator_intro.dtl",
-"map_intro_receptionist": "res://Content/dialogue/conversations/map_intro_receptionist.dtl"
+"map_intro_chairGuy": "res://Content/dialogue/conversations/map_intro_chairGuy.dtl",
+"map_intro_randomGuy": "res://Content/dialogue/conversations/map_intro_randomGuy.dtl",
+"map_intro_receptionist": "res://Content/dialogue/conversations/map_intro_receptionist.dtl",
+"map_lostMine_tutorialNPC": "res://Content/dialogue/conversations/map_lostMine_tutorialNPC.dtl"
 }
 extensions_folder="res://addons/dialogic_additions"
 text/letter_speed=0.04
@@ -57,29 +65,31 @@ text/autopauses={}
 glossary/default_case_sensitive=true
 layout/style_list=["res://Content/dialogue/bwauh.tres"]
 layout/default_style="res://Content/dialogue/bwauh.tres"
+variables={
+"unfriendly": 0
+}
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=2
 window/size/initial_position_type=2
 
 [dotnet]
 
-project/assembly_name="Trail Game"
+project/assembly_name="Hallows Well"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/boujie_water_shader/plugin.cfg", "res://addons/csg_terrain/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/portals/plugin.cfg", "res://addons/qodot/plugin.cfg")
+enabled=PackedStringArray("res://addons/boujie_water_shader/plugin.cfg", "res://addons/csg_terrain/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/portals/plugin.cfg", "res://addons/qodot/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [file_customization]
 
 folder_colors={
 "res://App/": "blue",
 "res://Content/": "yellow",
+"res://Content/interface/": "yellow",
 "res://Game/": "red",
-"res://Interface/": "green",
 "res://addons/": "pink",
 "res://script_templates/": "pink"
 }
@@ -179,16 +189,16 @@ previous_tool={
 }
 pocket_left={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":81,"key_label":0,"unicode":113,"location":0,"echo":false,"script":null)
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":81,"key_label":0,"unicode":113,"location":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":9,"pressure":0.0,"pressed":true,"script":null)
-, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
 ]
 }
 pocket_right={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":82,"key_label":0,"unicode":114,"location":0,"echo":false,"script":null)
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(153, 17),"global_position":Vector2(162, 63),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":82,"key_label":0,"unicode":114,"location":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":10,"pressure":0.0,"pressed":true,"script":null)
-, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(153, 17),"global_position":Vector2(162, 63),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
 grab={

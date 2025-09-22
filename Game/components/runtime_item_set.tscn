@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bsoxs8gmnstgy" path="res://Game/components/runtime_item_set.gd" id="1_ssr4f"]
 [ext_resource type="Texture2D" uid="uid://ti8omwpac58c" path="res://Content/sprites/spr_ui_crosshair.png" id="2_uif7u"]
-[ext_resource type="PackedScene" uid="uid://b10igw5xcvojj" path="res://Interface/ui_player_interface.tscn" id="3_54bsp"]
+[ext_resource type="PackedScene" uid="uid://b10igw5xcvojj" path="res://Content/interface/ui_player_interface.tscn" id="3_54bsp"]
 [ext_resource type="PackedScene" uid="uid://bfwfcn483wgly" path="res://Game/player/tools/tool_manager.tscn" id="4_gh7qe"]
 [ext_resource type="Script" uid="uid://b2e0l3amacr6i" path="res://Game/player/tools/tool_shovel.gd" id="5_yl0u7"]
 

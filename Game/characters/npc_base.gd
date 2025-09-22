@@ -1,7 +1,7 @@
 @icon("res://App/editor icons/spr_ed_npc.png")
 extends Node3D
 
-@export var dialogue_timeline : String
+@export var dialogue_timeline : DialogicTimeline
 @export var character : DialogicCharacter
 @onready var anim_player = $AnimationPlayer
 

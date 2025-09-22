@@ -8,4 +8,7 @@ script = ExtResource("1_sa8ac")
 [node name="MissionTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="UIUpdateTimer" type="Timer" parent="."]
+
 [connection signal="timeout" from="MissionTimer" to="." method="_on_mission_timer_timeout"]
+[connection signal="timeout" from="UIUpdateTimer" to="." method="_on_ui_update_timer_timeout"]

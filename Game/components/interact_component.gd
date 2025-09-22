@@ -1,5 +1,7 @@
 extends Area3D
 
+## The InteractComponent drives almost all player interactions in the game. It is the medium through which the players Frobber and the object being interacted with communicate
+
 class_name InteractComponent
 
 # This node will be attached to other nodes and will handle all the interaction handling

@@ -3,6 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://gcsr8xrou0dj" path="res://Game/player/tools/tool.tscn" id="1_cgdkp"]
 [ext_resource type="Script" uid="uid://dj3mtbcu7xl1g" path="res://Game/player/tools/tool_hands.gd" id="2_vbi5e"]
 
-[node name="ToolHands" instance=ExtResource("1_cgdkp")]
+[node name="ToolHands" node_paths=PackedStringArray("hold_point") instance=ExtResource("1_cgdkp")]
 script = ExtResource("2_vbi5e")
+hold_point = NodePath("HoldPoint")
 toolName = "Empty Hands"
+
+[node name="HoldPoint" type="Node3D" parent="." index="4"]

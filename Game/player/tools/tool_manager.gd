@@ -5,22 +5,25 @@ class_name PlayerToolManager
 # TOOL MANAGER
 # Handles things like equipping/unequipping, input handling, and 
 
+@export var player : Player
+@export var cam_container : Node3D
+@export var playerFrobber : Frobber
+
 @export var default_tool : PlayerTool
+@export var ray3d : RayCast3D
+@export var toolName_label : Label 
+@export var toolAmmo_label : Label
+
 var current_tool : PlayerTool
 
+var tool_array = []
 var equip_index : int
 var tool_selected : int = 0
 var total_tools : int
-var tool_array = []
-@export var player : PlayerSMC
-@export var cam_container : Node3D
 
-@export var ray3d : RayCast3D
-@export var playerFrobber : Frobber
 var has_hatchet : bool = true
 var has_shovel : bool = true
-@export var debuglabel : Label 
-@export var debuglabel_ammo : Label
+var prev_tween : Tween
 
 signal on_tool_change(tool : PlayerTool)
 
@@ -28,8 +31,8 @@ signal on_tool_change(tool : PlayerTool)
 func _ready():
 	_ready_tools()
 	switch_tool()
-	debuglabel.text = str(default_tool.toolName)
-	debuglabel_ammo.text = ""
+	toolName_label.text = str(default_tool.toolName)
+	toolAmmo_label.text = ""
 	pass # Replace with function body.
 
 func _ready_tools():
@@ -52,18 +55,10 @@ func _process(delta):
 	var prev_selected = tool_selected
 	_process_input()
 
-	debuglabel.text = str(current_tool.toolName)
+	toolName_label.text = str(current_tool.toolName)
 	
 	if prev_selected != tool_selected:
 		switch_tool()
-
-func _physics_process(delta: float) -> void:
-	handle_sway()
-
-func handle_sway():
-	#rotate_y(deg_to_rad(-cam_container.rotation.x))
-	#rotate_x(deg_to_rad(-cam_container.rotation.y))
-	pass
 
 func _process_input():
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -73,7 +68,7 @@ func _process_input():
 			tool_secondary()
 		elif Input.is_action_just_pressed("tertiary") && current_tool.canTertiary:
 			tool_tertiary()
-		debuglabel.text = str(current_tool.toolName)
+		toolName_label.text = str(current_tool.toolName)
 			
 	# Toolbar Scrolling
 	if Input.is_action_just_pressed("next_tool"):
@@ -87,10 +82,19 @@ func _process_input():
 		else:
 			tool_selected-=1
 	
+	# Keyboard input
+	if Input.is_key_pressed(KEY_1): # Empty Hands
+		tool_selected = 0
+	elif Input.is_key_pressed(KEY_2): # Picker
+		tool_selected = 1
+	elif Input.is_key_pressed(KEY_3): # Hatchet
+		tool_selected = 2
+	elif Input.is_key_pressed(KEY_4): # Shovel
+		tool_selected = 3
+	
 func switch_tool():
 	equip_index = 0
-	
-	debuglabel_ammo.text = ""
+	toolAmmo_label.text = ""
 	
 	for t in tool_array:
 		if equip_index == tool_selected:
@@ -104,6 +108,15 @@ func switch_tool():
 		equip_index += 1
 		
 	on_tool_change.emit(current_tool)
+	
+	toolName_label.modulate = Color.WHITE
+	if prev_tween:
+		prev_tween.stop()
+	await get_tree().create_timer(2).timeout
+	var tween = get_tree().create_tween()
+	prev_tween = tween
+	tween.tween_property(toolName_label, "modulate", Color(255, 255, 255, 0), 1)
+
 
 func tool_primary():
 	current_tool._tool_primary()

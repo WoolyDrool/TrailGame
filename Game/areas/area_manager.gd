@@ -21,11 +21,6 @@ func _ready() -> void:
 			missions[mission.mission_name.to_lower()] = mission
 	print(missions)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 func begin_area_mission(mission : AreaMission):
 	if !current_mission:
 		current_mission = mission 
