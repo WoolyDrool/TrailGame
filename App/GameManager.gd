@@ -42,6 +42,7 @@ signal area_complete_area(area : AreaManager)
 
 # Scene Management
 signal load_scene(path : String)
+signal load_scene_without_player(path : String)
 signal reload_current_scene
 var player_spawned : bool
 

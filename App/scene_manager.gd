@@ -8,6 +8,7 @@ extends Node
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	GameManager.load_scene.connect(load_scene)
+	GameManager.load_scene_without_player.connect(load_scene_without_player)
 	GameManager.reload_current_scene.connect(reload_current)
 
 	pass # Replace with function body.
@@ -44,3 +45,17 @@ func load_scene(path : String):
 	else:
 		print_debug("SCENE ", path, " IS NOT A VALID PATH")
 	pass
+
+func load_scene_without_player(path : String):
+	if(ResourceLoader.exists(path)):
+		transitioner.tween_out()
+		await transitioner.transition_finished
+		print("awaited transition")
+		var new_scene = load(path).instantiate()
+		current_scene.queue_free()
+		current_scene = new_scene
+		get_parent().add_child(new_scene)
+		get_parent().scene_file_path
+		transitioner.tween_in()
+	else:
+		print_debug("SCENE ", path, " IS NOT A VALID PATH")
