@@ -1,10 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bw8sepo1dej0s"]
+[gd_scene load_steps=16 format=3 uid="uid://bw8sepo1dej0s"]
 
 [ext_resource type="Script" uid="uid://chcpbdpal42dg" path="res://Game/player/player_controller.gd" id="1_chifv"]
 [ext_resource type="PackedScene" uid="uid://b10igw5xcvojj" path="res://Content/interface/ui_player_interface.tscn" id="2_uk1te"]
 [ext_resource type="Script" uid="uid://lqkqqlni4kvg" path="res://Game/player/player_frobber.gd" id="2_wjsc6"]
 [ext_resource type="PackedScene" uid="uid://bfwfcn483wgly" path="res://Game/player/tools/tool_manager.tscn" id="4_bexwg"]
-[ext_resource type="Script" uid="uid://b2e0l3amacr6i" path="res://Game/player/tools/tool_shovel.gd" id="5_0122v"]
 [ext_resource type="Texture2D" uid="uid://ti8omwpac58c" path="res://Content/sprites/spr_ui_crosshair.png" id="7_00gkg"]
 [ext_resource type="FontFile" uid="uid://123cyg2ru2nn" path="res://Content/fonts/mingliu.ttf" id="7_t0aee"]
 [ext_resource type="Script" uid="uid://ngk5os68j0ar" path="res://Game/components/runtime_item_manager.gd" id="9_4ys5o"]
@@ -91,33 +90,36 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("7_00gkg")
 
-[node name="ColorRect" type="ColorRect" parent="CamContainer/Camera3D/ImmediateUI/Crosshair"]
-layout_mode = 1
-anchors_preset = 8
+[node name="Container" type="Control" parent="CamContainer/Camera3D/ImmediateUI/Crosshair"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="CamContainer/Camera3D/ImmediateUI/Crosshair/Container"]
+layout_mode = 2
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -309.55
-offset_top = 68.5332
-offset_right = 181.45
-offset_bottom = 380.533
+offset_left = -297.55
+offset_top = 80.5332
+offset_right = 193.45
+offset_bottom = 392.533
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.3, 1)
 color = Color(0.404511, 0.404511, 0.404511, 1)
 
-[node name="InteractText" type="Label" parent="CamContainer/Camera3D/ImmediateUI/Crosshair"]
-layout_mode = 1
-anchors_preset = 8
+[node name="InteractText" type="Label" parent="CamContainer/Camera3D/ImmediateUI/Crosshair/Container"]
+layout_mode = 2
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -300.45
-offset_top = 78.9331
-offset_right = 176.55
-offset_bottom = 374.933
+offset_left = -288.45
+offset_top = 90.9329
+offset_right = 188.55
+offset_bottom = 386.933
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.3, 1)
@@ -127,17 +129,16 @@ text = "Interact"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="ModifierText" type="Label" parent="CamContainer/Camera3D/ImmediateUI/Crosshair"]
-layout_mode = 1
-anchors_preset = 8
+[node name="ModifierText" type="Label" parent="CamContainer/Camera3D/ImmediateUI/Crosshair/Container"]
+layout_mode = 2
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -299.8
-offset_top = 176.0
-offset_right = 177.2
-offset_bottom = 397.0
+offset_left = -287.8
+offset_top = 188.0
+offset_right = 189.2
+offset_bottom = 409.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.3, 1)
@@ -147,17 +148,16 @@ text = "Modifier"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="AppendText" type="Label" parent="CamContainer/Camera3D/ImmediateUI/Crosshair"]
-layout_mode = 1
-anchors_preset = 8
+[node name="AppendText" type="Label" parent="CamContainer/Camera3D/ImmediateUI/Crosshair/Container"]
+layout_mode = 2
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -299.8
-offset_top = 286.5
-offset_right = 177.2
-offset_bottom = 422.5
+offset_left = -287.8
+offset_top = 298.5
+offset_right = 189.2
+offset_bottom = 434.5
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.3, 1)
@@ -180,8 +180,7 @@ toolAmmo_label = NodePath("ToolCountLabel")
 [node name="HoldPoint" parent="CamContainer/Camera3D/ToolManager/ToolHands" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, 0)
 
-[node name="ToolPicker" parent="CamContainer/Camera3D/ToolManager" index="1" node_paths=PackedStringArray("tool_manager")]
-tool_manager = NodePath("..")
+[node name="ToolPicker" parent="CamContainer/Camera3D/ToolManager" index="1"]
 primaryActionCooldown = 0.5
 tertiaryActionCooldown = 3.0
 
@@ -190,7 +189,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.7, -1.3)
 
 [node name="ToolShovel" parent="CamContainer/Camera3D/ToolManager" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.8, -1.30477)
-script = ExtResource("5_0122v")
 
 [node name="ToolLabel" parent="CamContainer/Camera3D/ToolManager" index="4"]
 anchors_preset = 8
