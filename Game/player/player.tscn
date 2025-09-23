@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bw8sepo1dej0s"]
+[gd_scene load_steps=15 format=3 uid="uid://bw8sepo1dej0s"]
 
 [ext_resource type="Script" uid="uid://chcpbdpal42dg" path="res://Game/player/player_controller.gd" id="1_chifv"]
 [ext_resource type="PackedScene" uid="uid://b10igw5xcvojj" path="res://Game/interface/ui_player_interface.tscn" id="2_uk1te"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://mcoxybw4lgw7" path="res://Game/interface/ui_immediate.tscn" id="3_7fv12"]
 [ext_resource type="PackedScene" uid="uid://bfwfcn483wgly" path="res://Game/player/tools/tool_manager.tscn" id="4_bexwg"]
 [ext_resource type="FontFile" uid="uid://123cyg2ru2nn" path="res://Content/fonts/mingliu.ttf" id="7_t0aee"]
-[ext_resource type="Script" uid="uid://ngk5os68j0ar" path="res://Game/components/runtime_item_manager.gd" id="9_4ys5o"]
 [ext_resource type="Script" uid="uid://btdv1yqfoavxf" path="res://Game/player/player_gamemode_manager.gd" id="9_uv2qt"]
 [ext_resource type="Script" uid="uid://bgrcmdk4tl5aj" path="res://Game/player/footsteps_manager.gd" id="10_4ys5o"]
 [ext_resource type="AudioStream" uid="uid://c0fwh5p1r0pa2" path="res://Content/sound/player/footsteps/sfx_player_footstep_grass.wav" id="11_x82ud"]
@@ -80,12 +79,11 @@ offset_top = -20.0
 offset_right = 2.0
 offset_bottom = -20.0
 
-[node name="ToolManager" parent="CamContainer/Camera3D" node_paths=PackedStringArray("player", "cam_container", "playerFrobber", "ray3d", "shovel_ray3d", "toolName_label", "toolAmmo_label") instance=ExtResource("4_bexwg")]
+[node name="ToolManager" parent="CamContainer/Camera3D" node_paths=PackedStringArray("player", "cam_container", "playerFrobber", "ray3d", "toolName_label", "toolAmmo_label") instance=ExtResource("4_bexwg")]
 player = NodePath("../../..")
 cam_container = NodePath("../..")
 playerFrobber = NodePath("..")
 ray3d = NodePath("../RayCast3D")
-shovel_ray3d = NodePath("../ShovelCast")
 toolName_label = NodePath("ToolLabel")
 toolAmmo_label = NodePath("ToolCountLabel")
 
@@ -208,10 +206,6 @@ text = "ild = false
 
 [node name="PocketComponent" type="Node" parent="."]
 script = ExtResource("14_hygt8")
-
-[node name="RuntimeItemManager" type="Node" parent="."]
-script = ExtResource("9_4ys5o")
-metadata/_custom_type_script = "uid://ngk5os68j0ar"
 
 [node name="PlayerGamemodeManager" type="Node" parent="." node_paths=PackedStringArray("tool_manager", "player_interface", "player_frobber")]
 script = ExtResource("9_uv2qt")
