@@ -4,24 +4,24 @@ class_name PlayerTool
 
 var manager : PlayerToolManager
 @export var toolName = "Default"
+@export var primaryActionCooldown : float
+@export var secondaryActionCooldown : float
+@export var tertiaryActionCooldown : float
+@export var raycast_range = -2
+@export var toolCast : RayCast3D
+
+@onready var primaryActionTimer = $PrimaryTimer
+@onready var secondaryActionTimer = $SecondaryTimer
+@onready var tertiaryActionTimer = $TertiaryTimer
+
 var isEquip : bool = false
 var canPrimary : bool = true
 var canSecondary : bool = true
 var canTertiary : bool = true
-@export var raycast_range = -2
-
 var ray : RayCast3D
 var ray_result : InteractComponent 
 var frobber : Frobber
-@export var toolCast : RayCast3D
-@onready var primaryActionTimer = $PrimaryTimer
-@onready var secondaryActionTimer = $SecondaryTimer
-@onready var tertiaryActionTimer = $TertiaryTimer
 var animPlayer : AnimationPlayer
-
-@export var primaryActionCooldown : float
-@export var secondaryActionCooldown : float
-@export var tertiaryActionCooldown : float
 
 func _ready():
 	_get_nodes()
