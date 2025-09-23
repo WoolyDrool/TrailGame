@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3koxqga8a6rm"]
+[gd_scene load_steps=6 format=3 uid="uid://c3koxqga8a6rm"]
 
 [ext_resource type="PackedScene" uid="uid://gcsr8xrou0dj" path="res://Game/player/tools/tool.tscn" id="1_vxnd3"]
 [ext_resource type="Script" uid="uid://b1s7dfk7j233l" path="res://Game/player/tools/tool_picker.gd" id="2_m30x5"]
 [ext_resource type="PackedScene" uid="uid://bkta2by5xdsdo" path="res://Content/models/tools/model_picker.tscn" id="3_b6git"]
+[ext_resource type="PackedScene" uid="uid://dxs72uo0wrifl" path="res://Content/models/tools/Picker Gun.tscn" id="4_1hwsd"]
 
 [sub_resource type="Curve3D" id="Curve3D_fvhg7"]
 _data = {
@@ -29,3 +30,7 @@ progress = 0.432179
 
 [node name="model_picker2" parent="." index="6" instance=ExtResource("3_b6git")]
 transform = Transform3D(0.115, 0, 0, 0, 0.115, 0, 0, 0, 0.115, 0, 0, 0)
+visible = false
+
+[node name="Picker Gun" parent="." index="7" instance=ExtResource("4_1hwsd")]
+transform = Transform3D(-2.18557e-08, 0, -0.5, 0, 0.5, 0, 0.5, 0, -2.18557e-08, 0, -0.2, 0.3)
