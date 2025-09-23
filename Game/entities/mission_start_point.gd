@@ -18,6 +18,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+func open_mission_panel():
+	GameManager.ui_show_mission_panel.emit()
+
 func activate_mission_from_point():
 	mission.begin_mission()
 	pass

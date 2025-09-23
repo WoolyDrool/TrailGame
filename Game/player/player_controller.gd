@@ -59,11 +59,21 @@ func _ready():
 	GameManager.move_player_to_position.connect(teleport_player)
 	GameManager.player_seize_controls.connect(seize_controls)
 	GameManager.player_return_controls.connect(return_controls)
+	GameManager.player_show_mouse.connect(toggle_mouse_state)
 	debug_label.text = str("state: none")
 
 func teleport_player(newpos : Vector3):
 	self.position = newpos
 	pass
+
+func toggle_mouse_state(boolean : bool):
+	print("toggled mouse state")
+	if boolean:
+		can_use_mouse = false
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		can_use_mouse = true
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _input(event):
 	if can_use_mouse:
@@ -109,11 +119,15 @@ func _physics_process(delta):
 
 #region State Machine
 func change_state(new_state : PLAYER_STATES) -> void:
+	if !can_move:
+		return
 	if new_state == player_state:
 		return
 	player_state = new_state
 	
 func handle_states(_delta) -> void:
+	if !can_move:
+		return
 	match player_state:
 		PLAYER_STATES.IDLE:
 			state_idle(_delta)

@@ -218,5 +218,6 @@ player_frobber = NodePath("../CamContainer/Camera3D")
 
 [connection signal="finished" from="FootstepsManager/FootstepsPlayer" to="FootstepsManager" method="_on_footsteps_player_finished"]
 
+[editable path="CamContainer/Camera3D/PlayerInterface"]
 [editable path="CamContainer/Camera3D/ToolManager"]
 [editable path="CamContainer/Camera3D/ToolManager/ToolHands"]

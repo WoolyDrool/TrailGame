@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cywvs0jk6clft"]
+[gd_scene load_steps=8 format=3 uid="uid://cywvs0jk6clft"]
 
 [ext_resource type="Script" uid="uid://bsgqlrbak4pa8" path="res://Game/interface/ui_mission_select.gd" id="1_64icc"]
 [ext_resource type="Texture2D" uid="uid://33ayvttvwl7x" path="res://Game/areas/hud layout concept.png" id="1_oo1bn"]
 [ext_resource type="PackedScene" uid="uid://dhncv3fvys8e3" path="res://Game/interface/ui_mission_select_button.tscn" id="3_yc2jt"]
 [ext_resource type="Texture2D" uid="uid://ddkrtjyowk2q6" path="res://Content/sprites/mission thumbnails/spr_thumb_default.png" id="4_8wcjm"]
+[ext_resource type="FontFile" uid="uid://ugdwuve6ft8x" path="res://Content/fonts/typewcond_bold.otf" id="4_c5deq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_73j3k"]
 bg_color = Color(0, 0, 0, 1)
@@ -11,7 +12,7 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ou7lp"]
 bg_color = Color(0.099986, 0.099986, 0.099986, 1)
 
-[node name="MissionSelectUI" type="Control" node_paths=PackedStringArray("zone_name_label", "zone_data_label", "mission_thumbnail")]
+[node name="UIMissionSelect" type="Control" node_paths=PackedStringArray("zone_name_label", "zone_data_label", "mission_thumbnail")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,6 +23,8 @@ script = ExtResource("1_64icc")
 zone_name_label = NodePath("BGPanel/ZoneNameLabel")
 zone_data_label = NodePath("BGPanel/ZoneDataLabel")
 mission_thumbnail = NodePath("BGPanel/MissionThumbnail")
+mouse_visible = true
+player_controls = false
 
 [node name="HudLayoutConcept" type="Sprite2D" parent="."]
 visible = false
@@ -31,10 +34,10 @@ texture = ExtResource("1_oo1bn")
 
 [node name="BGPanel" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 1088.0
-offset_top = 24.0
-offset_right = 1896.0
-offset_bottom = 1064.0
+offset_left = 576.0
+offset_top = 16.0
+offset_right = 1384.0
+offset_bottom = 1056.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_73j3k")
 
 [node name="ZoneNameLabel" type="RichTextLabel" parent="BGPanel"]
@@ -67,20 +70,42 @@ offset_bottom = 445.0
 scale = Vector2(0.956522, 0.945748)
 texture = ExtResource("4_8wcjm")
 
+[node name="StartButton" type="Button" parent="BGPanel"]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 928.0
+offset_right = 400.0
+offset_bottom = 1022.0
+theme_override_fonts/font = ExtResource("4_c5deq")
+theme_override_font_sizes/font_size = 64
+text = "Start"
+
+[node name="BackButton" type="Button" parent="BGPanel"]
+layout_mode = 0
+offset_left = 432.0
+offset_top = 928.0
+offset_right = 592.0
+offset_bottom = 1022.0
+theme_override_fonts/font = ExtResource("4_c5deq")
+theme_override_font_sizes/font_size = 64
+text = "Back"
+
 [node name="Panel" type="Panel" parent="BGPanel"]
 layout_mode = 0
 offset_left = 64.0
-offset_top = 680.0
+offset_top = 576.0
 offset_right = 768.0
-offset_bottom = 1000.0
+offset_bottom = 896.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ou7lp")
 
 [node name="MissionBox" type="VBoxContainer" parent="BGPanel"]
 layout_mode = 0
 offset_left = 64.0
-offset_top = 680.0
+offset_top = 576.0
 offset_right = 768.0
-offset_bottom = 1000.0
+offset_bottom = 896.0
 
 [node name="MissionSelectButton" parent="BGPanel/MissionBox" instance=ExtResource("3_yc2jt")]
 layout_mode = 2
+
+[connection signal="pressed" from="BGPanel/BackButton" to="." method="_on_back_button_pressed"]

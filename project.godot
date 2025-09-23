@@ -24,6 +24,7 @@ PocketManager="*res://Game/components/pocket_component.gd"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 GlobalAudioManager="*res://App/global_audio_manager.gd"
+UiPlayerInterface="*res://Game/interface/ui_player_interface.gd"
 
 [dialogic]
 
@@ -81,7 +82,7 @@ project/assembly_name="Hallows Well"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/boujie_water_shader/plugin.cfg", "res://addons/csg_terrain/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/portals/plugin.cfg", "res://addons/qodot/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/boujie_water_shader/plugin.cfg", "res://addons/csg_terrain/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/portals/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [file_customization]
 

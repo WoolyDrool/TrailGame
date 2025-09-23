@@ -15,12 +15,15 @@ signal player_enabled(bool)
 signal player_control_enabled(bool)
 signal player_seize_controls
 signal player_return_controls
+signal player_show_mouse(bool)
 
 # UI
 signal ui_update_item_counts # Updates things things like pockets
 signal ui_update_score_count(mission : AreaMission) # Updates the progress bar for each stage
 signal ui_timer_start(time : float)
 signal ui_update_time_taken(time_taken : float)
+signal ui_show_mission_panel
+signal ui_hide_mission_panel
 
 # Game Modes
 signal change_gamemode(gm : GameMode)

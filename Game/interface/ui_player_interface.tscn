@@ -1,13 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://b10igw5xcvojj"]
+[gd_scene load_steps=9 format=3 uid="uid://b10igw5xcvojj"]
 
 [ext_resource type="Script" uid="uid://bvoraqgnvunyr" path="res://Game/interface/ui_player_interface.gd" id="1_ovo8g"]
 [ext_resource type="PackedScene" uid="uid://uxnygvr20moq" path="res://Game/interface/ui_main_gameplay.tscn" id="2_2rt4l"]
 [ext_resource type="PackedScene" uid="uid://rv5ewhi4t7vu" path="res://Game/interface/ui_free_roam.tscn" id="2_du40e"]
+[ext_resource type="PackedScene" uid="uid://cywvs0jk6clft" path="res://Game/interface/ui_mission_select.tscn" id="4_wxk36"]
 [ext_resource type="Script" uid="uid://b00ny5kkytw53" path="res://Game/interface/debug_panel.gd" id="5_mrhco"]
+[ext_resource type="Texture2D" uid="uid://drew4fmvvrca2" path="res://Content/sprites/spr_ui_heart_filled.png" id="7_87cmh"]
 [ext_resource type="Script" uid="uid://bby4d3kx6xsd1" path="res://Game/interface/ui_death_screen.gd" id="7_bldy4"]
 [ext_resource type="FontFile" uid="uid://123cyg2ru2nn" path="res://Content/fonts/mingliu.ttf" id="8_eoybr"]
 
-[node name="PlayerInterface" type="Control" node_paths=PackedStringArray("death_screen", "default_ui_panel", "free_roam_panel", "gameplay_panel")]
+[node name="PlayerInterface" type="Control" node_paths=PackedStringArray("death_screen", "default_ui_panel", "free_roam_panel", "gameplay_panel", "mission_panel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,11 +21,18 @@ death_screen = NodePath("DeathScreen")
 default_ui_panel = NodePath("UIFreeRoam")
 free_roam_panel = NodePath("UIFreeRoam")
 gameplay_panel = NodePath("UIMainGameplay")
+mission_panel = NodePath("UIMissionSelect")
+
+[node name="UIMissionSelect" parent="." instance=ExtResource("4_wxk36")]
+visible = false
+layout_mode = 1
 
 [node name="UIFreeRoam" parent="." instance=ExtResource("2_du40e")]
+visible = false
 layout_mode = 1
 
 [node name="UIMainGameplay" parent="." instance=ExtResource("2_2rt4l")]
+visible = false
 layout_mode = 1
 
 [node name="Timer" type="Timer" parent="."]
@@ -150,6 +159,40 @@ grow_vertical = 2
 pivot_offset = Vector2(25, 16)
 theme_override_font_sizes/font_size = 81
 text = "Retry"
+
+[node name="Hearts" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = -158.0
+offset_right = 983.0
+offset_bottom = -30.0
+grow_vertical = 0
+
+[node name="Heart" type="TextureRect" parent="Hearts"]
+layout_mode = 2
+texture = ExtResource("7_87cmh")
+
+[node name="Heart2" type="TextureRect" parent="Hearts"]
+layout_mode = 2
+texture = ExtResource("7_87cmh")
+
+[node name="Heart3" type="TextureRect" parent="Hearts"]
+layout_mode = 2
+texture = ExtResource("7_87cmh")
+
+[node name="MoneyLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 826.0
+offset_right = 250.0
+offset_bottom = 892.0
+theme_override_constants/outline_size = 14
+theme_override_fonts/font = ExtResource("8_eoybr")
+theme_override_font_sizes/font_size = 65
+text = "$: 0000"
 
 [connection signal="timeout" from="ClearTimer" to="." method="clear_ui"]
 [connection signal="pressed" from="DeathScreen/Button" to="DeathScreen" method="_on_button_pressed"]

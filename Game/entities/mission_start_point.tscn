@@ -30,7 +30,7 @@ descriptorText = "Easy - 4 Stage - $"
 descriptorText_Color = Color(1, 1, 1, 1)
 contextText = "View Missions"
 contextText_Color = Color(1, 1, 1, 1)
-methodName = "activate_mission_from_point"
+methodName = "open_mission_panel"
 
 [node name="CollisionShape3D" parent="InteractComponent" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.269608)

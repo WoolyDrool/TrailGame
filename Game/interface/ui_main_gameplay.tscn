@@ -157,33 +157,17 @@ text = "Final Score: 000000"
 horizontal_alignment = 1
 
 [node name="Pockets" type="HBoxContainer" parent="."]
+layout_direction = 3
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 1408.0
+offset_left = 959.0
 offset_top = -286.0
-offset_right = 2369.0
+offset_right = 1920.0
 offset_bottom = -158.0
 grow_vertical = 0
 scale = Vector2(2, 2)
-
-[node name="LPocketBG" type="TextureRect" parent="Pockets"]
-layout_mode = 2
-texture = ExtResource("2_q1axo")
-expand_mode = 3
-
-[node name="LPocketFill" type="TextureProgressBar" parent="Pockets/LPocketBG"]
-layout_mode = 0
-offset_top = 1.0
-offset_right = 512.0
-offset_bottom = 513.0
-scale = Vector2(0.25, 0.25)
-max_value = 5.0
-fill_mode = 3
-texture_progress = ExtResource("3_j43k7")
-texture_progress_offset = Vector2(0, -0.84)
-script = ExtResource("4_6wy5l")
 
 [node name="RPocketBG" type="TextureRect" parent="Pockets"]
 layout_mode = 2
@@ -200,4 +184,21 @@ scale = Vector2(-0.25, 0.25)
 max_value = 5.0
 fill_mode = 3
 texture_progress = ExtResource("3_j43k7")
+script = ExtResource("4_6wy5l")
+
+[node name="LPocketBG" type="TextureRect" parent="Pockets"]
+layout_mode = 2
+texture = ExtResource("2_q1axo")
+expand_mode = 3
+
+[node name="LPocketFill" type="TextureProgressBar" parent="Pockets/LPocketBG"]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 512.0
+offset_bottom = 513.0
+scale = Vector2(0.25, 0.25)
+max_value = 5.0
+fill_mode = 3
+texture_progress = ExtResource("3_j43k7")
+texture_progress_offset = Vector2(0, -0.84)
 script = ExtResource("4_6wy5l")

@@ -10,11 +10,29 @@ extends Control
 @export var free_roam_panel : PlayerUIPanel
 @export var gameplay_panel : PlayerUIPanel
 @export var paused_panel : PlayerUIPanel
+@export var mission_panel : PlayerUIPanel
+
+enum UI_STATE {NONE, NORMAL, MISSION_SELECT, MISSION_GAMEPLAY, MISSION_COMPLETE, CONVERSATION, DEATH}
+@export var current_ui_state : UI_STATE
 
 func _ready() -> void:
 	change_ui_panel(default_ui_panel)
 	GameManager.mission_start.connect(start_mission_ui)
 	GameManager.mission_end.connect(finish_mission_ui)
+	
+	GameManager.ui_show_mission_panel.connect(show_mission_panel)
+	GameManager.ui_hide_mission_panel.connect(hide_mission_panel)
+
+func change_ui_state(new_ui_state : UI_STATE):
+	if new_ui_state == current_ui_state:
+		push_warning("Attempted to enter current ui state again")
+		return
+	
+	current_ui_state = new_ui_state
+	
+	match current_ui_state:
+		UI_STATE.NONE:
+			pass
 
 func change_ui_panel(new_panel : PlayerUIPanel) -> void:
 	if new_panel == current_ui_panel:
@@ -37,6 +55,12 @@ func instantiante_oneoff_ui_panel(path : String):
 func _process(delta: float) -> void:
 	if current_ui_panel:
 		current_ui_panel.process_panel(delta)
+
+func show_mission_panel():
+	change_ui_panel(mission_panel)
+
+func hide_mission_panel():
+	change_ui_panel(free_roam_panel)
 
 func start_mission_ui(mission : AreaMission):
 	change_ui_panel(gameplay_panel)

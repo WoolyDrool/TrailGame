@@ -1,4 +1,4 @@
-extends Control
+extends PlayerUIPanel
 
 @export_category("Elements")
 @export var zone_name_label : RichTextLabel
@@ -12,3 +12,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func _on_back_button_pressed() -> void:
+	GameManager.ui_hide_mission_panel.emit()
