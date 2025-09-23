@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://deq77xieec155"]
+[gd_scene load_steps=6 format=3 uid="uid://deq77xieec155"]
 
 [ext_resource type="Script" uid="uid://bsoxs8gmnstgy" path="res://Game/components/runtime_item_set.gd" id="1_ssr4f"]
 [ext_resource type="Texture2D" uid="uid://ti8omwpac58c" path="res://Content/sprites/spr_ui_crosshair.png" id="2_uif7u"]
 [ext_resource type="PackedScene" uid="uid://b10igw5xcvojj" path="res://Game/interface/ui_player_interface.tscn" id="3_54bsp"]
 [ext_resource type="PackedScene" uid="uid://bfwfcn483wgly" path="res://Game/player/tools/tool_manager.tscn" id="4_gh7qe"]
-[ext_resource type="Script" uid="uid://b2e0l3amacr6i" path="res://Game/player/tools/tool_shovel.gd" id="5_yl0u7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hcygf"]
 radius = 0.2
@@ -131,15 +130,9 @@ autowrap_mode = 3
 
 [node name="PlayerInterface" parent="." instance=ExtResource("3_54bsp")]
 
-[node name="ToolManager" parent="." node_paths=PackedStringArray("player", "cam_container", "ray3d", "playerFrobber") instance=ExtResource("4_gh7qe")]
+[node name="ToolManager" parent="." node_paths=PackedStringArray("ray3d") instance=ExtResource("4_gh7qe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-player = NodePath("")
-cam_container = NodePath("")
 ray3d = NodePath("../RayCast3D")
-playerFrobber = NodePath("")
-
-[node name="ToolShovel" parent="ToolManager" index="3"]
-script = ExtResource("5_yl0u7")
 
 [node name="ToolLabel" parent="ToolManager" index="4"]
 offset_top = -329.0
@@ -148,8 +141,5 @@ offset_bottom = -132.0
 [node name="ToolCountLabel" parent="ToolManager" index="5"]
 offset_top = -313.0
 offset_bottom = -202.0
-
-[node name="HoldPoint" parent="ToolManager" index="6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [editable path="ToolManager"]
