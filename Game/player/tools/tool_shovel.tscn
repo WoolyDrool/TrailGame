@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://cp0fol7mmhjpx"]
+[gd_scene load_steps=6 format=3 uid="uid://cp0fol7mmhjpx"]
 
 [ext_resource type="PackedScene" uid="uid://gcsr8xrou0dj" path="res://Game/player/tools/tool.tscn" id="1_8c6cj"]
-[ext_resource type="PackedScene" uid="uid://pletdq3bfgxj" path="res://Game/components/interact_component.tscn" id="2_7tvud"]
 [ext_resource type="Script" uid="uid://b2e0l3amacr6i" path="res://Game/player/tools/tool_shovel.gd" id="2_dsija"]
+[ext_resource type="PackedScene" uid="uid://dvowhti2tnybs" path="res://Game/player/tools/shovel_platform.tscn" id="3_dsija"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_luprd"]
 albedo_color = Color(0.552956, 0.552956, 0.552956, 1)
@@ -10,19 +10,15 @@ albedo_color = Color(0.552956, 0.552956, 0.552956, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s3vvj"]
 albedo_color = Color(0.374513, 0.301107, 0, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_dsija"]
-size = Vector3(0.6, 0.1, 0.4)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_554ev"]
-size = Vector3(1, 2, 1)
-
-[node name="ToolShovel" instance=ExtResource("1_8c6cj")]
+[node name="ToolShovel" node_paths=PackedStringArray("viewmodel") instance=ExtResource("1_8c6cj")]
 script = ExtResource("2_dsija")
+shovel_platform_obj = ExtResource("3_dsija")
+shovel_platform_active = false
+viewmodel = NodePath("Viewmodel")
 toolName = "Shovel"
 primaryActionCooldown = 1.0
 
 [node name="Viewmodel" type="CSGCombiner3D" parent="." index="4"]
-visible = false
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="Viewmodel" index="0"]
 transform = Transform3D(0.5, 0, 0, 0, 0.8, 0, 0, 0, 0.24, 0, 0.8, 0)
@@ -31,31 +27,3 @@ material = SubResource("StandardMaterial3D_luprd")
 [node name="CSGBox3D" type="CSGBox3D" parent="Viewmodel" index="1"]
 size = Vector3(0.1, 1.5, 0.1)
 material = SubResource("StandardMaterial3D_s3vvj")
-
-[node name="ShovelPlatform" type="CSGCombiner3D" parent="." index="5"]
-transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0, 0)
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="ShovelPlatform" index="0"]
-transform = Transform3D(0.5, 0, 0, 0, 0.8, 0, 0, 0, 0.24, 0, 0.8, 0)
-material = SubResource("StandardMaterial3D_luprd")
-
-[node name="CSGBox3D" type="CSGBox3D" parent="ShovelPlatform" index="1"]
-size = Vector3(0.1, 1.5, 0.1)
-material = SubResource("StandardMaterial3D_s3vvj")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="ShovelPlatform" index="2"]
-collision_layer = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ShovelPlatform/StaticBody3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0282e-07, -0.75, 1.49012e-08)
-shape = SubResource("BoxShape3D_dsija")
-
-[node name="InteractComponent" parent="ShovelPlatform/StaticBody3D" index="1" instance=ExtResource("2_7tvud")]
-interactText = "Shovel"
-modifierText = "Grab"
-
-[node name="CollisionShape3D" parent="ShovelPlatform/StaticBody3D/InteractComponent" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
-shape = SubResource("BoxShape3D_554ev")
-
-[editable path="ShovelPlatform/StaticBody3D/InteractComponent"]

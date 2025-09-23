@@ -10,6 +10,9 @@ var toggle_sprint : bool = false
 signal move_player_to_position(newpos : Vector3)
 signal player_death
 
+# Tools
+signal tool_shovel_reclaim
+
 # Control
 signal player_enabled(bool)
 signal player_control_enabled(bool)

@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://bfwfcn483wgly"]
+[gd_scene load_steps=10 format=3 uid="uid://bfwfcn483wgly"]
 
 [ext_resource type="Script" uid="uid://bjkfhvmmvcrwg" path="res://Game/player/tools/tool_manager.gd" id="1_wsnef"]
 [ext_resource type="PackedScene" uid="uid://vgijbx81ryjk" path="res://Game/player/tools/tool_hands.tscn" id="2_20lvc"]
 [ext_resource type="PackedScene" uid="uid://c3koxqga8a6rm" path="res://Game/player/tools/tool_picker.tscn" id="3_4tbw1"]
 [ext_resource type="PackedScene" uid="uid://dnxn4by1788gu" path="res://Game/player/tools/tool_hatchet.tscn" id="4_k0i6l"]
 [ext_resource type="PackedScene" uid="uid://cp0fol7mmhjpx" path="res://Game/player/tools/tool_shovel.tscn" id="5_16u6d"]
-[ext_resource type="Script" uid="uid://b2e0l3amacr6i" path="res://Game/player/tools/tool_shovel.gd" id="6_25ojs"]
 
 [sub_resource type="AnimationRootNode" id="AnimationRootNode_gi7xv"]
 
@@ -37,7 +36,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0, -1.3)
 
 [node name="ToolShovel" parent="." instance=ExtResource("5_16u6d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.4, -1.30477)
-script = ExtResource("6_25ojs")
 
 [node name="ToolLabel" type="Label" parent="."]
 anchors_preset = 3
