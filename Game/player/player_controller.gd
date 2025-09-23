@@ -10,6 +10,7 @@ enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, MENU,
 @onready var standing_collision = $StandingCollision
 @onready var crouching_collision = $CrouchingCollision
 @onready var ceiling_check = $CeilingCheck
+@onready var health_manager = $PlayerHealthManager
 
 @export_category("Mouse Look")
 @export var mouse_sens : float = 0.4
@@ -51,12 +52,11 @@ var default_cam_height = Vector3(0, 1, 0)
 var crouched_cam_height = Vector3(0, 0, 0)
 var crouch_transition_speed : float = 0.55
 var stand_transition_speed : float = 0.2
-var dead : bool = false
 
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	GameManager.move_player_to_position.connect(teleport_player)
+	GameManager.player_move_to_position.connect(teleport_player)
 	GameManager.player_seize_controls.connect(seize_controls)
 	GameManager.player_return_controls.connect(return_controls)
 	GameManager.player_show_mouse.connect(toggle_mouse_state)
@@ -106,9 +106,8 @@ func _process(delta):
 			#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _physics_process(delta):
-	if !dead:
+	if !health_manager.dead:
 		handle_states(delta)
-
 		determine_move_speed()
 	#handle_jump_input()
 	#
@@ -151,6 +150,10 @@ func handle_states(_delta) -> void:
 			debug_label.text = str("state: Conversation")
 			state_conversation()
 #endregion
+
+func check_if_on_floor():
+	if !is_on_floor():
+		change_state(PLAYER_STATES.FALLING)
 
 #region States
 func state_idle(_delta):
@@ -200,14 +203,11 @@ func state_touchdown(delta):
 		print("player died from fall damage!")
 		GameManager.player_death.emit()
 		seize_controls()
-		dead = true
 	else:
 		print("safely landed")
 		has_picker_jumped = false
 		change_state(PLAYER_STATES.IDLE)
 		
-		
-	
 func state_conversation():
 	pass
 #endregion

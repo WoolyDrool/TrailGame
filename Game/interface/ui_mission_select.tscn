@@ -12,7 +12,7 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ou7lp"]
 bg_color = Color(0.099986, 0.099986, 0.099986, 1)
 
-[node name="UIMissionSelect" type="Control" node_paths=PackedStringArray("zone_name_label", "zone_data_label", "mission_thumbnail")]
+[node name="UIMissionSelect" type="Control" node_paths=PackedStringArray("zone_name_label", "zone_data_label", "mission_thumbnail", "mission_vbox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,6 +23,8 @@ script = ExtResource("1_64icc")
 zone_name_label = NodePath("BGPanel/ZoneNameLabel")
 zone_data_label = NodePath("BGPanel/ZoneDataLabel")
 mission_thumbnail = NodePath("BGPanel/MissionThumbnail")
+mission_vbox = NodePath("BGPanel/MissionBox")
+mission_select_button_scene = ExtResource("3_yc2jt")
 mouse_visible = true
 player_controls = false
 
@@ -104,8 +106,5 @@ offset_left = 64.0
 offset_top = 576.0
 offset_right = 768.0
 offset_bottom = 896.0
-
-[node name="MissionSelectButton" parent="BGPanel/MissionBox" instance=ExtResource("3_yc2jt")]
-layout_mode = 2
 
 [connection signal="pressed" from="BGPanel/BackButton" to="." method="_on_back_button_pressed"]

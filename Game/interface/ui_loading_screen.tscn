@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyri5ddgh7s0c"]
+
+[ext_resource type="FontFile" uid="uid://ugdwuve6ft8x" path="res://Content/fonts/typewcond_bold.otf" id="1_04cya"]
+[ext_resource type="Script" uid="uid://bcyttrti2eic1" path="res://Game/interface/ui_loading_tips.gd" id="2_6ojj2"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0330097, 0.0289047, 0.139163, 1)
+
+[node name="LoadingLabel" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 872.0
+offset_right = 266.0
+offset_bottom = 958.0
+theme_override_fonts/font = ExtResource("1_04cya")
+theme_override_font_sizes/font_size = 64
+text = "Loading"
+
+[node name="LoadingTipLabel" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 960.0
+offset_right = 1856.0
+offset_bottom = 1046.0
+theme_override_fonts/font = ExtResource("1_04cya")
+theme_override_font_sizes/font_size = 32
+text = "Tip: This is a loading screen tip"
+
+[node name="LevelNameLabel" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 720.0
+offset_right = 640.0
+offset_bottom = 890.0
+theme_override_fonts/font = ExtResource("1_04cya")
+theme_override_font_sizes/font_size = 128
+text = "Level Name"
+
+[node name="LoadingTips" type="Node" parent="." node_paths=PackedStringArray("loading_tip_label")]
+script = ExtResource("2_6ojj2")
+tips = Dictionary[String, Texture2D]({
+"All tools have a special fire mode, accessed by hitting Mouse-3": null
+})
+loading_tip_label = NodePath("../ColorRect/LoadingTipLabel")

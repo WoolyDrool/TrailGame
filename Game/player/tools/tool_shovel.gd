@@ -30,10 +30,11 @@ func _tool_tertiary() -> void:
 			canSecondary = false
 			canTertiary = false	
 			viewmodel.visible = false
-	
+
 func reclaim_shovel():
 	shovel_platform_active = false
 	canPrimary = true
 	canSecondary = true
 	canTertiary = true
 	viewmodel.visible = true
+	manager.player.check_if_on_floor()

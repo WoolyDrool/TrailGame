@@ -53,7 +53,6 @@ func frob():
 	
 	#col_to_select = null
 	var old_col
-	
 	if col_to_select != old_col:
 		col_to_select = null
 	

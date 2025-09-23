@@ -7,8 +7,6 @@ var mouse_sensitivity : float = 0.4
 var player_path : String = "res://Game/player/player.tscn"
 var toggle_crouch : bool = false
 var toggle_sprint : bool = false
-signal move_player_to_position(newpos : Vector3)
-signal player_death
 
 # Tools
 signal tool_shovel_reclaim
@@ -19,6 +17,8 @@ signal player_control_enabled(bool)
 signal player_seize_controls
 signal player_return_controls
 signal player_show_mouse(bool)
+signal player_move_to_position(newpos : Vector3)
+signal player_death
 
 # UI
 signal ui_update_item_counts # Updates things things like pockets
@@ -27,6 +27,7 @@ signal ui_timer_start(time : float)
 signal ui_update_time_taken(time_taken : float)
 signal ui_show_mission_panel
 signal ui_hide_mission_panel
+signal ui_populate_mission_buttons(missionName : String)
 
 # Game Modes
 signal change_gamemode(gm : GameMode)

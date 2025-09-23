@@ -1,16 +1,27 @@
-[gd_scene load_steps=15 format=3 uid="uid://bw8sepo1dej0s"]
+[gd_scene load_steps=20 format=3 uid="uid://bw8sepo1dej0s"]
 
 [ext_resource type="Script" uid="uid://chcpbdpal42dg" path="res://Game/player/player_controller.gd" id="1_chifv"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="2_s7tq4"]
 [ext_resource type="PackedScene" uid="uid://b10igw5xcvojj" path="res://Game/interface/ui_player_interface.tscn" id="2_uk1te"]
 [ext_resource type="Script" uid="uid://lqkqqlni4kvg" path="res://Game/player/player_frobber.gd" id="2_wjsc6"]
 [ext_resource type="PackedScene" uid="uid://mcoxybw4lgw7" path="res://Game/interface/ui_immediate.tscn" id="3_7fv12"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_jocr7"]
 [ext_resource type="PackedScene" uid="uid://bfwfcn483wgly" path="res://Game/player/tools/tool_manager.tscn" id="4_bexwg"]
 [ext_resource type="FontFile" uid="uid://123cyg2ru2nn" path="res://Content/fonts/mingliu.ttf" id="7_t0aee"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="8_t0aee"]
 [ext_resource type="Script" uid="uid://btdv1yqfoavxf" path="res://Game/player/player_gamemode_manager.gd" id="9_uv2qt"]
 [ext_resource type="Script" uid="uid://bgrcmdk4tl5aj" path="res://Game/player/footsteps_manager.gd" id="10_4ys5o"]
 [ext_resource type="AudioStream" uid="uid://c0fwh5p1r0pa2" path="res://Content/sound/player/footsteps/sfx_player_footstep_grass.wav" id="11_x82ud"]
 [ext_resource type="Script" uid="uid://b4o8wpn0f2nra" path="res://Game/player/flashlight.gd" id="12_7fv12"]
+[ext_resource type="Script" uid="uid://emxs1kydq3ju" path="res://Game/player/player_health_manager.gd" id="12_t0aee"]
 [ext_resource type="Script" uid="uid://dipsx1lg3006e" path="res://Game/components/pocket_component.gd" id="14_hygt8"]
+
+[sub_resource type="Resource" id="Resource_s7tq4"]
+script = ExtResource("3_jocr7")
+duration = 1.0
+transition = 0
+ease = 2
+metadata/_custom_type_script = "uid://8umksf8e80fw"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hcygf"]
 radius = 0.3
@@ -37,12 +48,29 @@ grav_multiplier = -15.0
 bunny_multiplier = 50.0
 bunny = false
 
+[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("look_at_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("2_s7tq4")
+look_at_mode = 1
+look_at_target = NodePath("../CamContainer")
+tween_resource = SubResource("Resource_s7tq4")
+tween_on_load = false
+look_at_damping = true
+look_at_damping_value = 0.03
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
 [node name="CamContainer" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
+[node name="AudioListener3D" type="AudioListener3D" parent="CamContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+current = true
+
 [node name="Camera3D" type="Camera3D" parent="CamContainer" node_paths=PackedStringArray("tools", "immediate_ui")]
+physics_interpolation_mode = 1
 cull_mask = 524285
 current = true
+fov = 77.3196
 script = ExtResource("2_wjsc6")
 tools = NodePath("ToolManager")
 immediate_ui = NodePath("ImmediateUI")
@@ -91,6 +119,7 @@ toolAmmo_label = NodePath("ToolCountLabel")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, 0)
 
 [node name="ToolPicker" parent="CamContainer/Camera3D/ToolManager" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.6, -1.30477)
 primaryActionCooldown = 0.5
 tertiaryActionCooldown = 3.0
 
@@ -99,6 +128,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.7, -1.3)
 
 [node name="ToolShovel" parent="CamContainer/Camera3D/ToolManager" index="3" node_paths=PackedStringArray("toolCast")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.8, -1.30477)
+visible = false
 toolCast = NodePath("../../ShovelCast")
 
 [node name="ToolLabel" parent="CamContainer/Camera3D/ToolManager" index="4"]
@@ -146,9 +176,11 @@ light_energy = 1.856
 spot_range = 16.0
 spot_angle = 32.0
 
-[node name="AudioListener3D" type="AudioListener3D" parent="CamContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-current = true
+[node name="PhantomCameraHost" type="Node" parent="CamContainer/Camera3D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("8_t0aee")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="StandingCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_mrjsy")
@@ -218,6 +250,11 @@ player_frobber = NodePath("../CamContainer/Camera3D")
 [node name="MoneyManager" type="Node" parent="."]
 
 [node name="UpgradeManager" type="Node" parent="."]
+
+[node name="PlayerHealthManager" type="Node" parent="."]
+script = ExtResource("12_t0aee")
+
+[node name="InvulnTimer" type="Timer" parent="PlayerHealthManager"]
 
 [connection signal="finished" from="FootstepsManager/FootstepsPlayer" to="FootstepsManager" method="_on_footsteps_player_finished"]
 

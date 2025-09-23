@@ -3,6 +3,7 @@ extends Node
 class_name AreaManager
 
 @export var area_name : String = "Default Area Name"
+@export var missions_in_area = []
 enum difficulty {EASY, MEDIUM, HARD}
 @export var area_difficulty : difficulty
 var missions : Dictionary = {}
@@ -18,6 +19,8 @@ signal complete_area
 func _ready() -> void:
 	for mission in get_children():
 		if mission is AreaMission:
+			missions_in_area.append(mission.mission_name)
+			print("Added the mission ", mission.mission_name)
 			missions[mission.mission_name.to_lower()] = mission
 	print(missions)
 
