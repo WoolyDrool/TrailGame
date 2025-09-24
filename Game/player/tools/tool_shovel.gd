@@ -37,4 +37,3 @@ func reclaim_shovel():
 	canSecondary = true
 	canTertiary = true
 	viewmodel.visible = true
-	manager.player.check_if_on_floor()
