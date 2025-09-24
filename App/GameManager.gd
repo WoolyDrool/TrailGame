@@ -2,6 +2,7 @@ extends Node
 
 # Controls
 var mouse_sensitivity : float = 0.4
+var controller_enabled : bool = false
 
 # Player
 var player_path : String = "res://Game/player/player.tscn"
