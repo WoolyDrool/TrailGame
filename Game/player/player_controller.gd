@@ -11,6 +11,8 @@ enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, MENU,
 @onready var crouching_collision = $CrouchingCollision
 @onready var ceiling_check = $CeilingCheck
 @onready var health_manager = $PlayerHealthManager
+@onready var debug_label = $DebugUI/RichTextLabel
+@onready var debug_label_2 = $DebugUI/RichTextLabel2
 
 @export_category("Mouse Look")
 @export var mouse_sens : float = 0.4
@@ -36,23 +38,23 @@ var prev_velocity : float
 @export var bunny_deaccell : float = 0.24
 @export var bunny : bool = true
 
-@onready var debug_label = $DebugUI/RichTextLabel
-@onready var debug_label_2 = $DebugUI/RichTextLabel2
+#region Internal Variables
+var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var input_dir
+var direction = Vector3.ZERO
+
 var can_move : bool = true
 var can_use_mouse : bool = true
-var was_on_floor 
+var was_on_floor : bool = true
 var has_picker_jumped : bool = false
 var is_looking_down : bool = false
-# Internal variables
-var direction = Vector3.ZERO
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
 var crouch_tween : Tween
 var default_cam_height = Vector3(0, 1, 0)
 var crouched_cam_height = Vector3(0, 0, 0)
 var crouch_transition_speed : float = 0.55
 var stand_transition_speed : float = 0.2
-
+#endregion
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -62,6 +64,17 @@ func _ready():
 	GameManager.player_show_mouse.connect(toggle_mouse_state)
 	debug_label.text = str("state: none")
 
+#region Player Game State Functions
+func seize_controls():
+	can_move = false
+	can_use_mouse = false
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func return_controls():
+	can_move = true
+	can_use_mouse = true
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
 func teleport_player(newpos : Vector3):
 	self.position = newpos
 	pass
@@ -74,6 +87,7 @@ func toggle_mouse_state(boolean : bool):
 	else:
 		can_use_mouse = true
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+#endregion
 
 func _input(event):
 	if can_use_mouse:
@@ -87,16 +101,6 @@ func _input(event):
 			else:
 				is_looking_down = false
 				debug_label_2.text = "ild = false"
-
-func seize_controls():
-	can_move = false
-	can_use_mouse = false
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
-func return_controls():
-	can_move = true
-	can_use_mouse = true
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _process(delta):
 	pass
@@ -212,7 +216,26 @@ func state_conversation():
 	pass
 #endregion
 
-#region Helper Functions
+#endregion
+
+#region Transformation Functions
+func handle_movement_input(_delta):
+	input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back").normalized()
+	direction = lerp(direction, (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized(), _delta * move_lerp_speed)
+	pass
+	# Get the input direction and handle the movement/deceleration.
+
+func handle_movement(_delta):
+	apply_gravity(_delta)
+	if direction:
+		velocity.x = direction.x * current_speed
+		velocity.z = direction.z * current_speed
+	else:
+		velocity.x = move_toward(velocity.x, 0, current_speed)
+		velocity.z = move_toward(velocity.z, 0, current_speed)
+	
+	move_and_slide()
+
 func determine_move_speed():
 	# Determine movement speed
 	if Input.is_action_pressed("move_crouch"):
@@ -252,24 +275,4 @@ func bunny_hop(_delta):
 			var speedbonus = current_speed + bunny_multiplier
 			var actual_speedbonus = lerpf(speedbonus, current_speed, bunny_deaccell)
 			current_speed = actual_speedbonus
-
-func handle_movement_input(_delta):
-	input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	direction = lerp(direction, (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized(), _delta * move_lerp_speed)
-	pass
-	# Get the input direction and handle the movement/deceleration.
-
-func handle_movement(_delta):
-	apply_gravity(_delta)
-	if direction:
-		velocity.x = direction.x * current_speed
-		velocity.z = direction.z * current_speed
-	else:
-		velocity.x = move_toward(velocity.x, 0, current_speed)
-		velocity.z = move_toward(velocity.z, 0, current_speed)
-	
-	move_and_slide()
-		
-#endregion
-	
 #endregion
