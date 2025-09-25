@@ -1,28 +1,44 @@
+class_name AreaManager
 extends Node
 
-class_name AreaManager
-
+@export_category("Area Information")
 @export var area_name : String = "Default Area Name"
 @export var missions_in_area = []
 enum difficulty {EASY, MEDIUM, HARD}
 @export var area_difficulty : difficulty
-var missions : Dictionary = {}
-var missions_completed : int = 0
-var current_mission : AreaMission
+
+@export_category("Area Scoring")
 @export var area_wrong_deposits : int = 0
-var failed_missions : int = 0
+
+var current_mission : AreaMission
+
+#region Internal Variables
+var missions_dict : Dictionary[String, AreaMission]
+
 var area_completed : bool = false
-var final_area_score : float
 signal complete_area
+var missions_completed : int = 0
+
+var failed_missions : int = 0
+var final_area_score : float
+#endregion
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for mission in get_children():
-		if mission is AreaMission:
-			missions_in_area.append(mission.mission_name)
-			print("Added the mission ", mission.mission_name)
-			missions[mission.mission_name.to_lower()] = mission
-	print(missions)
+	GameManager.mission_attempt_to_start.connect(attempt_mission_start)
+	
+	#for mission in get_children():
+		#if mission is AreaMission:
+			#missions_in_area.append(mission.mission_name)
+			#print("Added the mission ", mission.mission_name)
+			#missions_dict[mission.mission_name.to_lower()] = mission
+	print(missions_dict)
+
+func attempt_mission_start(mission_name : String):
+	current_mission = missions_dict.get(mission_name)
+	
+	if current_mission:
+		current_mission.begin_mission()
 
 func begin_area_mission(mission : AreaMission):
 	if !current_mission:
@@ -35,8 +51,9 @@ func complete_area_mission(mission : AreaMission):
 		current_mission = null
 		missions_completed += 1
 		final_area_score += mission.mission_score
-		if missions_completed + failed_missions == missions.size() && !area_completed:
+		if missions_completed + failed_missions == missions_dict.size() && !area_completed:
 			complete_area_final(self)
+		missions_dict.erase(mission.mission_name)
 
 func fail_area_mission(mission : AreaMission):
 	if current_mission == mission:

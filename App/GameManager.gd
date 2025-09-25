@@ -39,6 +39,7 @@ signal gamemode_exit_gather
 
 # Game Mode - Missions
 signal mission_start(mission : AreaMission)
+signal mission_attempt_to_start(mission_name : String)
 signal mission_end(mission : AreaMission)
 signal mission_fail(mission : AreaMission)
 signal mission_add_score(score : int)

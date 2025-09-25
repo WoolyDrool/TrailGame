@@ -7,7 +7,7 @@ func _process(delta: float) -> void:
 	pass
 
 func open_mission_panel():
-	for mission in area.missions_in_area:
+	for mission in area.missions_dict:
 		GameManager.ui_populate_mission_buttons.emit(mission)
 	
 	GameManager.ui_show_mission_panel.emit()

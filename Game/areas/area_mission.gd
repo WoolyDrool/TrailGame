@@ -13,6 +13,8 @@ class_name AreaMission
 @export var boundaries : CSGCombiner3D
 @export var player_start_pos : Node3D
 
+@export var objectives_container : ObjectiveContainer
+
 # Internal
 @onready var mission_timer : Timer = $MissionTimer
 @onready var ui_update_timer : Timer = $UIUpdateTimer
@@ -31,7 +33,12 @@ func _ready() -> void:
 	if !mission_timer:
 		mission_timer = $MissionTimer 
 	boundaries.visible = false
+	register_mission()
 	#print(mission_name, ", ", objectives_in_mission, ", ","Time Limit: ", str(mission_time))
+
+func register_mission():
+	#objectives_in_mission = objectives_container.get_child_count()
+	area.missions_dict.get_or_add(mission_name, self)
 
 #region Objectives
 func register_new_objective(amt : int):

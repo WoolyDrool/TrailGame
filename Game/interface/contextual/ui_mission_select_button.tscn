@@ -1,5 +1,10 @@
-[gd_scene load_steps=0 format=3 uid="uid://dhncv3fvys8e3"]
+[gd_scene load_steps=2 format=3 uid="uid://dhncv3fvys8e3"]
+
+[ext_resource type="Script" uid="uid://63mjtatsfjt" path="res://Game/interface/contextual/ui_mission_select_button.gd" id="1_uuuo8"]
 
 [node name="MissionStartButton" type="CheckButton"]
 theme_override_font_sizes/font_size = 60
 text = "Mission Name"
+script = ExtResource("1_uuuo8")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
