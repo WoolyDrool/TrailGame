@@ -179,16 +179,15 @@ func handle_states(_delta) -> void:
 func state_idle(_delta):
 	if not is_on_floor():
 		change_state(PLAYER_STATES.FALLING)	
-	handle_movement_input(_delta)
+	handle_movement_input()
 	if input_dir.length() > 0:
 		change_state(PLAYER_STATES.WALKING)	
 	handle_jump_input()
-	
 	handle_movement(_delta)
 
 func state_walk(_delta):
 	#print("in walking state")
-	handle_movement_input(_delta)
+	handle_movement_input()
 	handle_movement(_delta)
 	handle_jump_input()
 	if not is_on_floor():
@@ -198,7 +197,7 @@ func state_walk(_delta):
 
 func state_jump(_delta):
 	#print("in jumping state")
-	handle_movement_input(_delta)
+	handle_movement_input()
 	handle_movement(_delta)
 	handle_jump_input()
 	if velocity.y < jump_velocity:
@@ -206,7 +205,7 @@ func state_jump(_delta):
 
 func state_pickerJump(_delta):
 	has_picker_jumped = true
-	handle_movement_input(_delta)
+	handle_movement_input()
 	handle_movement(_delta)
 	velocity.y = jump_velocity * 2
 	if velocity.y < jump_velocity * 2:
@@ -241,7 +240,7 @@ func state_conversation():
 #endregion
 
 #region Transformation Functions
-func handle_movement_input(_delta):
+func handle_movement_input():
 	input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	wish_dir = transform.basis * Vector3(input_dir.x, 0, input_dir.y).normalized()
 
