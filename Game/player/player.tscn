@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="2_s7tq4"]
 [ext_resource type="PackedScene" uid="uid://b10igw5xcvojj" path="res://Game/interface/player/ui_player_interface.tscn" id="2_uk1te"]
 [ext_resource type="Script" uid="uid://lqkqqlni4kvg" path="res://Game/player/player_frobber.gd" id="2_wjsc6"]
-[ext_resource type="PackedScene" uid="uid://mcoxybw4lgw7" path="res://Game/interface/player/ui_immediate.tscn" id="3_7fv12"]
+[ext_resource type="PackedScene" path="res://Game/interface/player/ui_immediate.tscn" id="3_7fv12"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_jocr7"]
 [ext_resource type="PackedScene" uid="uid://bfwfcn483wgly" path="res://Game/player/tools/tool_manager.tscn" id="4_bexwg"]
 [ext_resource type="FontFile" uid="uid://123cyg2ru2nn" path="res://Content/fonts/mingliu.ttf" id="7_t0aee"]
@@ -42,6 +42,7 @@ walking_speed = 7.6
 sprinting_speed = 9.3
 crouching_speed = 2.0
 jump_velocity = 6.7
+air_accel = 600.0
 air_move_speed = 700.0
 
 [node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("look_at_target")]
