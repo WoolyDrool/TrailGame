@@ -140,7 +140,7 @@ func _physics_process(delta):
 	if !health_manager.dead:
 		handle_states(delta)
 		determine_move_speed()
-	handle_jump_input()
+		handle_jump_input()
 
 #region State Machine
 func change_state(new_state : PLAYER_STATES) -> void:
