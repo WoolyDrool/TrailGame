@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 class_name Player
 
-enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, MENU, CONVERSATION, CUTSCENE, TELEPORTING, PICKERJUMP}
+enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, STANDINGUP, MENU, CONVERSATION, CUTSCENE, TELEPORTING, PICKERJUMP}
 @export var player_state : PLAYER_STATES
 
 # Nodes
@@ -25,7 +25,6 @@ enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, MENU,
 @export_category("Main Movement")
 @export var walking_speed : float  = 5
 @export var sprinting_speed : float  = 8
-@export var crouching_speed : float  = 2.5
 @export var ground_accel : float = 14
 @export var ground_decel : float = 10 	# For the quake style movement, accel is 14, decel is 10, friction is 6
 @export var ground_friction : float = 6
@@ -35,6 +34,14 @@ enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, MENU,
 @export var air_cap : float = 0.85
 @export var air_accel : float = 800
 @export var air_move_speed : float = 500
+
+@export_category("Crouching")
+@export var crouching_speed : float  = 2.5
+@export var crouch_transition_speed : float = 0.55
+@export var stand_transition_speed : float = 0.2
+
+@export_category("Stairs")
+@export var max_step_height : float = 0.5
 
 #region Internal Variables
 var prev_velocity : float
@@ -161,6 +168,9 @@ func handle_states(_delta) -> void:
 		PLAYER_STATES.CROUCHING:
 			state_crouch(_delta)
 			debug_label.text = str("state: Crouching")
+		PLAYER_STATES.STANDINGUP:
+			state_standup(_delta)
+			debug_label.text = str("state: Standing Up")
 		PLAYER_STATES.PICKERJUMP:
 			state_pickerJump(_delta)
 			debug_label.text = str("state: Picker Jumping")
@@ -183,6 +193,7 @@ func state_idle(_delta):
 	if input_dir.length() > 0:
 		change_state(PLAYER_STATES.WALKING)	
 	handle_jump_input()
+	handle_crouch_input()
 	handle_movement(_delta)
 
 func state_walk(_delta):
@@ -190,6 +201,7 @@ func state_walk(_delta):
 	handle_movement_input()
 	handle_movement(_delta)
 	handle_jump_input()
+	handle_crouch_input()
 	if not is_on_floor():
 		change_state(PLAYER_STATES.FALLING)	
 	if input_dir.length() <= 0:
@@ -212,13 +224,29 @@ func state_pickerJump(_delta):
 		change_state(PLAYER_STATES.FALLING)
 
 func state_crouch(_delta):
-	pass
+	handle_movement_input()
+	handle_crouch_input()
+	handle_movement(_delta)
+	handle_jump_input()
+	standing_collision.disabled = true
+	crouching_collision.disabled = false
+
+func state_standup(_delta):
+	standing_collision.disabled = false
+	crouching_collision.disabled = true
+	handle_movement_input()
+	handle_crouch_input()
+	handle_movement(_delta)
+	handle_jump_input()
+	change_state(PLAYER_STATES.IDLE)
 
 func state_falling(_delta):
 	#print("in falling state")
 	if is_on_floor():
 		change_state(PLAYER_STATES.TOUCHDOWN)
-	handle_movement_input(_delta)
+	
+	handle_crouch_input()
+	handle_movement_input()
 	handle_movement(_delta)
 
 func state_touchdown(delta):
@@ -251,7 +279,31 @@ func handle_jump_input():
 
 func handle_crouch_input():
 	if Input.is_action_pressed("move_crouch"):
-		change_state(PLAYER_STATES.CROUCHING)
+		if player_state != PLAYER_STATES.CROUCHING:
+			change_state(PLAYER_STATES.CROUCHING)
+			if crouch_tween != null:
+				crouch_tween.kill()
+			crouch_tween = create_tween()
+			crouch_tween.tween_property(camera_phantom, "position", crouched_cam_height, crouch_transition_speed)
+	elif Input.is_action_just_released("move_crouch"):
+		if !ceiling_check.is_colliding():
+			if player_state == PLAYER_STATES.CROUCHING:
+				change_state(PLAYER_STATES.STANDINGUP)
+				if crouch_tween != null:
+					crouch_tween.kill()
+				crouch_tween = create_tween()
+				crouch_tween.tween_property(camera_phantom, "position", default_cam_height, stand_transition_speed)
+		else:
+			return
+	elif !Input.is_action_pressed("move_crouch"):
+		if !ceiling_check.is_colliding():
+			if player_state == PLAYER_STATES.CROUCHING:
+				change_state(PLAYER_STATES.STANDINGUP)
+				if crouch_tween != null:
+					crouch_tween.kill()
+				crouch_tween = create_tween()
+				crouch_tween.tween_property(camera_phantom, "position", default_cam_height, stand_transition_speed)
+
 
 func _handle_ground_physics(_delta) -> void:
 	var cur_speed_in_wish_dir = velocity.dot(wish_dir)
@@ -326,21 +378,11 @@ func determine_move_speed():
 	# Determine movement speed
 	if Input.is_action_pressed("move_crouch"):
 		current_speed = crouching_speed
-		standing_collision.disabled = true
-		crouching_collision.disabled = false
-		var tween = get_tree().create_tween()
-		tween.tween_property(cam_container, "position", crouched_cam_height, crouch_transition_speed)
 	else:
-		standing_collision.disabled = false
-		crouching_collision.disabled = true
 		if Input.is_action_pressed("move_sprint"):
 			current_speed = sprinting_speed
 		else:
 			current_speed = walking_speed
-	
-	if Input.is_action_just_released("move_crouch"):
-		var tween = get_tree().create_tween()
-		tween.tween_property(cam_container, "position", default_cam_height, crouch_transition_speed)
 
 func _headbob_effect(_delta):
 	headbob_time += _delta * velocity.length()
