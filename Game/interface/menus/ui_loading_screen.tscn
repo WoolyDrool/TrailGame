@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cyri5ddgh7s0c"]
 
 [ext_resource type="FontFile" uid="uid://ugdwuve6ft8x" path="res://Content/fonts/typewcond_bold.otf" id="1_04cya"]
-[ext_resource type="Script" uid="uid://bcyttrti2eic1" path="res://Game/interface/ui_loading_tips.gd" id="2_6ojj2"]
+[ext_resource type="Script" uid="uid://bcyttrti2eic1" path="res://Game/interface/menus/ui_loading_tips.gd" id="2_6ojj2"]
 
 [node name="Control" type="Control"]
 layout_mode = 3

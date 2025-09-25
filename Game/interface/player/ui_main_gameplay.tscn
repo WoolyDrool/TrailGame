@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://uxnygvr20moq"]
 
-[ext_resource type="Script" uid="uid://chkawu750o8tk" path="res://Game/interface/ui_main_gameplay.gd" id="1_hsk2k"]
+[ext_resource type="Script" uid="uid://chkawu750o8tk" path="res://Game/interface/player/ui_main_gameplay.gd" id="1_hsk2k"]
 [ext_resource type="FontFile" uid="uid://123cyg2ru2nn" path="res://Content/fonts/mingliu.ttf" id="2_j43k7"]
 [ext_resource type="Texture2D" uid="uid://oaxqlxwm76dj" path="res://Content/sprites/spr_ui_pocket_new.png" id="2_q1axo"]
 [ext_resource type="Texture2D" uid="uid://iitk82gbwem3" path="res://Content/sprites/spr_ui_pocketfill_new.png" id="3_j43k7"]
-[ext_resource type="Script" uid="uid://bkv0oscfbof1x" path="res://Game/interface/ui_pocket_component.gd" id="4_6wy5l"]
+[ext_resource type="Script" path="res://Game/interface/player/ui_pocket_component.gd" id="4_6wy5l"]
 
 [node name="UIMainGameplay" type="Control" node_paths=PackedStringArray("mission_completed_label", "mission_score_label", "mission_time_label", "mission_objectives_remaining_label", "pocket_container", "pocket_left_fill", "pocket_right_fill", "area_label", "final_score_label")]
 layout_mode = 3

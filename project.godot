@@ -24,7 +24,7 @@ PocketManager="*res://Game/components/pocket_component.gd"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 GlobalAudioManager="*res://App/global_audio_manager.gd"
-UiPlayerInterface="*res://Game/interface/ui_player_interface.gd"
+UiPlayerInterface="*res://Game/interface/player/ui_player_interface.gd"
 
 [dialogic]
 

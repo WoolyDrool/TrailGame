@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dhncv3fvys8e3"]
+[gd_scene load_steps=0 format=3 uid="uid://dhncv3fvys8e3"]
 
 [node name="MissionStartButton" type="CheckButton"]
 theme_override_font_sizes/font_size = 60

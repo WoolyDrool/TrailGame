@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://cywvs0jk6clft"]
 
-[ext_resource type="Script" uid="uid://bsgqlrbak4pa8" path="res://Game/interface/ui_mission_select.gd" id="1_64icc"]
+[ext_resource type="Script" path="res://Game/interface/contextual/ui_mission_select.gd" id="1_64icc"]
 [ext_resource type="Texture2D" uid="uid://33ayvttvwl7x" path="res://Game/areas/hud layout concept.png" id="1_oo1bn"]
-[ext_resource type="PackedScene" uid="uid://dhncv3fvys8e3" path="res://Game/interface/ui_mission_select_button.tscn" id="3_yc2jt"]
+[ext_resource type="PackedScene" uid="uid://dhncv3fvys8e3" path="res://Game/interface/contextual/ui_mission_select_button.tscn" id="3_yc2jt"]
 [ext_resource type="Texture2D" uid="uid://ddkrtjyowk2q6" path="res://Content/sprites/mission thumbnails/spr_thumb_default.png" id="4_8wcjm"]
 [ext_resource type="FontFile" uid="uid://ugdwuve6ft8x" path="res://Content/fonts/typewcond_bold.otf" id="4_c5deq"]
 

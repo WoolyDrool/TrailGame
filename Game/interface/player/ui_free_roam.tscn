@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://rv5ewhi4t7vu"]
 
-[ext_resource type="Script" uid="uid://dyrrojt0gjfmk" path="res://Game/interface/ui_free_roam.gd" id="1_haqiq"]
+[ext_resource type="Script" uid="uid://dyrrojt0gjfmk" path="res://Game/interface/player/ui_free_roam.gd" id="1_haqiq"]
 
 [node name="UIFreeRoam" type="Control"]
 layout_mode = 3

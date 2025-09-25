@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://d04atuoskhbn1"]
 
-[ext_resource type="PackedScene" uid="uid://uk31cfernn64" path="res://Game/interface/MainMenu/ui_main_menu.tscn" id="1_wdwy3"]
+[ext_resource type="PackedScene" uid="uid://uk31cfernn64" path="res://Game/interface/menus/ui_main_menu.tscn" id="1_wdwy3"]
 [ext_resource type="Shader" uid="uid://bvavb8k2sc47u" path="res://Content/shaders/earthbound.gdshader" id="2_fq11s"]
 [ext_resource type="Texture2D" uid="uid://nxarwo4gbydm" path="res://Content/textures/tex_menu_veil.png" id="2_pwfdo"]
 
