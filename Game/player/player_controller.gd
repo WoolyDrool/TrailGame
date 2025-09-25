@@ -21,6 +21,12 @@ enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, STAND
 @export_category("Gamepad Look")
 @export var controller_look_sens : float = 0.5
 
+@export_category("Headbob")
+@export var use_headbob : bool = true
+@export var headbob_amount : float = 0.04
+@export var headbob_frequency : float = 2.4
+@export var headbob_time : float 
+
 # Movement
 @export_category("Main Movement")
 @export var walking_speed : float  = 5
@@ -66,12 +72,6 @@ var fall_damage_threshhold : float = -20
 var crouch_tween : Tween
 var default_cam_height = Vector3(0, 1, 0)
 var crouched_cam_height = Vector3(0, 0, 0)
-var crouch_transition_speed : float = 0.55
-var stand_transition_speed : float = 0.2
-
-var headbob_amount : float = 0.04
-var headbob_frequency : float = 2.4
-var headbob_time : float 
 
 #endregion
 
@@ -324,7 +324,9 @@ func _handle_ground_physics(_delta) -> void:
 	
 	velocity *= new_speed
 	
-	_headbob_effect(_delta)
+	if use_headbob:
+		if player_state != PLAYER_STATES.CROUCHING:
+			_headbob_effect(_delta)
 
 #region Surfing
 func clip_velocity(normal : Vector3, overbounce : float, delta : float) -> void:
