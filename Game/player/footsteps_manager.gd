@@ -20,8 +20,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if player.is_moving && can_play:
-		handle_footsteps()
+	#if player.is_moving && can_play:
+		#handle_footsteps()
 	pass
 
 func handle_footsteps():

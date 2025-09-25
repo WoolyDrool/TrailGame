@@ -24,7 +24,7 @@ ease = 2
 metadata/_custom_type_script = "uid://8umksf8e80fw"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hcygf"]
-radius = 0.3
+radius = 0.1
 height = 6.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mrjsy"]
@@ -42,6 +42,7 @@ walking_speed = 7.6
 sprinting_speed = 9.3
 crouching_speed = 2.0
 jump_velocity = 6.7
+air_move_speed = 700.0
 
 [node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("look_at_target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

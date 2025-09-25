@@ -6,10 +6,9 @@
 albedo_color = Color(0, 1, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_th37g"]
-size = Vector3(0.5, 0.5, 0.5)
+size = Vector3(0.5, 0.5, 0.195)
 
 [node name="Recycle" instance=ExtResource("1_mkdlo")]
-collision_layer = 256
 item_name = "Recycle"
 type = 2
 

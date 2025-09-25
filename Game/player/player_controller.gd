@@ -7,7 +7,7 @@ enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, MENU,
 
 # Nodes
 @export var cam_container : Node3D
-@onready var camera_3d = $PhantomCamera3D
+@onready var camera_phantom = $PhantomCamera3D
 @onready var standing_collision = $StandingCollision
 @onready var crouching_collision = $CrouchingCollision
 @onready var ceiling_check = $CeilingCheck
@@ -17,8 +17,6 @@ enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, MENU,
 
 @export_category("Mouse Look")
 @export var mouse_sens : float = 0.4
-@export var mouse_smoothing : bool = true
-@export var mouse_lerp_speed : float = 20
 
 @export_category("Gamepad Look")
 @export var controller_look_sens : float = 0.5
@@ -28,7 +26,6 @@ enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, MENU,
 @export var walking_speed : float  = 5
 @export var sprinting_speed : float  = 8
 @export var crouching_speed : float  = 2.5
-@export var is_moving : bool = false
 @export var ground_accel : float = 14
 @export var ground_decel : float = 10 	# For the quake style movement, accel is 14, decel is 10, friction is 6
 @export var ground_friction : float = 6
@@ -42,6 +39,8 @@ enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, MENU,
 #region Internal Variables
 var prev_velocity : float
 var current_speed : float = 5.0
+
+var previous_state : PLAYER_STATES
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var input_dir
@@ -63,7 +62,7 @@ var crouched_cam_height = Vector3(0, 0, 0)
 var crouch_transition_speed : float = 0.55
 var stand_transition_speed : float = 0.2
 
-var headbob_amount : float = 0.06
+var headbob_amount : float = 0.04
 var headbob_frequency : float = 2.4
 var headbob_time : float 
 
@@ -135,11 +134,6 @@ func _physics_process(delta):
 		handle_states(delta)
 		determine_move_speed()
 	handle_jump_input()
-	#
-	#apply_gravity(delta)
-	#handle_movement(delta)
-
-#region State Logic 
 
 #region State Machine
 func change_state(new_state : PLAYER_STATES) -> void:
@@ -147,6 +141,8 @@ func change_state(new_state : PLAYER_STATES) -> void:
 		return
 	if new_state == player_state:
 		return
+	
+	previous_state = player_state
 	player_state = new_state
 	
 func handle_states(_delta) -> void:
@@ -162,6 +158,9 @@ func handle_states(_delta) -> void:
 		PLAYER_STATES.JUMPING:
 			state_jump(_delta)
 			debug_label.text = str("state: Jumping")
+		PLAYER_STATES.CROUCHING:
+			state_crouch(_delta)
+			debug_label.text = str("state: Crouching")
 		PLAYER_STATES.PICKERJUMP:
 			state_pickerJump(_delta)
 			debug_label.text = str("state: Picker Jumping")
@@ -176,10 +175,6 @@ func handle_states(_delta) -> void:
 			state_conversation()
 #endregion
 
-func check_if_on_floor():
-	if !is_on_floor():
-		change_state(PLAYER_STATES.FALLING)
-
 #region States
 func state_idle(_delta):
 	if not is_on_floor():
@@ -190,7 +185,6 @@ func state_idle(_delta):
 	handle_jump_input()
 	
 	handle_movement(_delta)
-	
 
 func state_walk(_delta):
 	#print("in walking state")
@@ -217,7 +211,10 @@ func state_pickerJump(_delta):
 	velocity.y = jump_velocity * 2
 	if velocity.y < jump_velocity * 2:
 		change_state(PLAYER_STATES.FALLING)
-		
+
+func state_crouch(_delta):
+	pass
+
 func state_falling(_delta):
 	#print("in falling state")
 	if is_on_floor():
@@ -238,22 +235,12 @@ func state_touchdown(delta):
 			change_state(PLAYER_STATES.WALKING)
 		else:
 			change_state(PLAYER_STATES.IDLE)
-		
+
 func state_conversation():
 	pass
 #endregion
 
-#endregion
-
 #region Transformation Functions
-#func apply_gravity(_delta):
-		## Add the gravity.
-	#if not is_on_floor():
-		#var deaccell_ramp = lerpf(0, grav_multiplier, gravity_accel_ramp)
-		#velocity.y -= (gravity - deaccell_ramp) * _delta 	
-		#prev_velocity = velocity.y
-
-
 func handle_movement_input(_delta):
 	input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	wish_dir = transform.basis * Vector3(input_dir.x, 0, input_dir.y).normalized()
@@ -263,10 +250,11 @@ func handle_jump_input():
 		velocity.y = jump_velocity
 		change_state(PLAYER_STATES.JUMPING)
 
+func handle_crouch_input():
+	if Input.is_action_pressed("move_crouch"):
+		change_state(PLAYER_STATES.CROUCHING)
+
 func _handle_ground_physics(_delta) -> void:
-	#velocity.x = wish_dir.x * current_speed
-	#velocity.z = wish_dir.z * current_speed
-	
 	var cur_speed_in_wish_dir = velocity.dot(wish_dir)
 	var add_speed_til_cap = current_speed - cur_speed_in_wish_dir
 	
@@ -287,6 +275,25 @@ func _handle_ground_physics(_delta) -> void:
 	
 	_headbob_effect(_delta)
 
+#region Surfing
+func clip_velocity(normal : Vector3, overbounce : float, delta : float) -> void:
+	var backoff = velocity.dot(normal) * overbounce
+	if backoff >= 0: return
+	
+	var change = normal * backoff
+	velocity -= change
+	
+	var adjust = velocity.dot(normal)
+	if adjust < 0:
+		velocity -= normal * adjust
+
+func is_surface_too_steep(normal : Vector3) -> bool:
+	var max_slope_ang_dot = Vector3(0,1,0).rotated(Vector3(1.0,0,0), floor_max_angle).dot(Vector3(0,1,0))
+	if normal.dot(Vector3(0,1,0)) < max_slope_ang_dot:
+		return true
+	return false
+#endregion
+
 func _handle_air_physics(_delta) -> void:
 	velocity.y -= gravity * _delta
 	
@@ -299,6 +306,14 @@ func _handle_air_physics(_delta) -> void:
 		var accel_speed = air_accel * air_move_speed * _delta
 		accel_speed = min(accel_speed, add_speed_till_cap)
 		velocity += accel_speed * wish_dir
+	
+	# Enables surf
+	if is_on_wall():
+		if is_surface_too_steep(get_wall_normal()):
+			motion_mode = CharacterBody3D.MOTION_MODE_FLOATING
+		else:
+			motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
+		clip_velocity(get_wall_normal(), 1, _delta)
 
 func handle_movement(_delta):
 	if is_on_floor():
@@ -330,7 +345,7 @@ func determine_move_speed():
 
 func _headbob_effect(_delta):
 	headbob_time += _delta * velocity.length()
-	camera_3d.transform.origin = Vector3(
+	camera_phantom.transform.origin = Vector3(
 		cos(headbob_time * headbob_frequency * 0.5) * headbob_amount,
 		default_cam_height.y + sin(headbob_time * headbob_frequency) * headbob_amount,
 		0
