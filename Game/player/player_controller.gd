@@ -14,6 +14,8 @@ enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, STAND
 @onready var health_manager = $PlayerHealthManager
 @onready var debug_label = $DebugUI/RichTextLabel
 @onready var debug_label_2 = $DebugUI/RichTextLabel2
+@onready var stairs_ahead_raycast = $CamContainer/StairsAheadRayCast3D
+@onready var stairs_below_raycast = $CamContainer/StairsBelowRayCast3D
 
 @export_category("Mouse Look")
 @export var mouse_sens : float = 0.4
@@ -70,8 +72,12 @@ var cur_controller_look : Vector2
 var fall_damage_threshhold : float = -20
 
 var crouch_tween : Tween
+var stand_tween : Tween
 var default_cam_height = Vector3(0, 1, 0)
 var crouched_cam_height = Vector3(0, 0, 0)
+
+var snapped_to_stairs_last_frame : bool = false
+var last_frame_was_on_floor = -INF # Spooky infinity
 
 #endregion
 
@@ -232,13 +238,13 @@ func state_crouch(_delta):
 	crouching_collision.disabled = false
 
 func state_standup(_delta):
-	standing_collision.disabled = false
-	crouching_collision.disabled = true
 	handle_movement_input()
 	handle_crouch_input()
 	handle_movement(_delta)
 	handle_jump_input()
 	change_state(PLAYER_STATES.IDLE)
+	standing_collision.disabled = false
+	crouching_collision.disabled = true
 
 func state_falling(_delta):
 	#print("in falling state")
@@ -303,7 +309,54 @@ func handle_crouch_input():
 					crouch_tween.kill()
 				crouch_tween = create_tween()
 				crouch_tween.tween_property(camera_phantom, "position", default_cam_height, stand_transition_speed)
+#region Stairs
+# These are direct calls to the PhysicsServer. Scary :-(
+# Fun fact: the server only uses global coordinates
+func _run_body_test_motion(from : Transform3D, motion : Vector3, result = null) -> bool:
+	if not result : result = PhysicsTestMotionResult3D.new()
+	var params = PhysicsTestMotionParameters3D.new()
+	params.from = from
+	params.motion = motion
+	return PhysicsServer3D.body_test_motion(self.get_rid(), params, result)
 
+func _snap_down_to_stairs_check() -> void:
+	var did_snap = false
+	var floor_below : bool = stairs_below_raycast.is_colliding() and not is_surface_too_steep(stairs_below_raycast.get_collision_normal())
+	var was_on_floor_last_frame = Engine.get_physics_frames() - last_frame_was_on_floor == 1
+	
+	if not is_on_floor() and velocity.y <= 0 and (was_on_floor_last_frame or snapped_to_stairs_last_frame) and not floor_below:
+		var body_test_result = PhysicsTestMotionResult3D.new()
+		if _run_body_test_motion(self.global_transform, Vector3(0, -max_step_height, 0), body_test_result):
+			var translate_y = body_test_result.get_travel().y
+			position.y += translate_y
+			apply_floor_snap()
+			did_snap = true
+			
+	snapped_to_stairs_last_frame = did_snap
+
+# This function is straight up indecipherable to me but the youtube man said it would work
+# Shout out Majikayo Games
+func _snap_up_to_stairs_check(_delta) -> bool:
+	if not is_on_floor() and not snapped_to_stairs_last_frame: return false
+	var expected_move_motion = self.velocity * Vector3(1,0,1) * _delta
+	var step_pos_with_clearance = self.global_transform.translated(expected_move_motion * Vector3(0,max_step_height * 2, 0))
+	var down_check_result = PhysicsTestMotionResult3D.new()
+	
+	# Actually evil series of if statements here
+	if (_run_body_test_motion(step_pos_with_clearance, Vector3(0, -max_step_height * 2, 0), down_check_result)
+	and (down_check_result.get_collider().is_class("StaticBody3D") or down_check_result.get_collider().is_class("CSGShape3D"))):
+		var step_height = ((step_pos_with_clearance.origin + down_check_result.get_travel()) - self.global_position).y
+		if step_height > max_step_height or step_height <= 0.01 or (down_check_result.get_collision_point() - self.global_position).y > max_step_height:
+			return false
+		stairs_ahead_raycast.global_position = down_check_result.get_collision_point() * Vector3(0, max_step_height, 0) + expected_move_motion.normalized() * 0.1
+		stairs_ahead_raycast.force_raycast_update()
+		if stairs_ahead_raycast.is_colliding() and not is_surface_too_steep(stairs_ahead_raycast.get_collision_normal()):
+			self.global_position = step_pos_with_clearance.origin + down_check_result.get_travel()
+			apply_floor_snap()
+			snapped_to_stairs_last_frame = true
+			return true
+	return false
+#endregion
 
 func _handle_ground_physics(_delta) -> void:
 	var cur_speed_in_wish_dir = velocity.dot(wish_dir)
@@ -341,10 +394,7 @@ func clip_velocity(normal : Vector3, overbounce : float, delta : float) -> void:
 		velocity -= normal * adjust
 
 func is_surface_too_steep(normal : Vector3) -> bool:
-	var max_slope_ang_dot = Vector3(0,1,0).rotated(Vector3(1.0,0,0), floor_max_angle).dot(Vector3(0,1,0))
-	if normal.dot(Vector3(0,1,0)) < max_slope_ang_dot:
-		return true
-	return false
+	return normal.angle_to(Vector3.UP) > self.floor_max_angle
 #endregion
 
 func _handle_air_physics(_delta) -> void:
@@ -370,11 +420,18 @@ func _handle_air_physics(_delta) -> void:
 
 func handle_movement(_delta):
 	if is_on_floor():
+		last_frame_was_on_floor = Engine.get_physics_frames()
+	
+	if is_on_floor():
 		_handle_ground_physics(_delta)
-	else:
+	else: 
 		_handle_air_physics(_delta)
 	
-	move_and_slide()
+	if not _snap_up_to_stairs_check(_delta):
+		# This function wraps move_and_slide because it manually moves the global_position of the controller
+		# Doing otherwise would mess with the players velocity and mess up the black magic calculations
+		move_and_slide()
+		_snap_down_to_stairs_check()
 
 func determine_move_speed():
 	# Determine movement speed

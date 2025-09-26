@@ -34,8 +34,8 @@ height = 1.0
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("cam_container")]
 collision_mask = 10
-floor_constant_speed = true
-floor_max_angle = 0.872665
+floor_stop_on_slope = false
+floor_block_on_wall = false
 script = ExtResource("1_chifv")
 cam_container = NodePath("CamContainer")
 walking_speed = 7.6
@@ -45,7 +45,8 @@ air_cap = 0.95
 air_accel = 600.0
 air_move_speed = 700.0
 crouching_speed = 5.0
-stand_transition_speed = 0.55
+stand_transition_speed = 100.0
+max_step_height = 1.0
 
 [node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("look_at_target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -114,8 +115,9 @@ ray3d = NodePath("../RayCast3D")
 toolName_label = NodePath("ToolLabel")
 toolAmmo_label = NodePath("ToolCountLabel")
 
-[node name="HoldPoint" parent="CamContainer/Camera3D/ToolManager/ToolHands" index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, 0)
+[node name="ToolHands" parent="CamContainer/Camera3D/ToolManager" index="0" node_paths=PackedStringArray("hold_point")]
+hold_point = NodePath("../../HoldPointNew")
+throw_force = 15.0
 
 [node name="ToolPicker" parent="CamContainer/Camera3D/ToolManager" index="1"]
 primaryActionCooldown = 0.5
@@ -269,14 +271,6 @@ player_frobber = NodePath("../CamContainer/Camera3D")
 script = ExtResource("12_t0aee")
 
 [node name="InvulnTimer" type="Timer" parent="PlayerHealthManager"]
-
-[node name="StairsAheadRayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -1)
-target_position = Vector3(0, -0.5, 0)
-
-[node name="StairsBelowRayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-target_position = Vector3(0, -0.75, 0)
 
 [connection signal="finished" from="FootstepsManager/FootstepsPlayer" to="FootstepsManager" method="_on_footsteps_player_finished"]
 
