@@ -180,6 +180,19 @@ process_physics_priority = 300
 script = ExtResource("8_t0aee")
 metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
+[node name="HoldPointNew" type="Node3D" parent="CamContainer/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, -1)
+
+[node name="StairsAheadRayCast3D" type="RayCast3D" parent="CamContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, -1)
+target_position = Vector3(0, -0.85, 0)
+collision_mask = 2
+
+[node name="StairsBelowRayCast3D" type="RayCast3D" parent="CamContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+target_position = Vector3(0, -0.75, 0)
+collision_mask = 2
+
 [node name="StandingCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_mrjsy")
 debug_color = Color(1, 1, 1, 0.42)

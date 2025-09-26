@@ -2,6 +2,7 @@ extends PlayerTool
 
 var holding : bool = false
 @export var hold_point : Node3D
+@export var throw_force : float = 15
 var held_object : Node3D
 var held_object_interact : InteractComponent
 var grab_speed
@@ -45,7 +46,7 @@ func _tool_secondary() -> void:
 
 func _input(event: InputEvent) -> void:
 	if isEquip:
-		if event.is_action_pressed("grab"):
+		if event.is_action_pressed("tertiary"):
 			if holding:
 				if held_object != null:
 					print("threw")
@@ -53,7 +54,7 @@ func _input(event: InputEvent) -> void:
 					held_object.freeze = false
 					if manager.player:
 						var angle = manager.player.global_rotation.y
-						held_object.apply_central_impulse(-manager.player.global_transform.basis.z.normalized() * 15 + Vector3(0,5,0))
+						held_object.apply_central_impulse(-manager.player.camera_phantom.basis.z * (held_object.mass * 15)  + Vector3(0,5,0))
 						held_object.reparent(manager.player.get_parent())
 						held_object_interact.collision.disabled = false
 						held_object = null
