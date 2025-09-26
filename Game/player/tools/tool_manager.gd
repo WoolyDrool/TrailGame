@@ -24,6 +24,7 @@ var total_tools : int
 var has_hatchet : bool = true
 var has_shovel : bool = true
 var prev_tween : Tween
+var fade_tween : Tween
 
 signal on_tool_change(tool : PlayerTool)
 
@@ -95,6 +96,11 @@ func _process_input():
 func switch_tool():
 	equip_index = 0
 	toolAmmo_label.text = ""
+	if fade_tween != null:
+		fade_tween.kill()
+	
+	if toolName_label.modulate != Color.WHITE:
+		toolName_label.modulate = Color.WHITE
 	
 	for t in tool_array:
 		if equip_index == tool_selected:
@@ -109,13 +115,12 @@ func switch_tool():
 		
 	on_tool_change.emit(current_tool)
 	
-	toolName_label.modulate = Color.WHITE
-	if prev_tween:
-		prev_tween.stop()
 	await get_tree().create_timer(2).timeout
-	var tween = get_tree().create_tween()
-	prev_tween = tween
-	tween.tween_property(toolName_label, "modulate", Color(255, 255, 255, 0), 1)
+	if fade_tween != null:
+		fade_tween.kill()
+		toolName_label.modulate = Color.WHITE
+	fade_tween = create_tween()
+	fade_tween.tween_property(toolName_label, "modulate", Color(255, 255, 255, 0), 1)
 
 
 func tool_primary():

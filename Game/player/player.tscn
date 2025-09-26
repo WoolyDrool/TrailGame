@@ -107,6 +107,10 @@ offset_top = -20.0
 offset_right = 2.0
 offset_bottom = -20.0
 
+[node name="MoneyLabel" parent="CamContainer/Camera3D/PlayerInterface" index="9"]
+offset_top = 788.0
+offset_bottom = 854.0
+
 [node name="ToolManager" parent="CamContainer/Camera3D" node_paths=PackedStringArray("player", "cam_container", "playerFrobber", "ray3d", "toolName_label", "toolAmmo_label") instance=ExtResource("4_bexwg")]
 player = NodePath("../../..")
 cam_container = NodePath("../..")
@@ -117,7 +121,6 @@ toolAmmo_label = NodePath("ToolCountLabel")
 
 [node name="ToolHands" parent="CamContainer/Camera3D/ToolManager" index="0" node_paths=PackedStringArray("hold_point")]
 hold_point = NodePath("../../HoldPointNew")
-throw_force = 15.0
 
 [node name="ToolPicker" parent="CamContainer/Camera3D/ToolManager" index="1"]
 primaryActionCooldown = 0.5
@@ -137,25 +140,26 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -322.0
-offset_top = 335.0
-offset_right = 344.0
-offset_bottom = 532.0
+offset_left = 272.0
+offset_top = 228.0
+offset_right = 938.0
+offset_bottom = 425.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("7_t0aee")
-theme_override_font_sizes/font_size = 96
-horizontal_alignment = 1
+theme_override_font_sizes/font_size = 64
 
 [node name="ToolCountLabel" parent="CamContainer/Camera3D/ToolManager" index="5"]
-offset_left = -219.0
-offset_top = -313.0
-offset_right = -95.0
-offset_bottom = -202.0
+offset_left = -152.0
+offset_top = -248.0
+offset_right = -28.0
+offset_bottom = -137.0
 theme_override_constants/outline_size = 15
 theme_override_fonts/font = ExtResource("7_t0aee")
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 2
 
 [node name="Flashlight" type="Node3D" parent="CamContainer/Camera3D" node_paths=PackedStringArray("cam_container", "player_joint", "cam_joint")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
