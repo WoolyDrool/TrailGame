@@ -10,8 +10,8 @@ extends Node
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	current_health = maximum_health
+	GameManager.player_take_damage.connect(player_take_damage)
 	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -23,6 +23,7 @@ func player_take_damage(value : int):
 		if current_health <= 0:
 			player_death()
 		else:
+			GameManager.ui_update_player_health.emit(current_health)
 			invuln_timer.start(invuln_time)
 	else:
 		print("Player was invulnverable")
