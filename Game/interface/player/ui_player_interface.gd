@@ -1,8 +1,8 @@
 class_name PlayerInterface
 extends Control
 
-@export var death_screen : Control
-
+enum UI_STATE {NONE, NORMAL, MISSION_SELECT, MISSION_GAMEPLAY, MISSION_COMPLETE, CONVERSATION, DEATH}
+@export var current_ui_state : UI_STATE
 @export var default_ui_panel : PlayerUIPanel
 @export var current_ui_panel : PlayerUIPanel
 
@@ -11,15 +11,12 @@ extends Control
 @export var gameplay_panel : PlayerUIPanel
 @export var paused_panel : PlayerUIPanel
 @export var mission_panel : PlayerUIPanel
-
-enum UI_STATE {NONE, NORMAL, MISSION_SELECT, MISSION_GAMEPLAY, MISSION_COMPLETE, CONVERSATION, DEATH}
-@export var current_ui_state : UI_STATE
+@export var death_screen : Control
 
 func _ready() -> void:
 	change_ui_panel(default_ui_panel)
 	GameManager.mission_start.connect(start_mission_ui)
 	GameManager.mission_end.connect(finish_mission_ui)
-	
 	GameManager.ui_show_mission_panel.connect(show_mission_panel)
 	GameManager.ui_hide_mission_panel.connect(hide_mission_panel)
 

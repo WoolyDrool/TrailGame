@@ -1,15 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://b10igw5xcvojj"]
+[gd_scene load_steps=10 format=3 uid="uid://b10igw5xcvojj"]
 
 [ext_resource type="Script" uid="uid://bvoraqgnvunyr" path="res://Game/interface/player/ui_player_interface.gd" id="1_ovo8g"]
-[ext_resource type="PackedScene" uid="uid://uxnygvr20moq" path="res://Game/interface/player/ui_main_gameplay.tscn" id="2_2rt4l"]
-[ext_resource type="PackedScene" uid="uid://rv5ewhi4t7vu" path="res://Game/interface/player/ui_free_roam.tscn" id="2_du40e"]
+[ext_resource type="PackedScene" uid="uid://b5aaeyik36wpn" path="res://Game/interface/player/ui_main_gameplay.tscn" id="2_2rt4l"]
+[ext_resource type="PackedScene" path="res://Game/interface/player/ui_free_roam.tscn" id="2_du40e"]
 [ext_resource type="PackedScene" uid="uid://cywvs0jk6clft" path="res://Game/interface/contextual/ui_mission_select.tscn" id="4_wxk36"]
 [ext_resource type="Script" uid="uid://b00ny5kkytw53" path="res://Game/interface/menus/debug_panel.gd" id="5_mrhco"]
 [ext_resource type="Texture2D" uid="uid://drew4fmvvrca2" path="res://Content/sprites/spr_ui_heart_filled.png" id="7_87cmh"]
-[ext_resource type="Script" uid="uid://bby4d3kx6xsd1" path="res://Game/interface/player/ui_death_screen.gd" id="7_bldy4"]
+[ext_resource type="Script" path="res://Game/interface/player/ui_death_screen.gd" id="7_bldy4"]
 [ext_resource type="FontFile" uid="uid://123cyg2ru2nn" path="res://Content/fonts/mingliu.ttf" id="8_eoybr"]
+[ext_resource type="Script" uid="uid://rkpeigtnx3by" path="res://Game/interface/player/ui_player_hearts.gd" id="8_gvtrp"]
 
-[node name="PlayerInterface" type="Control" node_paths=PackedStringArray("death_screen", "default_ui_panel", "free_roam_panel", "gameplay_panel", "mission_panel")]
+[node name="PlayerInterface" type="Control" node_paths=PackedStringArray("default_ui_panel", "free_roam_panel", "gameplay_panel", "mission_panel", "death_screen")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,11 +18,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ovo8g")
-death_screen = NodePath("DeathScreen")
 default_ui_panel = NodePath("UIFreeRoam")
 free_roam_panel = NodePath("UIFreeRoam")
 gameplay_panel = NodePath("UIMainGameplay")
 mission_panel = NodePath("UIMissionSelect")
+death_screen = NodePath("DeathScreen")
 
 [node name="UIMissionSelect" parent="." instance=ExtResource("4_wxk36")]
 visible = false
@@ -170,6 +171,7 @@ offset_top = -158.0
 offset_right = 983.0
 offset_bottom = -30.0
 grow_vertical = 0
+script = ExtResource("8_gvtrp")
 
 [node name="Heart" type="TextureRect" parent="Hearts"]
 layout_mode = 2
