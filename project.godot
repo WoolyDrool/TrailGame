@@ -91,8 +91,8 @@ folder_colors={
 "res://Content/": "yellow",
 "res://Game/": "red",
 "res://Game/interface/": "red",
-"res://addons/": "pink",
-"res://script_templates/": "pink"
+"res://Game/player/": "red",
+"res://addons/": "pink"
 }
 
 [global_group]
