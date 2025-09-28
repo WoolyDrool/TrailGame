@@ -14,11 +14,6 @@ var cur_tool_state : tool_state
 
 #region UI
 @export var immediate_ui : ImmediateUI
-@onready var crosshair = $ImmediateUI/Crosshair
-@onready var interact_text : Label = $ImmediateUI/Container/InteractText
-@onready var modifier_text : Label = $ImmediateUI/Container/ModifierText
-@onready var append_text : Label = $ImmediateUI/Container/AppendText
-@onready var text_bg : ColorRect = $ImmediateUI/Container/ColorRect
 #endregion
 
 func _ready() -> void:
