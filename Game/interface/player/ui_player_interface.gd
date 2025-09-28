@@ -1,6 +1,7 @@
 class_name PlayerInterface
 extends Control
 
+@export var ui_anim_player : AnimationPlayer
 enum UI_STATE {NONE, NORMAL, MISSION_SELECT, MISSION_GAMEPLAY, MISSION_COMPLETE, CONVERSATION, DEATH}
 @export var current_ui_state : UI_STATE
 @export var default_ui_panel : PlayerUIPanel
@@ -19,6 +20,7 @@ func _ready() -> void:
 	GameManager.mission_end.connect(finish_mission_ui)
 	GameManager.ui_show_mission_panel.connect(show_mission_panel)
 	GameManager.ui_hide_mission_panel.connect(hide_mission_panel)
+	GameManager.player_take_damage.connect(take_damage)
 
 func change_ui_state(new_ui_state : UI_STATE):
 	if new_ui_state == current_ui_state:
@@ -64,6 +66,10 @@ func start_mission_ui(mission : AreaMission):
 
 func finish_mission_ui(mission : AreaMission):
 	change_ui_panel(free_roam_panel)
+
+func take_damage(unused : int):
+	if ui_anim_player:
+		ui_anim_player.play("take_damage")
 
 ##region Misison
 #@onready var completed_label = $MissionCompleteLabel

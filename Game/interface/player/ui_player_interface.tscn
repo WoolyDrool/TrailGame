@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b10igw5xcvojj"]
+[gd_scene load_steps=16 format=3 uid="uid://b10igw5xcvojj"]
 
 [ext_resource type="Script" uid="uid://bvoraqgnvunyr" path="res://Game/interface/player/ui_player_interface.gd" id="1_ovo8g"]
 [ext_resource type="PackedScene" uid="uid://b5aaeyik36wpn" path="res://Game/interface/player/ui_main_gameplay.tscn" id="2_2rt4l"]
@@ -9,8 +9,52 @@
 [ext_resource type="Script" path="res://Game/interface/player/ui_death_screen.gd" id="7_bldy4"]
 [ext_resource type="FontFile" uid="uid://123cyg2ru2nn" path="res://Content/fonts/mingliu.ttf" id="8_eoybr"]
 [ext_resource type="Script" uid="uid://rkpeigtnx3by" path="res://Game/interface/player/ui_player_hearts.gd" id="8_gvtrp"]
+[ext_resource type="Texture2D" uid="uid://6sdu1d8iewfh" path="res://Content/sprites/spr_ui_heart_empty.png" id="10_os4ub"]
 
-[node name="PlayerInterface" type="Control" node_paths=PackedStringArray("default_ui_panel", "free_roam_panel", "gameplay_panel", "mission_panel", "death_screen")]
+[sub_resource type="Gradient" id="Gradient_os4ub"]
+offsets = PackedFloat32Array(0.535047)
+colors = PackedColorArray(0.717536, 0, 0.08355, 0.427451)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_noxh1"]
+gradient = SubResource("Gradient_os4ub")
+
+[sub_resource type="Animation" id="Animation_noxh1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("IdkWhatThisIsCalled:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_os4ub"]
+resource_name = "take_damage"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("IdkWhatThisIsCalled:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.345772),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lpwl5"]
+_data = {
+&"RESET": SubResource("Animation_noxh1"),
+&"take_damage": SubResource("Animation_os4ub")
+}
+
+[node name="PlayerInterface" type="Control" node_paths=PackedStringArray("ui_anim_player", "default_ui_panel", "free_roam_panel", "gameplay_panel", "mission_panel", "death_screen")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,6 +62,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ovo8g")
+ui_anim_player = NodePath("UIAnimationPlayer")
 default_ui_panel = NodePath("UIFreeRoam")
 free_roam_panel = NodePath("UIFreeRoam")
 gameplay_panel = NodePath("UIMainGameplay")
@@ -161,7 +206,7 @@ pivot_offset = Vector2(25, 16)
 theme_override_font_sizes/font_size = 81
 text = "Retry"
 
-[node name="Hearts" type="HBoxContainer" parent="."]
+[node name="Hearts" type="HBoxContainer" parent="." node_paths=PackedStringArray("heart1", "heart2", "heart3")]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -172,6 +217,11 @@ offset_right = 983.0
 offset_bottom = -30.0
 grow_vertical = 0
 script = ExtResource("8_gvtrp")
+heart1 = NodePath("Heart")
+heart2 = NodePath("Heart2")
+heart3 = NodePath("Heart3")
+filled_tex = ExtResource("7_87cmh")
+empty_tex = ExtResource("10_os4ub")
 
 [node name="Heart" type="TextureRect" parent="Hearts"]
 layout_mode = 2
@@ -188,13 +238,28 @@ texture = ExtResource("7_87cmh")
 [node name="MoneyLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 22.0
-offset_top = 826.0
+offset_top = 856.0
 offset_right = 250.0
-offset_bottom = 892.0
+offset_bottom = 922.0
 theme_override_constants/outline_size = 14
 theme_override_fonts/font = ExtResource("8_eoybr")
 theme_override_font_sizes/font_size = 65
 text = "$: 0000"
+
+[node name="IdkWhatThisIsCalled" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_noxh1")
+
+[node name="UIAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_lpwl5")
+}
 
 [connection signal="timeout" from="ClearTimer" to="." method="clear_ui"]
 [connection signal="pressed" from="DeathScreen/Button" to="DeathScreen" method="_on_button_pressed"]
