@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://irf3grijky0l"]
+
+[ext_resource type="PackedScene" uid="uid://drrrrdyi06jv3" path="res://Game/components/damage_component.tscn" id="1_c8t6p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_68242"]
+albedo_color = Color(0.306923, 0.306923, 0.306923, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ne6ip"]
+albedo_color = Color(0.601223, 0.601223, 0.601223, 1)
+metallic = 0.68
+metallic_specular = 1.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8ejvd"]
+
+[node name="HazardSpike" type="Node3D"]
+
+[node name="Mound" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.3, 0, 0, 0, 1, 0, 0, 0)
+material = SubResource("StandardMaterial3D_68242")
+
+[node name="Spike1" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+radius = 0.09
+height = 0.42
+cone = true
+material = SubResource("StandardMaterial3D_ne6ip")
+
+[node name="Spike2" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.3, 0)
+radius = 0.09
+height = 0.42
+cone = true
+material = SubResource("StandardMaterial3D_ne6ip")
+
+[node name="Spike3" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.3, 0)
+radius = 0.09
+height = 0.42
+cone = true
+material = SubResource("StandardMaterial3D_ne6ip")
+
+[node name="Spike4" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -0.3)
+radius = 0.09
+height = 0.42
+cone = true
+material = SubResource("StandardMaterial3D_ne6ip")
+
+[node name="Spike5" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0.3)
+radius = 0.09
+height = 0.42
+cone = true
+material = SubResource("StandardMaterial3D_ne6ip")
+
+[node name="DamageComponent" parent="." instance=ExtResource("1_c8t6p")]
+
+[node name="CollisionShape3D" parent="DamageComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("SphereShape3D_8ejvd")
+debug_color = Color(0.980392, 0, 0.364706, 1)
+
+[editable path="DamageComponent"]
