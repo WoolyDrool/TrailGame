@@ -247,13 +247,13 @@ func state_standup(_delta):
 	crouching_collision.disabled = true
 
 func state_falling(_delta):
-	#print("in falling state")
-	if is_on_floor():
-		change_state(PLAYER_STATES.TOUCHDOWN)
-	
 	handle_crouch_input()
 	handle_movement_input()
 	handle_movement(_delta)
+	
+	#print("in falling state")
+	if is_on_floor():
+		change_state(PLAYER_STATES.TOUCHDOWN)
 
 func state_touchdown(delta):
 	print("touched down with a velocity of ", prev_velocity)
