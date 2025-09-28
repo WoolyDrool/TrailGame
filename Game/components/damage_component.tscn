@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://drrrrdyi06jv3"]
+
+[ext_resource type="Script" uid="uid://kjvh88mnjh5r" path="res://Game/components/damage_component.gd" id="1_1exn6"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_yny3b"]
+radius = 1.0
+
+[node name="DamageComponent" type="Area3D"]
+script = ExtResource("1_1exn6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_yny3b")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
