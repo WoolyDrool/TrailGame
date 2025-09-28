@@ -89,6 +89,7 @@ enabled=PackedStringArray("res://addons/boujie_water_shader/plugin.cfg", "res://
 folder_colors={
 "res://App/": "blue",
 "res://Content/": "yellow",
+"res://Content/maps/": "yellow",
 "res://Game/": "red",
 "res://Game/interface/": "red",
 "res://Game/player/": "red",
