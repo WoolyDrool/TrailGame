@@ -14,6 +14,8 @@ signal player_seize_controls
 signal player_return_controls
 signal player_show_mouse(bool)
 signal player_move_to_position(newpos : Vector3)
+enum player_tool_state {EMPTY, PICKER, HATCHET, SHOVEL}
+var current_player_tool_state : player_tool_state
 
 # Controls
 var toggle_crouch : bool = false
