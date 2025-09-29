@@ -114,6 +114,7 @@ func switch_tool():
 		equip_index += 1
 		
 	on_tool_change.emit(current_tool)
+	playerFrobber.immediate_ui.clear_immediate_ui()
 	
 	await get_tree().create_timer(2).timeout
 	if fade_tween != null:
