@@ -29,21 +29,17 @@ func _ready():
 
 func Interact(action : InputEvent):
 	if is_in_group("pocketable"):
-		if action.is_action_pressed("pocket_left"):
-			get_parent().on_pocket(false)
-		if action.is_action_pressed("pocket_right"):
-			get_parent().on_pocket(true)
+		if GameManager.current_player_tool_state == GameManager.player_tool_state.EMPTY:
+			if action.is_action_pressed("pocket_left"):
+				get_parent().on_pocket(false)
+			if action.is_action_pressed("pocket_right"):
+				get_parent().on_pocket(true)
 	elif is_in_group("depositable"):
-		if action.is_action_pressed("pocket_left"):
-			get_parent().deposit_from_pocket(false)
-		if action.is_action_pressed("pocket_right"):
-			get_parent().deposit_from_pocket(true)
-	elif is_in_group("choppable"):
-		if action.is_action_pressed("primary"):
-			parent.call(methodName)	
-	elif is_in_group("diggable"):
-		if action.is_action_pressed("primary"):
-			parent.call(methodName)	
+		if GameManager.current_player_tool_state == GameManager.player_tool_state.EMPTY:
+			if action.is_action_pressed("pocket_left"):
+				get_parent().deposit_from_pocket(false)
+			if action.is_action_pressed("pocket_right"):
+				get_parent().deposit_from_pocket(true)
 	elif is_in_group("interactable"):
 		if action.is_action_pressed("interact"):
 			parent.call(methodName)	
