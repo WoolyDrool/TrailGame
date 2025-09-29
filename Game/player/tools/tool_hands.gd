@@ -11,6 +11,9 @@ var grab_speed
 func _ready() -> void:
 	pass # Replace with function body.
 
+func tool_equip():
+	super()
+	GameManager.current_player_tool_state = GameManager.player_tool_state.EMPTY
 
 func _tool_primary() -> void:
 	pass

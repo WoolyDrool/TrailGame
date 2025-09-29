@@ -13,6 +13,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+func tool_equip():
+	super()
+	GameManager.current_player_tool_state = GameManager.player_tool_state.SHOVEL
+
 func _tool_primary() -> void:
 	if frobber.col_to_select && is_instance_valid(frobber.col_to_select):
 		if frobber.col_to_select.is_in_group("diggable"):

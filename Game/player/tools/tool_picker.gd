@@ -12,6 +12,10 @@ var is_looking_down : bool = true
 func _get_nodes():
 	item_container = $ItemContainer
 
+func tool_equip():
+	super()
+	GameManager.current_player_tool_state = GameManager.player_tool_state.PICKER
+
 func _process(delta: float) -> void:
 	if isEquip:
 		manager.toolAmmo_label.text = ("Items: " + str(current_items) + "/" + str(max_items))

@@ -5,6 +5,9 @@ extends PlayerTool
 func _ready():
 	pass # Replace with function body.
 
+func tool_equip():
+	super()
+	GameManager.current_player_tool_state = GameManager.player_tool_state.HATCHET
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
