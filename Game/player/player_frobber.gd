@@ -87,18 +87,7 @@ func update_immediate_ui():
 func _unhandled_input(event: InputEvent) -> void:
 	# Todo add a sorting filter for if the player is holding a specific tool or not
 	if col_to_select && is_instance_valid(col_to_select):
-		#if cur_tool_state == tool_state.EMPTY:
-			if event.is_action_pressed("interact"): #|| event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
+			if event.is_action_pressed("interact"): 
 				col_to_select.Interact(event)
 				col_to_select = null
 				update_immediate_ui()
-		#elif cur_tool_state == tool_state.HATCHET:
-			#if event.is_action_pressed("primary"): #|| event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
-				#col_to_select.Interact(event)
-				#col_to_select = null
-				#update_immediate_ui()
-		#elif cur_tool_state == tool_state.SHOVEL:
-			#if event.is_action_pressed("primary"): #|| event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
-				#col_to_select.Interact(event)
-				#col_to_select = null
-				#update_immediate_ui()
