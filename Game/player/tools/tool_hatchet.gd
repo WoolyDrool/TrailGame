@@ -15,6 +15,7 @@ func _process(delta):
 
 # Actions
 func _tool_primary() -> void:
+	super()
 	if frobber.col_to_select && is_instance_valid(frobber.col_to_select):
 		if frobber.col_to_select.is_in_group("choppable"):
 			frobber.col_to_select.GenericInteract()
