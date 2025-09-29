@@ -23,10 +23,11 @@ func player_take_damage(value : int):
 		if current_health <= 0:
 			player_death()
 		else:
-			GameManager.ui_update_player_health.emit(current_health)
 			invuln_timer.start(invuln_time)
 	else:
 		print("Player was invulnverable")
+	
+	GameManager.ui_update_player_health.emit(current_health)
 		
 func player_death():
 	print("Player died!")
