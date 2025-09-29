@@ -15,6 +15,7 @@ var manager : PlayerToolManager
 @onready var tertiaryActionTimer = $TertiaryTimer
 
 var isEquip : bool = false
+var can_be_unequipped : bool = true
 var canPrimary : bool = true
 var canSecondary : bool = true
 var canTertiary : bool = true
