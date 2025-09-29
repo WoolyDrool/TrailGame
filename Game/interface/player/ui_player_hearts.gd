@@ -19,7 +19,11 @@ func _process(delta: float) -> void:
 
 func update_health_display(new_health : int):
 	# TODO 9/28/25: need to replace this with more dynamic solution
-	if new_health == 1:
+	if  new_health == 0:
+		heart1.texture = empty_tex
+		heart2.texture = empty_tex
+		heart3.texture = empty_tex
+	elif new_health == 1:
 		heart1.texture = filled_tex
 		heart2.texture = empty_tex
 		heart3.texture = empty_tex
