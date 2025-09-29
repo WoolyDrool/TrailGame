@@ -18,7 +18,6 @@ bottom_radius = 0.8
 height = 0.3
 
 [node name="DiggableObject" type="Node3D" node_paths=PackedStringArray("dirt_model", "buried_item")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.148603, 0)
 script = ExtResource("1_f6x0j")
 dirt_model = NodePath("DirtMound")
 buried_item = NodePath("Trash")
