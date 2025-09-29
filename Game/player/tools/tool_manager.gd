@@ -54,14 +54,14 @@ func _ready_tools():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var prev_selected = tool_selected
-	_process_input()
+	_process_input(delta)
 
 	toolName_label.text = str(current_tool.toolName)
 	
 	if prev_selected != tool_selected:
 		switch_tool()
 
-func _process_input():
+func _process_input(delta : float):
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		if Input.is_action_just_pressed("primary") && current_tool.canPrimary:
 			tool_primary()
@@ -69,6 +69,13 @@ func _process_input():
 			tool_secondary()
 		elif Input.is_action_just_pressed("tertiary") && current_tool.canTertiary:
 			tool_tertiary()
+		
+		if Input.is_action_pressed("primary"):
+			tool_hold_primary(delta)
+		elif Input.is_action_pressed("secondary"):
+			tool_hold_secondary(delta)
+		elif Input.is_action_pressed("tertiary"):
+			tool_hold_tertiary(delta)
 		toolName_label.text = str(current_tool.toolName)
 			
 	# Toolbar Scrolling
@@ -128,10 +135,19 @@ func tool_primary():
 	current_tool._tool_primary()
 	pass
 
+func tool_hold_primary(delta : float):
+	current_tool._tool_hold_primary(delta)
+
 func tool_secondary():
 	current_tool._tool_secondary()
 	pass
+
+func tool_hold_secondary(delta : float):
+	current_tool._tool_hold_secondary(delta)
 	
 func tool_tertiary():
 	current_tool._tool_tertiary()
 	pass
+
+func tool_hold_tertiary(delta : float):
+	current_tool._tool_hold_tertiary(delta)
