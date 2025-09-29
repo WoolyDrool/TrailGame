@@ -23,6 +23,13 @@ func _process(delta: float) -> void:
 
 func update_immediate_ui(context_obj : InteractComponent):
 	if context_obj:
+		if context_obj.is_in_group("pocketable") and not GameManager.current_player_tool_state == GameManager.player_tool_state.EMPTY or GameManager.current_player_tool_state == GameManager.player_tool_state.PICKER:
+			return
+		if context_obj.is_in_group("choppable") and not GameManager.current_player_tool_state == GameManager.player_tool_state.HATCHET:
+			return
+		if context_obj.is_in_group("diggable") and not GameManager.current_player_tool_state == GameManager.player_tool_state.SHOVEL:
+			return
+		
 		interact_text.text = context_obj.interactText
 		descriptor_text.text = context_obj.descriptorText
 		context_text.text = context_obj.contextText
