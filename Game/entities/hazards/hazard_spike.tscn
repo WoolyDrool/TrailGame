@@ -58,6 +58,5 @@ material = SubResource("StandardMaterial3D_ne6ip")
 [node name="CollisionShape3D" parent="DamageComponent" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 shape = SubResource("SphereShape3D_8ejvd")
-debug_color = Color(0.980392, 0, 0.364706, 1)
 
 [editable path="DamageComponent"]
