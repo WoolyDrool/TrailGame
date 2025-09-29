@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bw8sepo1dej0s"]
+[gd_scene load_steps=21 format=3 uid="uid://bw8sepo1dej0s"]
 
 [ext_resource type="Script" uid="uid://chcpbdpal42dg" path="res://Game/player/player_controller.gd" id="1_chifv"]
 [ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="2_s7tq4"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://b4o8wpn0f2nra" path="res://Game/player/flashlight.gd" id="12_7fv12"]
 [ext_resource type="Script" uid="uid://emxs1kydq3ju" path="res://Game/player/player_health_manager.gd" id="12_t0aee"]
 [ext_resource type="Script" uid="uid://dipsx1lg3006e" path="res://Game/components/pocket_component.gd" id="14_hygt8"]
+[ext_resource type="Script" uid="uid://dl71ywu8ebl6o" path="res://Game/player/player_sounds_manager.gd" id="16_jocr7"]
 
 [sub_resource type="Resource" id="Resource_s7tq4"]
 script = ExtResource("3_jocr7")
@@ -32,14 +33,14 @@ height = 4.0
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2v6a4"]
 height = 1.0
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("cam_container")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("cam_container") groups=["player"]]
 collision_mask = 10
 floor_stop_on_slope = false
 floor_block_on_wall = false
 script = ExtResource("1_chifv")
 cam_container = NodePath("CamContainer")
 walking_speed = 7.6
-sprinting_speed = 9.3
+sprinting_speed = 10.7
 jump_velocity = 6.7
 air_cap = 0.95
 air_accel = 600.0
@@ -128,6 +129,7 @@ tertiaryActionCooldown = 3.0
 
 [node name="ToolHatchet" parent="CamContainer/Camera3D/ToolManager" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.7, -1.3)
+primaryActionCooldown = 0.4
 
 [node name="ToolShovel" parent="CamContainer/Camera3D/ToolManager" index="3" node_paths=PackedStringArray("toolCast")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897342, -0.8, -1.30477)
@@ -275,6 +277,19 @@ player_frobber = NodePath("../CamContainer/Camera3D")
 script = ExtResource("12_t0aee")
 
 [node name="InvulnTimer" type="Timer" parent="PlayerHealthManager"]
+one_shot = true
+
+[node name="PlayerSoundsManager" type="Node3D" parent="." node_paths=PackedStringArray("footsteps_track", "barks_track", "tools_track")]
+script = ExtResource("16_jocr7")
+footsteps_track = NodePath("AudioTrack_Footsteps")
+barks_track = NodePath("AudioTrack_Barks")
+tools_track = NodePath("AudioTrack_Tools")
+
+[node name="AudioTrack_Footsteps" type="AudioStreamPlayer3D" parent="PlayerSoundsManager"]
+
+[node name="AudioTrack_Barks" type="AudioStreamPlayer3D" parent="PlayerSoundsManager"]
+
+[node name="AudioTrack_Tools" type="AudioStreamPlayer3D" parent="PlayerSoundsManager"]
 
 [connection signal="finished" from="FootstepsManager/FootstepsPlayer" to="FootstepsManager" method="_on_footsteps_player_finished"]
 
