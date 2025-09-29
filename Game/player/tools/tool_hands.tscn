@@ -6,6 +6,7 @@
 [node name="ToolHands" node_paths=PackedStringArray("hold_point") instance=ExtResource("1_cgdkp")]
 script = ExtResource("2_vbi5e")
 hold_point = NodePath("HoldPoint")
+throw_force = 15.0
 toolName = "Empty Hands"
 
 [node name="HoldPoint" type="Node3D" parent="." index="4"]
