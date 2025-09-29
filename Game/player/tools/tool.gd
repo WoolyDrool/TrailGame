@@ -61,15 +61,24 @@ func _tool_primary() -> void:
 	if primaryActionTimer:
 		primaryActionTimer.start()
 
+func _tool_hold_primary(delta : float) -> void:
+	pass
+
 func _tool_secondary() -> void:
 	canSecondary = false
 	if secondaryActionTimer:
 		secondaryActionTimer.start()
+		
+func _tool_hold_secondary(delta : float) -> void:
+	pass
 
 func _tool_tertiary() -> void:
 	canTertiary = false
 	if tertiaryActionTimer:
 		tertiaryActionTimer.start()
+
+func _tool_hold_tertiary(delta : float) -> void:
+	pass
 
 func _on_primary_timeout():
 	canPrimary = true
