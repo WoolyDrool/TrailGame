@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://587262u2onts"]
+
+[ext_resource type="PackedScene" uid="uid://d04wllb11cc5f" path="res://Game/components/slowdown_component.tscn" id="1_b5lvw"]
+[ext_resource type="Script" uid="uid://cmopixfa2qiuw" path="res://Game/entities/hazards/hazard_slowdown.gd" id="1_u146d"]
+[ext_resource type="PackedScene" uid="uid://pletdq3bfgxj" path="res://Game/components/interact_component.tscn" id="3_u146d"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xf14q"]
+albedo_color = Color(0.416185, 0.262327, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b5lvw"]
+albedo_color = Color(0.446305, 0.767971, 0, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_u146d"]
+radius = 1.0
+
+[node name="HazardSlowdown" type="Node3D" groups=["choppable"]]
+script = ExtResource("1_u146d")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
+radius = 1.0
+material = SubResource("StandardMaterial3D_xf14q")
+
+[node name="Bramble1" type="CSGCylinder3D" parent="."]
+transform = Transform3D(0.99959, 0.0180688, 0.0222158, -0.0239463, 0.101994, 0.994497, 0.0157034, -0.994621, 0.102384, 0, 0.173259, 0)
+radius = 0.09
+height = 1.3
+material = SubResource("StandardMaterial3D_b5lvw")
+
+[node name="Bramble2" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-0.857818, -0.512958, 0.0319528, -0.0239463, 0.101994, 0.994497, -0.513395, 0.852332, -0.0997754, 0.356535, 0.173259, 0)
+radius = 0.09
+height = 1.3
+material = SubResource("StandardMaterial3D_b5lvw")
+
+[node name="Bramble3" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-0.977235, -0.212153, -0.00177269, -0.0239463, 0.101994, 0.994497, -0.210804, 0.971899, -0.104752, -0.211019, 0.173259, 0)
+radius = 0.09
+height = 1.3
+material = SubResource("StandardMaterial3D_b5lvw")
+
+[node name="SlowdownComponent" parent="." instance=ExtResource("1_b5lvw")]
+
+[node name="InteractComponent" parent="." groups=["choppable"] instance=ExtResource("3_u146d")]
+methodName = "on_chop"
+
+[node name="CollisionShape3D" parent="InteractComponent" index="0"]
+shape = SubResource("SphereShape3D_u146d")
+
+[editable path="InteractComponent"]

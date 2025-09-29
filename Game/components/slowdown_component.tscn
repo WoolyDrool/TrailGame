@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://d04wllb11cc5f"]
+
+[ext_resource type="Script" uid="uid://25mjh0d1s0cj" path="res://Game/components/slowdown_component.gd" id="1_6yxdu"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gvlsa"]
+radius = 1.0
+
+[node name="SlowdownComponent" type="Area3D"]
+script = ExtResource("1_6yxdu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_gvlsa")
+debug_color = Color(0.620091, 0.534446, 1.92523e-07, 0.42)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
