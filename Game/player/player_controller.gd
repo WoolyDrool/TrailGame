@@ -265,6 +265,7 @@ func state_touchdown(delta):
 	else:
 		print("safely landed")
 		has_picker_jumped = false
+		handle_jump_input()
 		if velocity.length() > 0:
 			change_state(PLAYER_STATES.WALKING)
 		else:
