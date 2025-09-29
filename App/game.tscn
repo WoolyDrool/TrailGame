@@ -17,10 +17,10 @@ script = ExtResource("4_jj8ee")
 current_scene = NodePath("../level0")
 transitioner = NodePath("../GlobalTransition")
 
-[node name="GlobalAudioManager" type="AudioStreamPlayer" parent="."]
+[node name="GameAudioManager" type="AudioStreamPlayer" parent="."]
 script = ExtResource("4_6w5aw")
 
-[node name="GlobalAudioPlayer" parent="GlobalAudioManager" instance=ExtResource("5_j3adi")]
+[node name="GlobalAudioPlayer" parent="GameAudioManager" instance=ExtResource("5_j3adi")]
 
 [node name="GlobalTransition" type="ColorRect" parent="."]
 anchors_preset = 15
