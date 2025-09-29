@@ -62,6 +62,7 @@ var input_dir
 var wish_dir
 var direction = Vector3.ZERO
 
+var overwriting_speed : bool = false
 var can_move : bool = true
 var can_use_mouse : bool = true
 var was_on_floor : bool = true
@@ -433,15 +434,24 @@ func handle_movement(_delta):
 		move_and_slide()
 		_snap_down_to_stairs_check()
 
+func overwrite_move_speed(overwrite_speed : float):
+	current_speed = overwrite_speed
+	overwriting_speed = true
+
+func return_move_speed():
+	current_speed = walking_speed
+	overwriting_speed = false
+
 func determine_move_speed():
-	# Determine movement speed
-	if Input.is_action_pressed("move_crouch"):
-		current_speed = crouching_speed
-	else:
-		if Input.is_action_pressed("move_sprint"):
-			current_speed = sprinting_speed
+	if !overwriting_speed:
+		# Determine movement speed
+		if Input.is_action_pressed("move_crouch"):
+			current_speed = crouching_speed
 		else:
-			current_speed = walking_speed
+			if Input.is_action_pressed("move_sprint"):
+				current_speed = sprinting_speed
+			else:
+				current_speed = walking_speed
 
 func _headbob_effect(_delta):
 	headbob_time += _delta * velocity.length()
