@@ -19,6 +19,7 @@ class_name InteractComponent
 @export var hitbox : HitboxComponent
 var collision : CollisionShape3D
 var parent
+signal interacted
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,7 +36,7 @@ func Interact(action : InputEvent):
 			if action.is_action_pressed("pocket_right"):
 				get_parent().on_pocket(true)
 	elif is_in_group("depositable"):
-		if GameManager.current_player_tool_state == GameManager.player_tool_state.EMPTY:
+		#if GameManager.current_player_tool_state == GameManager.player_tool_state.EMPTY:
 			if action.is_action_pressed("pocket_left"):
 				get_parent().deposit_from_pocket(false)
 			if action.is_action_pressed("pocket_right"):
@@ -43,6 +44,8 @@ func Interact(action : InputEvent):
 	elif is_in_group("interactable"):
 		if action.is_action_pressed("interact"):
 			parent.call(methodName)	
+			interacted.emit()
 			
 func GenericInteract():
 	parent.call(methodName)
+	interacted.emit()

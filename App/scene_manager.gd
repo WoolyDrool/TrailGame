@@ -25,7 +25,6 @@ func reload_current():
 
 func load_scene(path : String):
 	if(ResourceLoader.exists(path)):
-		transitioner.tween_out()
 		await transitioner.transition_finished
 		print("awaited transition")
 		var new_scene = load(path).instantiate()
@@ -41,14 +40,12 @@ func load_scene(path : String):
 			current_scene.find_child("AreaGamemode").apply_gamemode()
 		get_parent().add_child(new_scene)
 		get_parent().scene_file_path
-		transitioner.tween_in()
 	else:
 		print_debug("SCENE ", path, " IS NOT A VALID PATH")
 	pass
 
 func load_scene_without_player(path : String):
 	if(ResourceLoader.exists(path)):
-		transitioner.tween_out()
 		await transitioner.transition_finished
 		print("awaited transition")
 		var new_scene = load(path).instantiate()
@@ -56,6 +53,5 @@ func load_scene_without_player(path : String):
 		current_scene = new_scene
 		get_parent().add_child(new_scene)
 		get_parent().scene_file_path
-		transitioner.tween_in()
 	else:
 		print_debug("SCENE ", path, " IS NOT A VALID PATH")

@@ -1,28 +1,32 @@
-[gd_scene load_steps=7 format=3 uid="uid://chs8oja85k8ks"]
+[gd_scene load_steps=8 format=3 uid="uid://chs8oja85k8ks"]
 
 [ext_resource type="Script" uid="uid://bccldd7eho0iw" path="res://App/game.gd" id="1_lf7hn"]
-[ext_resource type="PackedScene" uid="uid://dcn048utcp7wd" path="res://Content/maps/map_debug.tscn" id="2_1kb1v"]
 [ext_resource type="Script" uid="uid://coctbwjiiio1i" path="res://App/global_audio_manager.gd" id="4_6w5aw"]
 [ext_resource type="Script" uid="uid://bapwxp7gh2q87" path="res://App/scene_manager.gd" id="4_jj8ee"]
 [ext_resource type="PackedScene" uid="uid://08t1lkafausy" path="res://App/global_audio_player.tscn" id="5_j3adi"]
 [ext_resource type="Script" uid="uid://fddd3e5j5o5l" path="res://App/screen_transition.gd" id="6_1kb1v"]
+[ext_resource type="PackedScene" uid="uid://rs82qmhpubub" path="res://Content/maps/map_tutorial.tscn" id="6_ngppy"]
+[ext_resource type="Script" uid="uid://bp2fy0cn03byj" path="res://App/save_load_manager.gd" id="7_ngppy"]
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_lf7hn")
 
-[node name="level0" parent="." instance=ExtResource("2_1kb1v")]
-
-[node name="SceneManager" type="Node" parent="." node_paths=PackedStringArray("current_scene", "transitioner")]
+[node name="SceneManager" type="Node" parent="." node_paths=PackedStringArray("transitioner")]
 script = ExtResource("4_jj8ee")
-current_scene = NodePath("../level0")
-transitioner = NodePath("../GlobalTransition")
+transitioner = NodePath("../ScreenTransitionManager")
 
 [node name="GameAudioManager" type="AudioStreamPlayer" parent="."]
 script = ExtResource("4_6w5aw")
 
 [node name="GlobalAudioPlayer" parent="GameAudioManager" instance=ExtResource("5_j3adi")]
 
-[node name="GlobalTransition" type="ColorRect" parent="."]
+[node name="Node3D" parent="." instance=ExtResource("6_ngppy")]
+
+[node name="SaveLoadManager" type="Node" parent="."]
+script = ExtResource("7_ngppy")
+
+[node name="ScreenTransitionManager" type="ColorRect" parent="."]
+unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -33,4 +37,4 @@ color = Color(0, 0, 0, 1)
 script = ExtResource("6_1kb1v")
 speed = 1.11
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GlobalTransition"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ScreenTransitionManager"]

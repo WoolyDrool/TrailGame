@@ -1,4 +1,5 @@
 @icon("res://App/editor icons/spr_ed_npc.png")
+class_name NPCGeneric
 extends Node3D
 
 @export var dialogue_timeline : DialogicTimeline

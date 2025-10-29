@@ -1,0 +1,95 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmyc1ebp0ays3"]
+
+[ext_resource type="Script" uid="uid://b3nhcvb0hp3fg" path="res://Game/interface/menus/ui_save_file_button.gd" id="1_5sljp"]
+[ext_resource type="FontFile" uid="uid://cl67hdcfm36u3" path="res://Content/fonts/XTypewriter-Bold.ttf" id="2_v2fql"]
+[ext_resource type="ButtonGroup" uid="uid://c2jbabpbtrr1u" path="res://Game/interface/menus/save_select_button_group.tres" id="3_v2fql"]
+
+[node name="SaveFileButton" type="Control" node_paths=PackedStringArray("assoc_button")]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+script = ExtResource("1_5sljp")
+assoc_button = NodePath("SelectButton")
+
+[node name="SelectButton" type="Button" parent="."]
+layout_mode = 2
+offset_right = 285.0
+offset_bottom = 584.0
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_v2fql")
+theme_override_font_sizes/font_size = 40
+toggle_mode = true
+button_group = ExtResource("3_v2fql")
+text = "Empty Save"
+
+[node name="ConfirmDelete" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchor_right = 1.011
+anchor_bottom = 1.0
+offset_right = -3.13501
+
+[node name="Panel" type="Panel" parent="ConfirmDelete"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ConfirmDeleteLabel" type="Label" parent="ConfirmDelete"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_v2fql")
+theme_override_font_sizes/font_size = 40
+text = "Delete?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ConfirmDeleteButtons" type="HBoxContainer" parent="ConfirmDelete"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 320.0
+offset_right = -13.0
+offset_bottom = -216.0
+
+[node name="YesButton" type="Button" parent="ConfirmDelete/ConfirmDeleteButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Yes"
+
+[node name="NoButton" type="Button" parent="ConfirmDelete/ConfirmDeleteButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "No"
+
+[node name="Options" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 592.0
+offset_bottom = 56.0
+
+[node name="PlayButton" type="Button" parent="Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Play"
+
+[node name="DeleteButton" type="Button" parent="Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Delete"
+
+[connection signal="pressed" from="SelectButton" to="." method="_on_select_button_pressed"]
+[connection signal="toggled" from="SelectButton" to="." method="_on_select_button_toggled"]
+[connection signal="pressed" from="ConfirmDelete/ConfirmDeleteButtons/YesButton" to="." method="_on_yes_button_pressed"]
+[connection signal="pressed" from="ConfirmDelete/ConfirmDeleteButtons/NoButton" to="." method="_on_no_button_pressed"]
+[connection signal="pressed" from="Options/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="toggled" from="Options/DeleteButton" to="." method="_on_delete_button_toggled"]

@@ -4,7 +4,11 @@ extends Node3D
 
 var player_path : NodePath = "res://Game/player/player.tscn"
 var current_player : Player
+@export var player_enabled_on_spawn : bool = true
 @export var cam_point : Node3D
+
+signal on_player_spawn(player : Player)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	await get_tree().create_timer(0.25).timeout
@@ -30,4 +34,9 @@ func spawn_player():
 			current_player.rotation = rotation
 			await current_player
 			current_player.cam_container.rotation.x = cam_point.rotation.x
+			if !player_enabled_on_spawn:
+				current_player.seize_controls()
 			visible = false
+
+	if current_player:
+			on_player_spawn.emit(current_player)	

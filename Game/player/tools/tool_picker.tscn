@@ -7,7 +7,7 @@
 
 [sub_resource type="Curve3D" id="Curve3D_fvhg7"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, -0.0815628, 0.00526214, 0, 0, 0, 0, 0, 0, 0, 1.42915, 0.0138277),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, -0.0815628, 0.00526214, 0, 0, 0, 0, 0, 0, 0, 1.16002, 0.0138277),
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
@@ -19,12 +19,11 @@ toolName = "Picker"
 primaryActionCooldown = 3.0
 
 [node name="Path3D" type="Path3D" parent="." index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -0.00306892)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.1, -1.52314)
 curve = SubResource("Curve3D_fvhg7")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D" index="0"]
-transform = Transform3D(-1.63254e-07, 0.999998, 1.18313e-07, 0.00566271, 1.19236e-07, -0.999979, -0.999982, -1.62581e-07, -0.0056627, 0, 0.349408, 0.00770569)
-progress = 0.432179
+transform = Transform3D(1.94703e-07, 0.999998, 1.04136e-09, 0.00689662, -3.01461e-10, -0.999971, -0.999974, 1.94706e-07, -0.0068966, 0, -0.0815628, 0.00526214)
 
 [node name="ItemContainer" type="Node3D" parent="." index="5"]
 

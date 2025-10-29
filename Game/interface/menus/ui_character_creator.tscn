@@ -1,0 +1,100 @@
+[gd_scene load_steps=7 format=3 uid="uid://beqyviijuoyst"]
+
+[ext_resource type="Texture2D" uid="uid://btgu1aiq5aqln" path="res://Content/sprites/spr_ui_characterCreation.png" id="1_0y3l8"]
+[ext_resource type="Script" uid="uid://gu3qtf51tch7" path="res://Game/interface/menus/ui_character_creator.gd" id="1_m56p7"]
+[ext_resource type="Texture2D" uid="uid://doji5s1n5fncg" path="res://Content/sprites/spr_ui_characterCreation_finalize_grey.png" id="2_62k0t"]
+[ext_resource type="Texture2D" uid="uid://d0tkiwyox8n2v" path="res://Content/sprites/spr_ui_characterCreation_finalize_red.png" id="3_m56p7"]
+[ext_resource type="AudioStream" uid="uid://c0j7jro8m4rog" path="res://Content/sound/sfx/sfx_paper_ruffle_1.wav" id="5_uqul8"]
+[ext_resource type="AudioStream" uid="uid://ebucblaxxfvc" path="res://Content/sound/sfx/sfx_paper_stamp_1.wav" id="6_sj10p"]
+
+[node name="CharacterCreator" type="Control" node_paths=PackedStringArray("finalize_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m56p7")
+finalize_button = NodePath("FinalizeButton")
+
+[node name="BG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_0y3l8")
+expand_mode = 1
+
+[node name="NameEntry" type="LineEdit" parent="."]
+layout_mode = 1
+offset_left = 528.0
+offset_top = 343.0
+offset_right = 1396.0
+offset_bottom = 402.0
+theme_override_colors/font_placeholder_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/font_uneditable_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+placeholder_text = "Your Name Here"
+alignment = 1
+context_menu_enabled = false
+emoji_menu_enabled = false
+virtual_keyboard_enabled = false
+flat = true
+
+[node name="PronounsButton" type="OptionButton" parent="."]
+layout_mode = 0
+offset_left = 863.0
+offset_top = 584.0
+offset_right = 1055.0
+offset_bottom = 640.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+flat = true
+alignment = 1
+item_count = 4
+popup/item_0/text = "His"
+popup/item_0/id = 0
+popup/item_1/text = "Her"
+popup/item_1/id = 1
+popup/item_2/text = "Their"
+popup/item_2/id = 2
+popup/item_3/text = "(Random)"
+popup/item_3/id = 3
+
+[node name="FinalizeButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -386.0
+offset_top = -386.0
+grow_horizontal = 0
+grow_vertical = 0
+toggle_mode = true
+texture_normal = ExtResource("2_62k0t")
+texture_pressed = ExtResource("3_m56p7")
+texture_hover = ExtResource("3_m56p7")
+
+[node name="PaperRuffleSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_uqul8")
+
+[node name="StampSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_sj10p")
+
+[node name="JuiceTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="text_changed" from="NameEntry" to="." method="_on_name_entry_text_changed"]
+[connection signal="item_selected" from="PronounsButton" to="." method="_on_pronouns_button_item_selected"]
+[connection signal="toggled" from="FinalizeButton" to="." method="_on_finalize_button_toggled"]
+[connection signal="timeout" from="JuiceTimer" to="." method="_on_juice_timer_timeout"]

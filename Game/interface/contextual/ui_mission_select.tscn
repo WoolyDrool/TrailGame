@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cywvs0jk6clft"]
+[gd_scene load_steps=7 format=3 uid="uid://cywvs0jk6clft"]
 
 [ext_resource type="Script" uid="uid://bsgqlrbak4pa8" path="res://Game/interface/contextual/ui_mission_select.gd" id="1_64icc"]
-[ext_resource type="Texture2D" uid="uid://33ayvttvwl7x" path="res://Game/areas/hud layout concept.png" id="1_oo1bn"]
 [ext_resource type="PackedScene" uid="uid://dhncv3fvys8e3" path="res://Game/interface/contextual/ui_mission_select_button.tscn" id="3_yc2jt"]
 [ext_resource type="Texture2D" uid="uid://ddkrtjyowk2q6" path="res://Content/sprites/mission thumbnails/spr_thumb_default.png" id="4_8wcjm"]
 [ext_resource type="FontFile" uid="uid://ugdwuve6ft8x" path="res://Content/fonts/typewcond_bold.otf" id="4_c5deq"]
@@ -27,12 +26,6 @@ mission_vbox = NodePath("BGPanel/MissionBox")
 mission_select_button_scene = ExtResource("3_yc2jt")
 mouse_visible = true
 player_controls = false
-
-[node name="HudLayoutConcept" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(960, 544)
-scale = Vector2(1, 1.00741)
-texture = ExtResource("1_oo1bn")
 
 [node name="BGPanel" type="Panel" parent="."]
 layout_mode = 0
@@ -72,21 +65,21 @@ offset_bottom = 445.0
 scale = Vector2(0.956522, 0.945748)
 texture = ExtResource("4_8wcjm")
 
-[node name="StartButton" type="Button" parent="BGPanel"]
-layout_mode = 0
-offset_left = 907.0
-offset_top = 405.0
-offset_right = 1067.0
-offset_bottom = 499.0
-theme_override_fonts/font = ExtResource("4_c5deq")
-theme_override_font_sizes/font_size = 64
-text = "Start"
-
 [node name="BackButton" type="Button" parent="BGPanel"]
 layout_mode = 0
-offset_left = 432.0
+offset_left = 447.0
 offset_top = 928.0
-offset_right = 592.0
+offset_right = 607.0
+offset_bottom = 1022.0
+theme_override_fonts/font = ExtResource("4_c5deq")
+theme_override_font_sizes/font_size = 64
+text = "Back"
+
+[node name="StartButton" type="Button" parent="BGPanel"]
+layout_mode = 0
+offset_left = 229.0
+offset_top = 928.0
+offset_right = 389.0
 offset_bottom = 1022.0
 theme_override_fonts/font = ExtResource("4_c5deq")
 theme_override_font_sizes/font_size = 64
@@ -107,5 +100,5 @@ offset_top = 576.0
 offset_right = 768.0
 offset_bottom = 896.0
 
-[connection signal="pressed" from="BGPanel/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="BGPanel/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="BGPanel/StartButton" to="." method="_on_start_button_pressed"]

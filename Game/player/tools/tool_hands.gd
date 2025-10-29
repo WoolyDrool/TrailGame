@@ -82,7 +82,9 @@ func _tool_tertiary() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pocket_left") || event.is_action_pressed("pocket_right"):
+		print("got input")
 		if frobber.col_to_select && is_instance_valid(frobber.col_to_select):
-			if frobber.col_to_select.is_in_group("pocketable"):
-				#print("called interact")
+			print("instance is valid")
+			if frobber.col_to_select.is_in_group("interactable"):
+				print("called interact")
 				frobber.col_to_select.Interact(event)

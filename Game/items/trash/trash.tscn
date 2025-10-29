@@ -9,7 +9,6 @@ albedo_color = Color(2.59906e-06, 0.659069, 0.313399, 1)
 size = Vector3(0.5, 0.5, 0.5)
 
 [node name="Trash" instance=ExtResource("1_b43fa")]
-collision_layer = 256
 item_name = "Trash"
 type = 1
 

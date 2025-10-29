@@ -7,7 +7,8 @@ enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, STAND
 
 # Nodes
 @export var cam_container : Node3D
-@onready var camera_phantom = $PhantomCamera3D
+@onready var camera_phantom : PhantomCamera3D = $PhantomCamera3D
+@onready var default_phantom_camera_target = $CamContainer
 @onready var standing_collision = $StandingCollision
 @onready var crouching_collision = $CrouchingCollision
 @onready var ceiling_check = $CeilingCheck
@@ -16,6 +17,7 @@ enum PLAYER_STATES {IDLE, WALKING, JUMPING, FALLING, TOUCHDOWN, CROUCHING, STAND
 @onready var debug_label_2 = $DebugUI/RichTextLabel2
 @onready var stairs_ahead_raycast = $CamContainer/StairsAheadRayCast3D
 @onready var stairs_below_raycast = $CamContainer/StairsBelowRayCast3D
+@onready var immediate_ui = $CamContainer/Camera3D/ImmediateUI
 
 @export_category("Mouse Look")
 @export var mouse_sens : float = 0.4
@@ -95,15 +97,29 @@ func seize_controls():
 	can_move = false
 	can_use_mouse = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	immediate_ui.visible = false
 
 func return_controls():
 	can_move = true
 	can_use_mouse = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	immediate_ui.visible = true
 	
 func teleport_player(newpos : Vector3):
 	self.position = newpos
 	pass
+
+#func move_player_camera(new_target : Vector3):
+	#if !can_move and !can_use_mouse:
+		#camera_phantom.look_at_target = new_target
+	#else:
+		#push_error("Attempted to move camera while player has control")
+#
+#func reset_player_camera(new_target : Vector3):
+	#if !can_move and !can_use_mouse:
+		#camera_phantom.look_at_target = default_phantom_camera_target
+	#else:
+		#push_error("Attempted to move camera while player has control")
 
 func toggle_mouse_state(boolean : bool):
 	print("toggled mouse state")
@@ -248,7 +264,7 @@ func state_standup(_delta):
 	crouching_collision.disabled = true
 
 func state_falling(_delta):
-	handle_crouch_input()
+	#handle_crouch_input()
 	handle_movement_input()
 	handle_movement(_delta)
 	
@@ -311,6 +327,7 @@ func handle_crouch_input():
 					crouch_tween.kill()
 				crouch_tween = create_tween()
 				crouch_tween.tween_property(camera_phantom, "position", default_cam_height, stand_transition_speed)
+
 #region Stairs
 # These are direct calls to the PhysicsServer. Scary :-(
 # Fun fact: the server only uses global coordinates

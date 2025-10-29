@@ -25,23 +25,27 @@ PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_came
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 GlobalAudioManager="*res://App/global_audio_manager.gd"
 UiPlayerInterface="*res://Game/interface/player/ui_player_interface.gd"
+SaveLoadManager="*res://App/save_load_manager.gd"
 
 [dialogic]
 
 directories/dch_directory={
 "lab_tech": "res://Content/dialogue/characters/lab_tech.dch",
 "navigator": "res://Content/dialogue/characters/navigator.dch",
+"phone_voice": "res://Content/dialogue/characters/phone_voice.dch",
 "random_guy": "res://Content/dialogue/characters/random_guy.dch",
 "receptionist_bunny": "res://Content/dialogue/characters/receptionist_bunny.dch",
 "smug_guy": "res://Content/dialogue/characters/smug_guy.dch"
 }
 directories/dtl_directory={
+"map_canyon_mole miner": "res://Content/dialogue/conversations/map_canyon_mole miner.dtl",
 "map_hub_labTech_intro": "res://Content/dialogue/conversations/map_hub_labTech_intro.dtl",
 "map_hub_navigator_intro": "res://Content/dialogue/conversations/map_hub_navigator_intro.dtl",
 "map_intro_chairGuy": "res://Content/dialogue/conversations/map_intro_chairGuy.dtl",
 "map_intro_randomGuy": "res://Content/dialogue/conversations/map_intro_randomGuy.dtl",
 "map_intro_receptionist": "res://Content/dialogue/conversations/map_intro_receptionist.dtl",
-"map_lostMine_tutorialNPC": "res://Content/dialogue/conversations/map_lostMine_tutorialNPC.dtl"
+"map_lostMine_tutorialNPC": "res://Content/dialogue/conversations/map_lostMine_tutorialNPC.dtl",
+"map_tutorial_phoneCall_1": "res://Content/dialogue/conversations/map_tutorial_phoneCall_1.dtl"
 }
 extensions_folder="res://addons/dialogic_additions"
 text/letter_speed=0.04

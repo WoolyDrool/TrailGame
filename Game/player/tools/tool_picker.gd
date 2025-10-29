@@ -32,7 +32,7 @@ func _tool_primary() -> void:
 				picked_item.reparent(item_container)
 				picked_item.freeze = true
 				frobber.col_to_select.queue_free()
-				adjusted_ratio = (max_items * path.progress)
+				adjusted_ratio = (max_items * path.progress / 2)
 				print(adjusted_ratio)
 				path.progress_ratio += adjusted_ratio
 				picked_item.position = path.position

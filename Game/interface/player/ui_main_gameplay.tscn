@@ -1,10 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5aaeyik36wpn"]
+[gd_scene load_steps=11 format=3 uid="uid://b5aaeyik36wpn"]
 
 [ext_resource type="Script" path="res://Game/interface/player/ui_main_gameplay.gd" id="1_hsk2k"]
 [ext_resource type="FontFile" uid="uid://123cyg2ru2nn" path="res://Content/fonts/mingliu.ttf" id="2_j43k7"]
 [ext_resource type="Texture2D" uid="uid://oaxqlxwm76dj" path="res://Content/sprites/spr_ui_pocket_new.png" id="2_q1axo"]
 [ext_resource type="Texture2D" uid="uid://iitk82gbwem3" path="res://Content/sprites/spr_ui_pocketfill_new.png" id="3_j43k7"]
 [ext_resource type="Script" path="res://Game/interface/player/ui_pocket_component.gd" id="4_6wy5l"]
+[ext_resource type="Script" uid="uid://rkpeigtnx3by" path="res://Game/interface/player/ui_player_hearts.gd" id="6_e4t2q"]
+[ext_resource type="Texture2D" uid="uid://drew4fmvvrca2" path="res://Content/sprites/spr_ui_heart_filled.png" id="7_pu2ca"]
+[ext_resource type="Texture2D" uid="uid://6sdu1d8iewfh" path="res://Content/sprites/spr_ui_heart_empty.png" id="8_rcn4i"]
+
+[sub_resource type="Gradient" id="Gradient_os4ub"]
+offsets = PackedFloat32Array(0.535047)
+colors = PackedColorArray(0.717536, 0, 0.08355, 0.427451)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dfahk"]
+gradient = SubResource("Gradient_os4ub")
 
 [node name="UIMainGameplay" type="Control" node_paths=PackedStringArray("mission_completed_label", "mission_score_label", "mission_time_label", "mission_objectives_remaining_label", "pocket_container", "pocket_left_fill", "pocket_right_fill", "area_label", "final_score_label")]
 layout_mode = 3
@@ -207,3 +217,55 @@ fill_mode = 3
 texture_progress = ExtResource("3_j43k7")
 texture_progress_offset = Vector2(0, -0.84)
 script = ExtResource("4_6wy5l")
+
+[node name="Hearts" type="HBoxContainer" parent="." node_paths=PackedStringArray("heart1", "heart2", "heart3", "idk_what_this_is_called")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = -158.0
+offset_right = 983.0
+offset_bottom = -30.0
+grow_vertical = 0
+script = ExtResource("6_e4t2q")
+heart1 = NodePath("Heart")
+heart2 = NodePath("Heart2")
+heart3 = NodePath("Heart3")
+filled_tex = ExtResource("7_pu2ca")
+empty_tex = ExtResource("8_rcn4i")
+idk_what_this_is_called = NodePath("../IdkWhatThisIsCalled")
+
+[node name="Heart" type="TextureRect" parent="Hearts"]
+layout_mode = 2
+texture = ExtResource("7_pu2ca")
+
+[node name="Heart2" type="TextureRect" parent="Hearts"]
+layout_mode = 2
+texture = ExtResource("7_pu2ca")
+
+[node name="Heart3" type="TextureRect" parent="Hearts"]
+layout_mode = 2
+texture = ExtResource("7_pu2ca")
+
+[node name="MoneyLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 856.0
+offset_right = 250.0
+offset_bottom = 922.0
+theme_override_constants/outline_size = 14
+theme_override_fonts/font = ExtResource("2_j43k7")
+theme_override_font_sizes/font_size = 65
+text = "$: 0000"
+
+[node name="IdkWhatThisIsCalled" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture1D_dfahk")
